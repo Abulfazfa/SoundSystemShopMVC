@@ -1,0 +1,48 @@
+﻿@model List<Banner>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card mt-5">
+            <div class="card-body">
+                <h4 class="card-title">Bannner Table</h4>
+                <a class="btn btn-success" asp-controller="banner" asp-action="create">Add Banner</a>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                
+                                <th>Settings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    
+                                    <td>
+                                        <img src="~/assets/img/banner/@item.ImgUrl" width="150" height="150" />
+                                    </td>
+                                    <td>@item.Name</td>
+                                    
+                                    <td>
+                                        <a class="btn btn-secondary" asp-controller="banner" asp-action="detail" asp-route-id="@item.Id">Detail</a>
+                                        <a class="btn btn-primary" asp-controller="banner" asp-action="update" asp-route-id="@item.Id">Update</a>
+                                        <a class="btn btn-danger" asp-controller="banner" asp-action="delete" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

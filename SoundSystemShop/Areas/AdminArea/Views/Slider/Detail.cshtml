@@ -1,0 +1,34 @@
+﻿@model Slider
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card mt-5">
+            <div class="card-body">
+
+                <div class="form-group">
+                    <img src="~/images/@Model.ImgUrl" width="300" height="200" />
+                </div>
+                <div class="form-group">
+                    <p>@Model.Header</p>
+                </div>
+                <div class="form-group">
+                    <h2>@Model.Title</h2>
+                </div>
+                <div class="form-group">
+                    <p>@Model.Description</p>
+                </div>
+                
+
+
+
+                <a class="btn btn-dark" asp-controller="slider" asp-action="index">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

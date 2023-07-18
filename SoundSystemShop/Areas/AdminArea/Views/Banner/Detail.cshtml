@@ -1,0 +1,24 @@
+﻿@model Banner
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card mt-5">
+            <div class="card-body">
+
+                <div class="form-group">
+                    <img src="~/assets/img/banner/@Model.ImgUrl" width="300" height="200" />
+                </div>
+                <div class="form-group">
+                   <p>@Model.Name</p>
+                </div>
+                <a class="btn btn-dark" asp-controller="banner" asp-action="index">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
