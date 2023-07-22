@@ -1,6 +1,11 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.EntityFrameworkCore;
 using SoundSystemShop;
 using SoundSystemShop.DAL;
+using SoundSystemShop.Models;
+using SoundSystemShop.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -10,6 +15,21 @@ builder.Services.ServiceRegister();
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
     option.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+});
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
+
+}).AddCookie().AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+{
+    options.ClientId = config["Authentication:Google:ClientId"];
+    options.ClientSecret = config["Authentication:Google:ClientSecret"];
+    options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
+});
+builder.Services.AddAutoMapper(option =>
+{
+    option.AddProfile<MapProfile>();
 });
 
 var app = builder.Build();
@@ -23,6 +43,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseCookiePolicy();
+
 
 app.UseRouting();
 app.UseAuthentication();

@@ -1,0 +1,48 @@
+﻿@model BlogVM
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card mt-5">
+            <div class="card-body">
+                <h4 class="card-title"></h4>
+
+
+
+                <form method="post" class="forms-sample" enctype="multipart/form-data">
+                    <img src="~/assets/img/blog/@Model.ImgUrl" width="100" height="100" />
+                    <div class="form-group">
+                        <label asp-for="Photo"></label>
+                        <input class="form-control" asp-for="Photo" id="fileInput">
+                        <span asp-validation-for="Photo"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input class="form-control" asp-for="Name" id="fileInput">
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description"></label>
+                        <input class="form-control" asp-for="Description" id="fileInput">
+                        <span asp-validation-for="Description"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Author"></label>
+                        <input class="form-control" asp-for="Author" id="fileInput">
+                        <span asp-validation-for="Author"></span>
+                    </div>
+                    @foreach (var item in Model.Comments)
+                    {
+                        <p>@item.Comment</p>
+                        <a class="btn btn-danger" asp-action="deleteImage" asp-route-commentId="@item.Id" asp-route-Id="@ViewBag.Id">X</a>
+                    }
+
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <a class="btn btn-dark" asp-controller="blog" asp-action="index">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

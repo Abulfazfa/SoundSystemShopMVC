@@ -1,27 +1,27 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SoundSystemShop.Services;
+using SoundSystemShop.Services.Interfaces;
 using SoundSystemShop.ViewModels;
 
 namespace SoundSystemShop.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly SliderRepository _sliderRepository;
-    private readonly BlogRepository _blogRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public HomeController(SliderRepository sliderRepository, BlogRepository blogRepository)
+    public HomeController(IUnitOfWork unitOfWork)
     {
-        _sliderRepository = sliderRepository;
-        _blogRepository = blogRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public IActionResult Index()
     {
         HomeVW homeVW = new HomeVW();
-        homeVW.Sliders = _sliderRepository.GetAll();
-        homeVW.Blogs = _blogRepository.GetAll();
-        //homeVW.SocialMedias = _socialMediaRepository.GetAll();
+        homeVW.Sliders = _unitOfWork.SliderRepo.GetAll();
+        homeVW.Banners = _unitOfWork.BannerRepo.GetAll();
+        homeVW.SocialMedias = _unitOfWork.SocialMediaRepo.GetAll();
+        homeVW.Blogs = _unitOfWork.BlogRepo.GetAll();
         return View(homeVW);
     }
 

@@ -1,0 +1,53 @@
+﻿
+
+<button id="Banner1">Frame</button>
+<button id="up">Up</button>
+<button id="down">Down</button>
+<button id="more">More</button>
+<div class="area"></div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Get all button elements on the page
+        var allButtons = $("button");
+        var area = $(".area");
+
+        // Attach click event handler to each button using .click() method
+        allButtons.click(function () {
+            // 'this' refers to the current button element that was clicked
+            var buttonId = $(this).attr("id");
+            
+            // Perform AJAX request based on the button's ID
+            $.ajax({
+                url: `https://localhost:44392/shop/getAll?name=${buttonId}`,
+                success: function (result) {
+                    console.log(result.imgUrl)
+                    var product = `<div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card mt-5">
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <img src="/assets/img/banner/${result.imgUrl}" width="300" height="200" />
+                        </div>
+                        <div class="form-group">
+                           <p>${result.name}</p>
+                        </div>
+                        <a class="btn btn-dark" asp-controller="banner" asp-action="index">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>`
+        area.append(product);
+
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX request failed:", status, error);
+                }
+            });
+        });
+    });
+
+</script>

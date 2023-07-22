@@ -8,7 +8,71 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="118e52d5-4bd6-4292-a0b7-b9267abc4256" name="Changes" comment="" />
+    <list default="true" id="118e52d5-4bd6-4292-a0b7-b9267abc4256" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SoundSystemShop/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SoundSystemShop/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/soundsystemshop.metadata.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/soundsystemshop.metadata.v5.1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/soundsystemshop.projects.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/soundsystemshop.projects.v5.1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/SoundSystemShop/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/SoundSystemShop/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/SoundSystemShop/FileContentIndex/1b360ff1-3018-43c0-8717-4ad8bc9119d9.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/SoundSystemShop/FileContentIndex/61ebe57f-8bd9-427e-8123-eb6940098173.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/SoundSystemShop/FileContentIndex/9342eb6b-e78d-422d-8164-ac3a5a8d60e0.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/SoundSystemShop/FileContentIndex/b73df318-242c-49bf-ab61-ca080d7304e5.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/SoundSystemShop/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/SoundSystemShop/v17/.futdcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/SoundSystemShop/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/SoundSystemShop/v17/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/SoundSystemShop/v17/fileList.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/SoundSystemShop/v17/fileList.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Areas/AdminArea/Controllers/BlogController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/Areas/AdminArea/Controllers/BlogController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/Controllers/HomeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/DAL/AppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/DAL/AppDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Migrations/AppDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/Migrations/AppDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Models/AppUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/Models/AppUser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Models/SocialMedia.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/Models/SocialMedia.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Services/BannerRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Services/BlogRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Services/GenericRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Services/Interfaces/IBannerRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Services/Interfaces/IBlogRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Services/Interfaces/IGenericRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Services/Interfaces/IProductRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Services/Interfaces/ISliderRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Services/Interfaces/IUnitOfWork.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Services/ProductRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Services/SliderRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Services/UnitOfWork.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/SoundSystemShop.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/SoundSystemShop.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/SoundSystemShop.csproj.user" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/SoundSystemShop.csproj.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/ViewModels/HomeVW.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/ViewModels/HomeVW.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Views/Account/Login.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/Views/Account/Login.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Views/Account/Register.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/Views/Account/Register.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/Views/Home/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/bin/Debug/net6.0/Newtonsoft.Json.dll" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/bin/Debug/net6.0/Newtonsoft.Json.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/bin/Debug/net6.0/SoundSystemShop.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/bin/Debug/net6.0/SoundSystemShop.deps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/bin/Debug/net6.0/SoundSystemShop.dll" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/bin/Debug/net6.0/SoundSystemShop.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/bin/Debug/net6.0/SoundSystemShop.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/bin/Debug/net6.0/SoundSystemShop.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/bin/Debug/net6.0/SoundSystemShop.staticwebassets.runtime.json" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/bin/Debug/net6.0/SoundSystemShop.staticwebassets.runtime.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/bin/Debug/net6.0/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/bin/Debug/net6.0/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/SoundSystemShop.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/SoundSystemShop.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/SoundSystemShop.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/SoundSystemShop.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/SoundSystemShop.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/SoundSystemShop.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/SoundSystemShop.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/SoundSystemShop.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/SoundSystemShop.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/SoundSystemShop.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/SoundSystemShop.dll" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/SoundSystemShop.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/SoundSystemShop.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/SoundSystemShop.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/project.razor.vs.json" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/project.razor.vs.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/ref/SoundSystemShop.dll" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/ref/SoundSystemShop.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/refint/SoundSystemShop.dll" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/refint/SoundSystemShop.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/staticwebassets.build.json" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/staticwebassets.build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/staticwebassets.development.json" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/Debug/net6.0/staticwebassets.development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/SoundSystemShop.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/SoundSystemShop.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/SoundSystemShop.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/SoundSystemShop.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoundSystemShop/obj/staticwebassets.pack.sentinel" beforeDir="false" afterPath="$PROJECT_DIR$/SoundSystemShop/obj/staticwebassets.pack.sentinel" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -95,6 +159,7 @@
       <workItem from="1689485871861" duration="4684000" />
       <workItem from="1689572309128" duration="288000" />
       <workItem from="1689585113957" duration="4994000" />
+      <workItem from="1689926589246" duration="557000" />
     </task>
     <servers />
   </component>

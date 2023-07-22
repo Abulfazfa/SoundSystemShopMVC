@@ -9,7 +9,7 @@
         <div class="hero__slider owl-carousel">
             @foreach (var item in Model.Sliders)
         {
-            <div class="hero__items set-bg" data-setbg="~/asstes/img/hero/@item.ImgUrl">
+            <div class="hero__items set-bg" data-setbg="/assets/img/hero/@item.ImgUrl">
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-5 col-lg-7 col-md-8">
@@ -401,26 +401,28 @@
     <!-- Instagram Section Begin -->
     <section class="instagram spad">
         <div class="container">
+           @foreach (var item in Model.SocialMedias)
+           {
             <div class="row">
                 <div class="col-lg-8">
                     <div class="instagram__pic">
-                        <div class="instagram__pic__item set-bg" data-setbg="~/asstes/img/instagram/instagram-1.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="~/asstes/img/instagram/instagram-2.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="~/asstes/img/instagram/instagram-3.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="~/asstes/img/instagram/instagram-4.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="~/asstes/img/instagram/instagram-5.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="~/asstes/img/instagram/instagram-6.jpg"></div>
+                        @foreach (var img in item.ImgUrls)
+                        {
+                            <div class="instagram__pic__item set-bg" data-setbg="/asstes/img/instagram/@img.ImgUrl"></div>
+                        }
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="instagram__text">
-                        <h2>Instagram</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
-                        <h3>#Male_Fashion</h3>
+                        <h2>@item.Name</h2>
+                        <p>
+                            @item.Desciption
+                        </p>
+                        <h3>#@item.Tag</h3>
                     </div>
                 </div>
             </div>
+        }
         </div>
     </section>
     <!-- Instagram Section End -->
@@ -444,7 +446,7 @@
                             <div class="blog__item__text">
                                 <span><img src="~/assets/img/icon/calendar.png" alt=""> @item.CreationDate</span>
                                 <h5>@item.Name</h5>
-                                <a href="~/assets/#">Read More</a>
+                                <a asp-controller="blog" asp-action="detail" asp-route-id="@item.Id">Read More</a>
                             </div>
                         </div>
                     </div>

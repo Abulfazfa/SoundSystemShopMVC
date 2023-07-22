@@ -1,0 +1,39 @@
+﻿@model Blog
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card mt-5">
+            <div class="card-body">
+
+                <div class="form-group">
+                    <img src="~/assets/img/blog/@Model.ImgUrl" width="300" height="200" />
+                </div>
+                <div class="form-group">
+                    <p>@Model.Name</p>
+                </div>
+                <div class="form-group">
+                    <p>@Model.Description</p>
+                </div>
+                <div class="form-group">
+                    <p>@Model.Author</p>
+                </div>
+                <div class="form-group">
+                    <p>@Model.CreationDate</p>
+                </div>
+                @foreach (var item in Model.Comments)
+                {
+                    <div class="form-group">
+                        <p>@item.UserName</p>
+                        <p>@item.Comment</p>
+                    </div>
+                }
+                
+                <a class="btn btn-dark" asp-controller="blog" asp-action="index">Back</a>
+            </div>
+        </div>
+    </div>
+</div>

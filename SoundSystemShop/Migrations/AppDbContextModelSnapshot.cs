@@ -171,7 +171,6 @@ namespace SoundSystemShop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConnectionId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -189,6 +188,10 @@ namespace SoundSystemShop.Migrations
                     b.Property<bool>("IsBlocked")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -203,8 +206,9 @@ namespace SoundSystemShop.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("OTP")
-                        .HasColumnType("int");
+                    b.Property<string>("OTP")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -367,6 +371,52 @@ namespace SoundSystemShop.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("SoundSystemShop.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Brand")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Desc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("DiscountPrice")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ProductCount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductRating")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Products");
+                });
+
             modelBuilder.Entity("SoundSystemShop.Models.ProductImage", b =>
                 {
                     b.Property<int>("Id")
@@ -391,12 +441,9 @@ namespace SoundSystemShop.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SocialMediaId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("SocialMediaId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductImages");
                 });
@@ -444,20 +491,12 @@ namespace SoundSystemShop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Brand")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Desc")
+                    b.Property<string>("Desciption")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("DiscountPrice")
-                        .HasColumnType("float");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -466,20 +505,38 @@ namespace SoundSystemShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
+                    b.Property<string>("Tag")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductCount")
+                    b.HasKey("Id");
+
+                    b.ToTable("SocialMedias");
+                });
+
+            modelBuilder.Entity("SoundSystemShop.Models.SocialMediaImg", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductRating")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ImgUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("SocialMediaId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("SocialMediaId");
 
-                    b.ToTable("Products");
+                    b.ToTable("SocialMediaImgs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -549,14 +606,7 @@ namespace SoundSystemShop.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("SoundSystemShop.Models.ProductImage", b =>
-                {
-                    b.HasOne("SoundSystemShop.Models.SocialMedia", null)
-                        .WithMany("Images")
-                        .HasForeignKey("SocialMediaId");
-                });
-
-            modelBuilder.Entity("SoundSystemShop.Models.SocialMedia", b =>
+            modelBuilder.Entity("SoundSystemShop.Models.Product", b =>
                 {
                     b.HasOne("SoundSystemShop.Models.Category", "Category")
                         .WithMany()
@@ -565,6 +615,22 @@ namespace SoundSystemShop.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("SoundSystemShop.Models.ProductImage", b =>
+                {
+                    b.HasOne("SoundSystemShop.Models.Product", null)
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SoundSystemShop.Models.SocialMediaImg", b =>
+                {
+                    b.HasOne("SoundSystemShop.Models.SocialMedia", null)
+                        .WithMany("ImgUrls")
+                        .HasForeignKey("SocialMediaId");
                 });
 
             modelBuilder.Entity("SoundSystemShop.Models.Blog", b =>
@@ -577,9 +643,14 @@ namespace SoundSystemShop.Migrations
                     b.Navigation("Children");
                 });
 
-            modelBuilder.Entity("SoundSystemShop.Models.SocialMedia", b =>
+            modelBuilder.Entity("SoundSystemShop.Models.Product", b =>
                 {
                     b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("SoundSystemShop.Models.SocialMedia", b =>
+                {
+                    b.Navigation("ImgUrls");
                 });
 #pragma warning restore 612, 618
         }
