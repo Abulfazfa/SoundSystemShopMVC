@@ -1,6 +1,8 @@
+using SoundSystemShop.Services.Interfaces;
+
 namespace SoundSystemShop.Services;
 
-public class FileService
+public class FileService : IFileService
 {
     public string ReadFile(string path, string body)
     {

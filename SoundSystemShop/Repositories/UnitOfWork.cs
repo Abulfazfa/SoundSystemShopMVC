@@ -1,4 +1,7 @@
-﻿using SoundSystemShop.DAL;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SoundSystemShop.DAL;
+using SoundSystemShop.Models;
 using SoundSystemShop.Services.Interfaces;
 
 namespace SoundSystemShop.Services
@@ -6,13 +9,17 @@ namespace SoundSystemShop.Services
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _appDbContext;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         public IProductRepository ProductRepo { get ; set ; }
         public ISliderRepository SliderRepo { get; set; }
         public IBannerRepository BannerRepo { get; set; }
         public ISocialMediaRepository SocialMediaRepo { get ; set ; }
         public IBlogRepository BlogRepo { get ; set ; }
+        public IGenericRepository<AppUser> AppUserRepo { get; private set; }
 
-        public UnitOfWork(AppDbContext appDbContext)
+        public UnitOfWork(AppDbContext appDbContext, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _appDbContext = appDbContext;
             SliderRepo = new SliderRepository(_appDbContext);
@@ -20,6 +27,10 @@ namespace SoundSystemShop.Services
             BannerRepo = new BannerRepository(_appDbContext);
             SocialMediaRepo = new SocialMediaRepository(_appDbContext);
             BlogRepo = new BlogRepository(_appDbContext);
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _roleManager = roleManager;
+            AppUserRepo = new GenericRepository<AppUser>(_appDbContext);
         }
 
         public void Commit()

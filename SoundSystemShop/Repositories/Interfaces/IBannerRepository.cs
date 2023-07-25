@@ -5,6 +5,6 @@ namespace SoundSystemShop.Services.Interfaces
 {
     public interface IBannerRepository : IGenericRepository<Banner>
     {
-        public bool Any(Func<Banner, bool> func);
+        bool ExistsWithImgUrl(string imgUrl, int idToExclude);
     }
 }

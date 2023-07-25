@@ -9,46 +9,45 @@ namespace SoundSystemShop.Services
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly AppDbContext _appDbContext;
-        
-        internal DbSet<T> _dbSet;
-
-        public GenericRepository(AppDbContext appDbContext)
+        public GenericRepository(AppDbContext dbContext)
         {
-            _appDbContext = appDbContext;
-            _dbSet = appDbContext.Set<T>();
+            _appDbContext = dbContext;
         }
 
-        public bool Add(T entity)
+        public async Task<T> GetByIdAsync(int id)
         {
-            _dbSet.Add(entity);
-            return true;
+            return await _appDbContext.Set<T>().FindAsync(id);
         }
 
+        public async Task<List<T>> GetAllAsync()
+        {
+            return await _appDbContext.Set<T>().ToListAsync();
+        }
+
+        public async Task AddAsync(T entity)
+        {
+            await _appDbContext.Set<T>().AddAsync(entity);
+        }
+
+        public async Task UpdateAsync(T entity)
+        {
+            _appDbContext.Set<T>().Update(entity);
+            await Task.CompletedTask;
+        }
+
+        public async Task DeleteAsync(T entity)
+        {
+            _appDbContext.Set<T>().Remove(entity);
+            await Task.CompletedTask;
+        }
+
+        public async Task<T> GetByPredicateAsync(Func<T, bool> func)
+        {
+            return await _appDbContext.Set<T>().FindAsync(func);
+        }
         public bool Any(Func<T, bool> func)
         {
-            return _dbSet.Any(func);
-        }
-
-
-        public bool Delete(Func<T, bool> func)
-        {
-            _dbSet.Remove(_dbSet.FirstOrDefault(func));
-            return true;
-        }
-
-        public T Get(Func<T, bool> func)
-        {
-            return _dbSet.FirstOrDefault(func);
-        }
-
-        public List<T> GetAll()
-        {
-            return _dbSet.ToList();
-        }
-
-        public bool Update(T entity)
-        {
-            throw new NotImplementedException();
+            return _appDbContext.Set<T>().Any(func);
         }
 
     }

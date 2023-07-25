@@ -8,11 +8,18 @@ namespace SoundSystemShop.Profiles
     {
         public MapProfile()
         {
+            CreateMap<Slider, SliderVM>();
+            CreateMap<SliderVM, Slider>()
+                .ForMember(dest => dest.ImgUrl, opt => opt.Ignore());
             CreateMap<Blog, BlogVM>();
             CreateMap<BlogVM, Blog>()
                 .ForMember(dest => dest.CreationDate, opt => opt.MapFrom(src => DateTime.Now))
-                .ForMember(dest => dest.ImgUrl, opt => opt.MapFrom(src => src.Photo.FileName));
+                .ForMember(dest => dest.ImgUrl, opt => opt.Ignore());
+            CreateMap<BannerVM, Banner>();
+            CreateMap<BannerVM, Banner>()
+                .ForMember(dest => dest.ImgUrl, opt => opt.Ignore());
         }
     }
 
 }
+ 

@@ -11,6 +11,22 @@
 
 (function ($) {
 
+
+
+    //$(document).on("keyup", "#input-search", function () {
+    //    $("#searchList ul").remove();
+    //    var search = $("#input-search").val().trim();
+    //    $.ajax({
+    //        method: "get",
+    //        url: "/home/search?search=" + search,
+    //        success: function (res) {
+    //            $("#searchList").append(res);
+    //        }
+    //    })
+    //})
+
+
+
     /*------------------
         Preloader
     --------------------*/

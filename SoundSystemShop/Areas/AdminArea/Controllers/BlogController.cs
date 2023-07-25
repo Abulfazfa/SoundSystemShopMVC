@@ -11,24 +11,20 @@ namespace SoundSystemShop.Areas.AdminArea.Controllers;
 [Area("AdminArea")]
 public class BlogController : Controller
 {
-    private readonly IWebHostEnvironment _webHostEnvironment;
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
+    private readonly IBlogService _blogService;
 
-    public BlogController(IWebHostEnvironment webHostEnvironment, IUnitOfWork unitOfWork, IMapper mapper)
+    public BlogController(IBlogService blogService)
     {
-        _webHostEnvironment = webHostEnvironment;
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
+        _blogService = blogService;
     }
 
     public IActionResult Index()
     {
-        return View(_unitOfWork.BlogRepo.GetAll());
+        return View(_blogService.GetAllBlogs().Result.ToList());
     }
-    public IActionResult Detail(int? id)
+    public IActionResult Detail(int id)
     {
-        return View(_unitOfWork.BlogRepo.Get(b => b.Id == id));
+        return View(_blogService.GetBlogById(id));
     }
     public IActionResult Create()
     {
@@ -39,74 +35,56 @@ public class BlogController : Controller
     [AutoValidateAntiforgeryToken]
     public IActionResult Create(BlogVM blogVM)
     {
-
-        if (!blogVM.Photo.CheckFileType())
+        if(!ModelState.IsValid)
         {
-            ModelState.AddModelError("Photo", "Sellect a image");
             return View();
         }
-
-        Blog blog = _mapper.Map<Blog>(blogVM);
-        _unitOfWork.BlogRepo.Add(blog);
-        _unitOfWork.Commit();
-
+        try
+        {
+            _blogService.CreateBlog(blogVM);
+            return RedirectToAction("Index");
+        }
+        catch (ArgumentException ex)
+        {
+            ModelState.AddModelError("Photo", ex.Message);
+            return View();
+        }
+    }
+    public IActionResult Delete(int id)
+    {
+        var result = _blogService.DeletBlog(id).Result;
+        if (!result)
+        {
+            ModelState.AddModelError("", "Happen some problems");
+            return View();
+        }
         return RedirectToAction("Index");
     }
-    public IActionResult Delete(int? id)
+
+    public IActionResult Update(int id)
     {
-        if (id == null) return NotFound();
-        var blog = _unitOfWork.BlogRepo.Get(x => x.Id == id);
-        if (blog == null) return NotFound();
-
-        string path = Path.Combine(_webHostEnvironment.WebRootPath, "assets/img/blog", blog.ImgUrl);
-        DeleteHelper.DeleteFile(path);
-        _unitOfWork.BlogRepo.Delete(b => b.Id == blog.Id);
-        _unitOfWork.Commit();
-
-        return RedirectToAction("Index");
-    }
-
-    public IActionResult Update(int? id)
-    {
-        ViewBag.Id = id;
-        if (id == null) return NotFound();
-        var blog = _unitOfWork.BlogRepo.Get(x => x.Id == id);
-        if (blog == null) return NotFound();
-        BlogVM blogVM = _mapper.Map<BlogVM>(blog);
+        var blogVM = _blogService.MapBlogVMAndBlog(id);
+        if (blogVM == null)
+        {
+            ModelState.AddModelError("", "Happen problem");
+            return View();
+        }
         return View(blogVM);
     }
 
     [HttpPost]
     [AutoValidateAntiforgeryToken]
-    public IActionResult Update(int? id, BlogVM blogVM)
+    public IActionResult Update(int id, BlogVM blogVM)
     {
-        var blog = _unitOfWork.BlogRepo.Get(x => x.Id == id);
-        DateTime existingCreationDate = blog.CreationDate;
-        if (blogVM.Photo != null)
-        {
-            var exist = _unitOfWork.BlogRepo.Any(c => c.ImgUrl.ToLower() == blogVM.Photo.FileName.ToLower() && c.Id != id);
-            if (!exist)
-            {
-                string path = Path.Combine(_webHostEnvironment.WebRootPath, "assets/img/blog", blog.ImgUrl);
-                DeleteHelper.DeleteFile(path);
-                blog.ImgUrl = blogVM.Photo.FileName;
-            }
-        }
-        _mapper.Map<Blog>(blogVM);
-        blog.CreationDate = existingCreationDate;
-        _unitOfWork.Commit();
-        return RedirectToAction("Index");
+        
+        if (_blogService.UpdateBlog(id, blogVM).Result) return RedirectToAction("Index");
+        return View(blogVM);
+
     }
 
-    public IActionResult DeleteComment(int? id, int commentId)
+    public IActionResult DeleteComment(int id, int commentId)
     {
-        if (id == null) return View();
-        var exist = _unitOfWork.BlogRepo.Get(b => b.Id == id);
-        if (exist == null) return View();
-        var clickedComment = exist.Comments.FirstOrDefault(c => c.Id == commentId);
-        exist.Comments.Remove(clickedComment);
-
-        _unitOfWork.Commit();
+        _blogService.DeleteComment(id, commentId);
         return RedirectToAction("Update", new { Id = id });
     }
 }

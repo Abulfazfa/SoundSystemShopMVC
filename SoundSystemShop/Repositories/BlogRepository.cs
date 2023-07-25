@@ -10,5 +10,9 @@ namespace SoundSystemShop.Services
         public BlogRepository(AppDbContext appDbContext) : base(appDbContext)
         {
         }
+        public bool ExistsWithImgUrl(string imgUrl, int idToExclude)
+        {
+            return true;
+        }
     }
 }

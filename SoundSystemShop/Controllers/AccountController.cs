@@ -6,25 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 using SoundSystemShop.Helper;
 using SoundSystemShop.Models;
 using SoundSystemShop.Services;
+using SoundSystemShop.Services.Interfaces;
 using SoundSystemShop.ViewModels;
+using static QRCoder.PayloadGenerator;
 
 namespace SoundSystemShop.Areas.AdminArea.Controllers;
 
 public class AccountController : Controller
 {
-    private readonly UserManager<AppUser> _userManager;
-    private readonly SignInManager<AppUser> _signInManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
-    private readonly FileService _fileService;
-    private readonly EmailService _emailService;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IAccountService _accountService;
 
-    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager, FileService fileService, EmailService emailService)
+    public AccountController(IAccountService accountService)
     {
-        _userManager = userManager;
-        _signInManager = signInManager;
-        _roleManager = roleManager;
-        _fileService = fileService;
-        _emailService = emailService;
+        _accountService = accountService;
     }
 
     public IActionResult Register()
@@ -36,39 +31,27 @@ public class AccountController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Register(RegisterVM registerVM)
     {
-        if (!ModelState.IsValid) return View();
-        string otp = GenerateOTP();
-        AppUser appUser = new()
+        if (!ModelState.IsValid)
         {
-            Fullname = registerVM.Fullname,
-            Email = registerVM.Email,
-            UserName = registerVM.Username,
-            OTP = otp
-        };
-
-        var result = await _userManager.CreateAsync(appUser, registerVM.Password);
-
-        if (!result.Succeeded)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", errorMessage: error.Description);
-            }
             return View(registerVM);
         }
 
-        await _userManager.AddToRoleAsync(appUser, RoleEnum.User.ToString());
-        string body = string.Empty;
-        string path = "wwwroot/template/verify.html";
-        string subject = "Verify Email";
-        body = _fileService.ReadFile(path, body);
-        body = body.Replace("{{Confirm Account}}", otp);
-        body = body.Replace("{{Welcome!}}", appUser.Fullname);
+        UserRegistrationResult registrationResult = await _accountService.RegisterUser(registerVM);
 
-        _emailService.Send(appUser.Email, subject, body);
-        return RedirectToAction(nameof(VerifyEmail), new { Email = appUser.Email });
+        switch (registrationResult)
+        {
+            case UserRegistrationResult.Success:
+                return RedirectToAction(nameof(VerifyEmail), new { Email = registerVM.Email });
+            case UserRegistrationResult.Failed:
+                ModelState.AddModelError("", "User registration failed. Please try again later.");
+                break;
+            default:
+                break;
+        }
 
+        return View(registerVM);
     }
+
     public IActionResult VerifyEmail(string email)
     {
         ConfirmAccountVM confirmAccountVM = new ConfirmAccountVM();
@@ -78,35 +61,28 @@ public class AccountController : Controller
 
     public async Task<IActionResult> ConfirmEmail(ConfirmAccountVM confirmAccountVM)
     {
-        AppUser existUser = await _userManager.FindByEmailAsync(confirmAccountVM.Email);
-        if (existUser == null) return NotFound();
-        if (existUser.OTP != confirmAccountVM.OTP || string.IsNullOrEmpty(confirmAccountVM.OTP))
+        bool success = await _accountService.ConfirmEmailAndSignIn(confirmAccountVM);
+        if (success)
         {
-            TempData["Error"] = "Wrong OTP";
-            RedirectToAction(nameof(VerifyEmail), new { Email = confirmAccountVM.Email });
+            return RedirectToAction(nameof(Login));
         }
-        string token = await _userManager.GenerateEmailConfirmationTokenAsync(existUser);
-        await _userManager.ConfirmEmailAsync(existUser, token);
-        await _signInManager.SignInAsync(existUser, isPersistent: false);
-        return RedirectToAction(nameof(Login));
+        else
+        {
+            return RedirectToAction(nameof(VerifyEmail), new { Email = confirmAccountVM.Email });
+        }
     }
 
     public async Task<IActionResult> RecendOTP(string email)
     {
-        string otp = GenerateOTP();
-        AppUser existUser = await _userManager.FindByEmailAsync(email);
-        existUser.OTP = otp;
-        await _userManager.UpdateAsync(existUser);
-
-        string body = string.Empty;
-        string path = "wwwroot/assets/templates/verify.html";
-        string subject = "Verify Email";
-        body = _fileService.ReadFile(path, body);
-        body = body.Replace("{{Confirm Account}}", otp);
-        body = body.Replace("{{Welcome!}}", existUser.Fullname);
-
-        _emailService.Send(existUser.Email, subject, body);
-        return RedirectToAction(nameof(VerifyEmail), new { Email = email });
+        bool success = await _accountService.ResendOTP(email);
+        if (success)
+        {
+            return RedirectToAction(nameof(VerifyEmail), new { Email = email });
+        }
+        else
+        {
+            return NotFound();
+        }
 
     }
 
@@ -120,8 +96,8 @@ public class AccountController : Controller
     public async Task<IActionResult> ChangePassword(ChangePasswordVM changePasswordVM)
     {
         if (!ModelState.IsValid) return View();
-        AppUser existUser = await _userManager.FindByNameAsync(User.Identity.Name);
-        IdentityResult result = await _userManager.ChangePasswordAsync(existUser, changePasswordVM.CurrentPassword, changePasswordVM.NewPassword);
+        IdentityResult result = await _accountService.ChangePassword(User.Identity.Name, changePasswordVM.CurrentPassword, changePasswordVM.NewPassword);
+
         if (result.Succeeded)
         {
             ViewBag.IsSuccess = true;
@@ -133,8 +109,8 @@ public class AccountController : Controller
             {
                 ModelState.AddModelError("", error.Description);
             }
+            return View(changePasswordVM);
         }
-        return View(changePasswordVM);
     }
 
     public IActionResult ForgotPassword()
@@ -145,24 +121,23 @@ public class AccountController : Controller
     [AutoValidateAntiforgeryToken]
     public async Task<IActionResult> ForgotPassword(ForgetPasswordVM forgetPasswordVM)
     {
-        if (!ModelState.IsValid) return View(forgetPasswordVM);
-        AppUser existUser = await _userManager.FindByEmailAsync(forgetPasswordVM.Email);
-        if (existUser == null)
+        if (!ModelState.IsValid)
         {
-            ModelState.AddModelError("Email", "User not found ");
             return View(forgetPasswordVM);
         }
-        string token = await _userManager.GeneratePasswordResetTokenAsync(existUser);
-        string link = Url.Action(nameof(ResetPassword), "Account", new { userId = existUser.Id, token }, Request.Scheme, Request.Host.ToString());
-        string body = string.Empty;
-        string path = "wwwroot/template/ForgotPassword.html";
-        string subject = "Verify Email";
-        body = _fileService.ReadFile(path, body);
-        body = body.Replace("{{link}}", link);
-        body = body.Replace("{{Welcome!}}", existUser.Fullname);
 
-        _emailService.Send(existUser.Email, subject, body);
-        return RedirectToAction(nameof(ResetPasswordVerifyEmail));
+        string resetLink = Url.Action(nameof(ResetPassword), "Account", new { userId = "{userId}", token = "{token}" }, Request.Scheme, Request.Host.ToString());
+        bool success = await _accountService.InitiatePasswordReset(forgetPasswordVM.Email, resetLink);
+
+        if (success)
+        {
+            return RedirectToAction(nameof(ResetPasswordVerifyEmail));
+        }
+        else
+        {
+            ModelState.AddModelError("Email", "User not found");
+            return View(forgetPasswordVM);
+        }
     }
     public IActionResult ResetPasswordVerifyEmail()
     {
@@ -177,16 +152,21 @@ public class AccountController : Controller
     public async Task<IActionResult> ResetPassword(ResetPasswordVM resetPasswordVM)
     {
         if (!ModelState.IsValid) return View(resetPasswordVM);
-        AppUser existUser = await _userManager.FindByIdAsync(resetPasswordVM.UserId);
-        if (existUser == null) return NotFound();
 
-        if (await _userManager.CheckPasswordAsync(existUser, resetPasswordVM.Password))
+        IdentityResult result = await _accountService.ResetPassword(resetPasswordVM);
+
+        if (result.Succeeded)
         {
-            ModelState.AddModelError("", "This password already");
+            return RedirectToAction(nameof(Login));
+        }
+        else
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
             return View(resetPasswordVM);
         }
-        await _userManager.ResetPasswordAsync(existUser, resetPasswordVM.Token, resetPasswordVM.Password);
-        return RedirectToAction(nameof(Login));
 
     }
     public IActionResult Login()
@@ -197,37 +177,42 @@ public class AccountController : Controller
     [AutoValidateAntiforgeryToken]
     public async Task<IActionResult> Login(LoginVM loginVM, string? ReturnUrl)
     {
-        if (!ModelState.IsValid) return View();
-        AppUser appUser = await _userManager.FindByNameAsync(loginVM.UsernameOrEmail) ?? await _userManager.FindByEmailAsync(loginVM.UsernameOrEmail);
-        if (appUser == null)
+        if (!ModelState.IsValid)
         {
-            ModelState.AddModelError("", "username or password isn't true");
             return View(loginVM);
         }
-        var result = await _signInManager.PasswordSignInAsync(appUser, loginVM.Password, loginVM.RememberMe, true);
-        if (result.IsLockedOut)
+
+        LoginResult loginResult = await _accountService.Login(loginVM);
+
+        switch (loginResult)
         {
-            ModelState.AddModelError("", "your profile has been blocked");
-            return View(loginVM);
+            case LoginResult.Success:
+                if (!string.IsNullOrEmpty(ReturnUrl))
+                {
+                    return Redirect(ReturnUrl);
+                }
+                bool isAdmin = await _accountService.GetRoleList(loginVM.UsernameOrEmail);
+                if (isAdmin)
+                {
+                    return RedirectToAction("Index", "Dashboard", new { area = "adminarea" });
+                }
+
+                return RedirectToAction("Index", "Home");
+
+            case LoginResult.UserNotFound:
+                ModelState.AddModelError("", "Username or password is incorrect.");
+                break;
+
+            case LoginResult.UserLockedOut:
+                ModelState.AddModelError("", "Your profile has been blocked.");
+                break;
+
+            case LoginResult.InvalidCredentials:
+                ModelState.AddModelError("", "Username or password is incorrect.");
+                break;
         }
-        if (!result.Succeeded)
-        {
-            ModelState.AddModelError("", "username or password isn't true");
-            return View(loginVM);
-        }
-        if (ReturnUrl != null)
-        {
-            return Redirect(ReturnUrl);
-        }
 
-        await _signInManager.SignInAsync(appUser, loginVM.RememberMe);
-        var userList = await _userManager.GetRolesAsync(appUser);
-        if (userList.Contains(RoleEnum.Admin.ToString())) return RedirectToAction("Index", "Dashboard", new { area = "adminarea" });
-
-        return RedirectToAction("Index", "Home");
-
-
-
+        return View(loginVM);
     }
     public async Task LoginWithGoogle()
     {
@@ -253,24 +238,8 @@ public class AccountController : Controller
 
     public async Task<IActionResult> Logout()
     {
-        await _signInManager.SignOutAsync();
+        await _accountService.Logout();
         return RedirectToAction("Login");
-    }
-
-    public async Task<IActionResult> AddRole()
-    {
-        foreach (var item in Enum.GetValues(typeof(RoleEnum)))
-        {
-            await _roleManager.CreateAsync(new IdentityRole { Name = item.ToString() });
-        }
-        return Content("Roles added");
-    }
-
-    private static string GenerateOTP()
-    {
-        Random random = new();
-        int otpNumber = random.Next(1000, 9999);
-        return otpNumber.ToString();
     }
 
 }

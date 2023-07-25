@@ -21,32 +21,36 @@
             
             // Perform AJAX request based on the button's ID
             $.ajax({
-                url: `https://localhost:44392/shop/getAll?name=${buttonId}`,
+                url: `https://localhost:44392/shop/getAll?categoryName=${buttonId}`,
                 success: function (result) {
-                    console.log(result.imgUrl)
-                    var product = `<div class="row">
-            <div class="col-md-6 grid-margin stretch-card">
-                <div class="card mt-5">
-                    <div class="card-body">
+                    console.log(result);
 
-                        <div class="form-group">
-                            <img src="/assets/img/banner/${result.imgUrl}" width="300" height="200" />
+                    // Convert the result object to a JSON string
+                    var jsonString = JSON.stringify(result);
+
+                    var product = `<div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card mt-5">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <img src="/assets/img/banner/${result.imgUrl}" width="150" height="100" />
+                            </div>
+                            <div class="form-group">
+                                <p>${result.name}</p>
+                            </div>
+                            <a class="btn btn-dark" href="https://localhost:44392/shop/GenerateQRCode?json=${encodeURIComponent(jsonString)}">Create</a>
                         </div>
-                        <div class="form-group">
-                           <p>${result.name}</p>
-                        </div>
-                        <a class="btn btn-dark" asp-controller="banner" asp-action="index">Back</a>
                     </div>
                 </div>
-            </div>
-        </div>`
-        area.append(product);
+            </div>`;
 
+                    area.append(product);
                 },
                 error: function (xhr, status, error) {
                     console.error("AJAX request failed:", status, error);
                 }
             });
+
         });
     });
 

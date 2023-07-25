@@ -326,6 +326,10 @@ namespace SoundSystemShop.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -379,6 +383,9 @@ namespace SoundSystemShop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
@@ -411,6 +418,8 @@ namespace SoundSystemShop.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("CategoryId");
 
@@ -608,6 +617,10 @@ namespace SoundSystemShop.Migrations
 
             modelBuilder.Entity("SoundSystemShop.Models.Product", b =>
                 {
+                    b.HasOne("SoundSystemShop.Models.AppUser", null)
+                        .WithMany("OwnProducts")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("SoundSystemShop.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
@@ -631,6 +644,11 @@ namespace SoundSystemShop.Migrations
                     b.HasOne("SoundSystemShop.Models.SocialMedia", null)
                         .WithMany("ImgUrls")
                         .HasForeignKey("SocialMediaId");
+                });
+
+            modelBuilder.Entity("SoundSystemShop.Models.AppUser", b =>
+                {
+                    b.Navigation("OwnProducts");
                 });
 
             modelBuilder.Entity("SoundSystemShop.Models.Blog", b =>

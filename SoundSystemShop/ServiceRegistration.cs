@@ -34,6 +34,12 @@ namespace SoundSystemShop
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ISliderRepository, SliderRepository>();
+            services.AddScoped<ISliderService, SliderService>();
+            services.AddScoped<IBannerService, BannerService>();
+            services.AddScoped<IBlogService, BlogService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddSignalR();
         }
     }

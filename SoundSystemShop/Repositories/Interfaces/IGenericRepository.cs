@@ -5,11 +5,12 @@ namespace SoundSystemShop.Services.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {
-        List<T> GetAll();
-        T Get(Func<T, bool> func);
-        bool Add(T entity);
-        bool Update(T entity);
-        bool Delete(Func<T, bool> func);
+        Task<T> GetByIdAsync(int id);
+        Task<T> GetByPredicateAsync(Func<T,bool> func);
+        Task<List<T>> GetAllAsync();
+        Task AddAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(T entity);
         bool Any(Func<T, bool> func);
     }
 }

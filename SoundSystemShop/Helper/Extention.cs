@@ -1,3 +1,6 @@
+using System.Drawing.Imaging;
+using System.Drawing;
+
 namespace SoundSystemShop.Helper;
 
 public static class Extention
@@ -16,5 +19,14 @@ public static class Extention
             file.CopyTo(stream);
         }
         return fileName;
+    }
+
+    public static byte[] BitmapToByteArray(this Bitmap bitmap)
+    {
+        using (MemoryStream ms = new MemoryStream())
+        {
+            bitmap.Save(ms, ImageFormat.Png);
+            return ms.ToArray();
+        }
     }
 }

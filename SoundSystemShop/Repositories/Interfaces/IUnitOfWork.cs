@@ -1,12 +1,16 @@
-﻿namespace SoundSystemShop.Services.Interfaces
+﻿using SoundSystemShop.Models;
+
+namespace SoundSystemShop.Services.Interfaces
 {
     public interface IUnitOfWork
     {
         void Commit();
-        public IProductRepository ProductRepo { get; set; }
-        public ISliderRepository SliderRepo { get; set; }
-        public IBannerRepository BannerRepo { get; set; }
-        public ISocialMediaRepository SocialMediaRepo { get; set; }
-        public IBlogRepository BlogRepo { get; set; }
+        IProductRepository ProductRepo { get; set; }
+        ISliderRepository SliderRepo { get; set; }
+        IBannerRepository BannerRepo { get; set; }
+        ISocialMediaRepository SocialMediaRepo { get; set; }
+        IBlogRepository BlogRepo { get; set; }
+        IGenericRepository<AppUser> AppUserRepo { get; }
+
     }
 }

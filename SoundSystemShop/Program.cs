@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.EntityFrameworkCore;
 using SoundSystemShop;
 using SoundSystemShop.DAL;
+using SoundSystemShop.Hubs;
 using SoundSystemShop.Models;
 using SoundSystemShop.Profiles;
 
@@ -56,5 +57,5 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
+app.MapHub<ChatHub>("/chat");
 app.Run();

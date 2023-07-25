@@ -251,3 +251,4 @@ C:\Users\HP\RiderProjects\SoundSystemShop\SoundSystemShop\bin\Debug\net6.0\runti
 C:\Users\HP\RiderProjects\SoundSystemShop\SoundSystemShop\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.Google.dll
 C:\Users\HP\RiderProjects\SoundSystemShop\SoundSystemShop\bin\Debug\net6.0\AutoMapper.dll
 C:\Users\HP\RiderProjects\SoundSystemShop\SoundSystemShop\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\HP\RiderProjects\SoundSystemShop\SoundSystemShop\bin\Debug\net6.0\QRCoder.dll

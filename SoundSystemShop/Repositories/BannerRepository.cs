@@ -1,4 +1,5 @@
-﻿using SoundSystemShop.DAL;
+﻿using Microsoft.EntityFrameworkCore;
+using SoundSystemShop.DAL;
 using SoundSystemShop.Models;
 using SoundSystemShop.Services.Interfaces;
 using System.Linq;
@@ -9,10 +10,11 @@ namespace SoundSystemShop.Services
     {
         public BannerRepository(AppDbContext appDbContext) : base(appDbContext)
         {
+           
         }
-        public bool Any(Func<Banner, bool> func)
+        public bool ExistsWithImgUrl(string imgUrl, int idToExclude)
         {
-            return _dbSet.Any(func);
+            return Any(b => b.ImgUrl.ToLower() == imgUrl.ToLower() && b.Id != idToExclude);
         }
     }
 }

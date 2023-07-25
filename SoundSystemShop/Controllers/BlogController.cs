@@ -1,42 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SoundSystemShop.Models;
+using SoundSystemShop.Services;
 using SoundSystemShop.Services.Interfaces;
 
 namespace SoundSystemShop.Controllers
 {
     public class BlogController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IBlogService _blogService;
 
-        public BlogController(IUnitOfWork unitOfWork)
+        public BlogController(IBlogService blogService)
         {
-            _unitOfWork = unitOfWork;
+            _blogService = blogService;
         }
 
         public IActionResult Index()
         {
-            return View(_unitOfWork.BlogRepo.GetAll());
+            return View(_blogService.GetAllBlogs());
         }
-        public IActionResult Detail(int? id)
+        public IActionResult Detail(int id)
         {
             if (id == null) return RedirectToAction(nameof(Index));
-            var blog = _unitOfWork.BlogRepo.Get(b => b.Id == id);
+            var blog = _blogService.GetBlogById(id);
             if (blog == null) return NotFound();
             return View(blog);
         }
         public IActionResult CreateBlogComment(int blogId, string name, string email, string comment)
         {
-            var blog = _unitOfWork.BlogRepo.Get(b => b.Id == blogId);
-            BlogComment blogComment = new()
-            {
-                UserName = name,
-                UserEmail = email,
-                Comment = comment
-            };
-            blog.Comments.Add(blogComment);
-            _unitOfWork.Commit();
-
-            return Content("salam");
+            _blogService.CreateBlogComment(blogId, name, email, comment);
+            return RedirectToAction(nameof(Detail), new {id = blogId});
         }
     }
 }

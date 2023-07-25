@@ -11,6 +11,9 @@ namespace SoundSystemShop.Services
         public SliderRepository(AppDbContext appDbContext) : base(appDbContext)
         {
         }
-
+        public bool ExistsWithImgUrl(string imgUrl, int idToExclude)
+        {
+            return Any(b => b.ImgUrl.ToLower() == imgUrl.ToLower() && b.Id != idToExclude);
+        }
     }
 }
