@@ -15,7 +15,7 @@ namespace SoundSystemShop.Profiles
             CreateMap<BlogVM, Blog>()
                 .ForMember(dest => dest.CreationDate, opt => opt.MapFrom(src => DateTime.Now))
                 .ForMember(dest => dest.ImgUrl, opt => opt.Ignore());
-            CreateMap<BannerVM, Banner>();
+            CreateMap<Banner, BannerVM>();
             CreateMap<BannerVM, Banner>()
                 .ForMember(dest => dest.ImgUrl, opt => opt.Ignore());
         }

@@ -4,6 +4,6 @@ namespace SoundSystemShop.Services.Interfaces
 {
     public interface IBlogRepository : IGenericRepository<Blog>
     {
-        bool ExistsWithImgUrl(string imgUrl, int idToExclude);
+         Task<Blog> GetBlogWithComments(int blogId);
     }
 }

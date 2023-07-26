@@ -2230,6 +2230,19 @@
           }
         }
       },
+      "Powell.CouponCode/1.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Powells.CouponCode.dll": {
+            "related": ".pdb"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Powells.CouponCode.dll": {
+            "related": ".pdb"
+          }
+        }
+      },
       "QRCoder/1.4.1": {
         "type": "package",
         "dependencies": {
@@ -7095,6 +7108,25 @@
         "nuget.versioning.nuspec"
       ]
     },
+    "Powell.CouponCode/1.0.3": {
+      "sha512": "ZfXuTBmesmRc3wGSfjAxrX4SvlLBTbLSsM3D3xTzcmbwEtnjtx0GjeNY0aOTM5/mE1N1K0/L+3+Hy9z3NdIVLw==",
+      "type": "package",
+      "path": "powell.couponcode/1.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35/Powells.CouponCode.dll",
+        "lib/net35/Powells.CouponCode.pdb",
+        "lib/net40/Powells.CouponCode.dll",
+        "lib/net40/Powells.CouponCode.pdb",
+        "lib/net45/Powells.CouponCode.dll",
+        "lib/net45/Powells.CouponCode.pdb",
+        "lib/netstandard2.0/Powells.CouponCode.dll",
+        "lib/netstandard2.0/Powells.CouponCode.pdb",
+        "powell.couponcode.1.0.3.nupkg.sha512",
+        "powell.couponcode.nuspec"
+      ]
+    },
     "QRCoder/1.4.1": {
       "sha512": "W8KwCwsOJe9SI7Cm7XeIMawd08F/US6xNw34lg2Qnx6m7GYYakxbyBQaNoW1Q75oJOmX/32sJUZr6Cix2B6GUQ==",
       "type": "package",
@@ -11134,6 +11166,7 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.15",
       "Newtonsoft.Json >= 13.0.3",
+      "Powell.CouponCode >= 1.0.3",
       "QRCoder >= 1.4.1"
     ]
   },
@@ -11213,6 +11246,10 @@
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[13.0.3, )"
+          },
+          "Powell.CouponCode": {
+            "target": "Package",
+            "version": "[1.0.3, )"
           },
           "QRCoder": {
             "target": "Package",

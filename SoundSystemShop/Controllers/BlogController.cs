@@ -27,6 +27,7 @@ namespace SoundSystemShop.Controllers
         }
         public IActionResult CreateBlogComment(int blogId, string name, string email, string comment)
         {
+            if(name == null || email == null || comment == null) return RedirectToAction(nameof(Detail), new { id = blogId });
             _blogService.CreateBlogComment(blogId, name, email, comment);
             return RedirectToAction(nameof(Detail), new {id = blogId});
         }

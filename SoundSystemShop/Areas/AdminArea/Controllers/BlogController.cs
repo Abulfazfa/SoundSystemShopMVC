@@ -63,6 +63,7 @@ public class BlogController : Controller
 
     public IActionResult Update(int id)
     {
+        ViewBag.Id = id;
         var blogVM = _blogService.MapBlogVMAndBlog(id);
         if (blogVM == null)
         {
@@ -76,7 +77,7 @@ public class BlogController : Controller
     [AutoValidateAntiforgeryToken]
     public IActionResult Update(int id, BlogVM blogVM)
     {
-        
+        ViewBag.Id = id;
         if (_blogService.UpdateBlog(id, blogVM).Result) return RedirectToAction("Index");
         return View(blogVM);
 

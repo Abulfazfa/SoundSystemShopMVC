@@ -3,8 +3,24 @@
     ViewData["Title"] = "Update";
     Layout = "~/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml";
 }
+<style>
+    table {
+        width: 100%; /* Set the table width as needed */
+    }
+
+    td {
+        word-wrap: break-word; /* Optional: Allow long words to wrap to fit within the cell */
+        line-break:anywhere;
+    }
+
+    .scrollable-content {
+        max-height: 100px; /* Set the desired maximum height for the scrolling area */
+        overflow-y: auto; /* Enable vertical scrolling when content overflows */
+    }
+</style>
+
 <div class="row">
-    <div class="col-md-6 grid-margin stretch-card">
+    <div class="col-md-8 grid-margin stretch-card">
         <div class="card mt-5">
             <div class="card-body">
                 <h4 class="card-title"></h4>
@@ -33,11 +49,35 @@
                         <input class="form-control" asp-for="Author" id="fileInput">
                         <span asp-validation-for="Author"></span>
                     </div>
-                    @foreach (var item in Model.Comments)
-                    {
-                        <p>@item.Comment</p>
-                        <a class="btn btn-danger" asp-action="deleteImage" asp-route-commentId="@item.Id" asp-route-Id="@ViewBag.Id">X</a>
-                    }
+                    <hr/>
+                    <p>Comments</p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">UserName</th>
+                                <th scope="col">Comment</th>
+                                <th scope="col">Post Date</th>
+                                <th scope="col">Settings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Comments)
+                            {
+                                <tr>
+                                    <td>@item.UserName</td>
+                                    <td>
+                                        <div class="scrollable-content">
+                                            @item.Comment
+                                        </div>
+                                    </td>
+                                    <td>@item.CreationDate</td>
+                                    <td><a class="btn btn-danger" asp-action="DeleteComment" asp-route-commentId="@item.Id" asp-route-Id="@ViewBag.Id">X</a></td>
+                                </tr>
+                            }
+                            
+                        </tbody>
+                    </table>
+                    
 
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <a class="btn btn-dark" asp-controller="blog" asp-action="index">Back</a>

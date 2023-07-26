@@ -18,7 +18,7 @@ namespace SoundSystemShop.Services
         BlogVM MapBlogVMAndBlog(int id);
         Task<bool> UpdateBlog(int id, BlogVM blogVM);
         bool CreateBlogComment(int blogId, string name, string email, string comment);
-        Task<bool> DeleteComment(int id, int commentId);
+        bool DeleteComment(int id, int commentId);
     }
     public class BlogService : IBlogService
     {
@@ -69,7 +69,7 @@ namespace SoundSystemShop.Services
 
         public Blog GetBlogById(int id)
         {
-            return _unitOfWork.BlogRepo.GetByIdAsync(id).Result;
+            return _unitOfWork.BlogRepo.GetBlogWithComments(id).Result;
         }
 
         public BlogVM MapBlogVMAndBlog(int id)
@@ -101,6 +101,16 @@ namespace SoundSystemShop.Services
             _unitOfWork.Commit();
             return true;
         }
+        public bool DeleteComment(int id, int commentId)
+        {
+            if (commentId == null) return false;
+            var result = GetBlogById(id);
+            if (result == null) return false;
+            var clickedComment = result.Comments.FirstOrDefault(c => c.Id == commentId);
+            result.Comments.Remove(clickedComment);
+            _unitOfWork.Commit();
+            return true;
+        }
         public bool CreateBlogComment(int blogId, string name, string email, string comment)
         {
             var blog = GetBlogById(blogId);
@@ -115,14 +125,6 @@ namespace SoundSystemShop.Services
             _unitOfWork.Commit();
             return true;
         }
-        public async Task<bool> DeleteComment(int id, int commentId)
-        {
-            var exist = await _unitOfWork.BlogRepo.GetByIdAsync(id);
-            if (exist == null) return false;
-            var clickedComment = exist.Comments.FirstOrDefault(c => c.Id == commentId);
-            exist.Comments.Remove(clickedComment);
-            _unitOfWork.Commit();
-            return true;
-        }
+        
     }
 }

@@ -252,3 +252,4 @@ C:\Users\HP\RiderProjects\SoundSystemShop\SoundSystemShop\bin\Debug\net6.0\Micro
 C:\Users\HP\RiderProjects\SoundSystemShop\SoundSystemShop\bin\Debug\net6.0\AutoMapper.dll
 C:\Users\HP\RiderProjects\SoundSystemShop\SoundSystemShop\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\HP\RiderProjects\SoundSystemShop\SoundSystemShop\bin\Debug\net6.0\QRCoder.dll
+C:\Users\HP\RiderProjects\SoundSystemShop\SoundSystemShop\bin\Debug\net6.0\Powells.CouponCode.dll

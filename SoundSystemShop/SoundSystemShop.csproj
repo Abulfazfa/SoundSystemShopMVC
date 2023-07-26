@@ -85,6 +85,7 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
       <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="Powell.CouponCode" Version="1.0.3" />
       <PackageReference Include="QRCoder" Version="1.4.1" />
     </ItemGroup>
 

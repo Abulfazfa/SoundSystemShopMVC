@@ -78,6 +78,10 @@
               "target": "Package",
               "version": "[13.0.3, )"
             },
+            "Powell.CouponCode": {
+              "target": "Package",
+              "version": "[1.0.3, )"
+            },
             "QRCoder": {
               "target": "Package",
               "version": "[1.4.1, )"

@@ -1,18 +1,24 @@
-﻿using SoundSystemShop.DAL;
+﻿using Microsoft.EntityFrameworkCore;
+using SoundSystemShop.DAL;
 using SoundSystemShop.Models;
 using SoundSystemShop.Services.Interfaces;
+using System;
 using System.Linq;
 
 namespace SoundSystemShop.Services
 {
     public class BlogRepository : GenericRepository<Blog>, IBlogRepository
     {
+        private readonly AppDbContext _appDbContext;
         public BlogRepository(AppDbContext appDbContext) : base(appDbContext)
         {
+            _appDbContext = appDbContext;
         }
-        public bool ExistsWithImgUrl(string imgUrl, int idToExclude)
+
+        public async Task<Blog> GetBlogWithComments(int blogId)
         {
-            return true;
+            return await _appDbContext.Blogs.Include(b => b.Comments).FirstOrDefaultAsync(b => b.Id == blogId);
         }
     }
+
 }

@@ -3,9 +3,24 @@
     ViewData["Title"] = "Detail";
     Layout = "_AdminLayout";
 }
+<style>
+    table {
+        width: 100%; /* Set the table width as needed */
+    }
+
+    td {
+        word-wrap: break-word; /* Optional: Allow long words to wrap to fit within the cell */
+        line-break: anywhere;
+    }
+
+    .scrollable-content {
+        max-height: 100px; /* Set the desired maximum height for the scrolling area */
+        overflow-y: auto; /* Enable vertical scrolling when content overflows */
+    }
+</style>
 
 <div class="row">
-    <div class="col-md-6 grid-margin stretch-card">
+    <div class="col-md-9 grid-margin stretch-card">
         <div class="card mt-5">
             <div class="card-body">
 
@@ -24,13 +39,30 @@
                 <div class="form-group">
                     <p>@Model.CreationDate</p>
                 </div>
-                @foreach (var item in Model.Comments)
-                {
-                    <div class="form-group">
-                        <p>@item.UserName</p>
-                        <p>@item.Comment</p>
-                    </div>
-                }
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">UserName</th>
+                            <th scope="col">Comment</th>
+                            <th scope="col">Post Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Comments)
+                        {
+                            <tr>
+                                <td>@item.UserName</td>
+                                <td style="line-break: anywhere;">
+                                    <div class="scrollable-content">
+                                        @item.Comment
+                                    </div>
+                                </td>
+                                <td>@item.CreationDate</td>  
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
                 
                 <a class="btn btn-dark" asp-controller="blog" asp-action="index">Back</a>
             </div>

@@ -8,46 +8,48 @@ namespace SoundSystemShop.Services
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
+        private readonly DbSet<T> _dbSet;
         private readonly AppDbContext _appDbContext;
         public GenericRepository(AppDbContext dbContext)
         {
             _appDbContext = dbContext;
+            _dbSet = _appDbContext.Set<T>();
         }
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _appDbContext.Set<T>().FindAsync(id);
+            return await _dbSet.FindAsync(id);
         }
 
         public async Task<List<T>> GetAllAsync()
         {
-            return await _appDbContext.Set<T>().ToListAsync();
+            return await _dbSet.ToListAsync();
         }
 
         public async Task AddAsync(T entity)
         {
-            await _appDbContext.Set<T>().AddAsync(entity);
+            await _dbSet.AddAsync(entity);
         }
 
         public async Task UpdateAsync(T entity)
         {
-            _appDbContext.Set<T>().Update(entity);
+            _dbSet.Update(entity);
             await Task.CompletedTask;
         }
 
         public async Task DeleteAsync(T entity)
         {
-            _appDbContext.Set<T>().Remove(entity);
+            _dbSet.Remove(entity);
             await Task.CompletedTask;
         }
 
         public async Task<T> GetByPredicateAsync(Func<T, bool> func)
         {
-            return await _appDbContext.Set<T>().FindAsync(func);
+            return await _dbSet.FindAsync(func);
         }
         public bool Any(Func<T, bool> func)
         {
-            return _appDbContext.Set<T>().Any(func);
+            return _dbSet.Any(func);
         }
 
     }
