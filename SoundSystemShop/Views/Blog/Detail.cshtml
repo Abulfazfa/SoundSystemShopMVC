@@ -37,10 +37,10 @@
                     <div class="blog__details__share">
                         <span>share</span>
                         <ul>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#" class="youtube"><i class="fa fa-youtube-play"></i></a></li>
-                            <li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#" class="facebook-btn"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#" class="twitter-btn"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#" class="youtube-btn"><i class="fa fa-youtube-play"></i></a></li>
+                            <li><a href="#" class="linkedin-btn"><i class="fa fa-linkedin"></i></a></li>
                         </ul>
                     </div>
                     <div class="blog__details__text">
@@ -119,3 +119,35 @@
     </div>
 </section>
 <!-- Blog Details Section End -->
+
+
+
+<script>
+    // Twitter Share Button Script https://twitter.com/share?url=[post-url]&text=[post-title]
+    //&via=[via]&hashtags=[hashtags]
+    //  https://www.linkedin.com/shareArticle?url=[post-url]&title=[post-title]
+    //  https://www.facebook.com/sharer.php?u=[post-url]
+
+    const facebookBtn = document.querySelector(".facebook-btn");
+    const twitterBtn = document.querySelector(".twitter-btn");
+    //const youtubBtn = document.querySelector(".facebook-btn");
+    const linkedInBtn = document.querySelector(".linkedin-btn");
+
+    function init(){
+        let postUrl = 'http://abulfez-001-site1.btempurl.com/blog/detail/9';
+        let postTitle = encodeURIComponent("Hi everyone check ");
+        facebookBtn.setAttribute(
+            "href",
+            `https://www.facebook.com/share.php?u=${postUrl}`
+        );
+        twitterBtn.setAttribute(
+            "href",
+            `https://twitter.com/share?url=${postUrl}&text=${postTitle}`
+        );
+        linkedInBtn.setAttribute(
+            "href",
+            `https://www.linkedin.com/sharing/share-offsite/?url=${postUrl}`
+        );
+    }
+    init();
+</script>
