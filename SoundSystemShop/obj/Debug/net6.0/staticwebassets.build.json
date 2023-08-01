@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "BMdWU5bHzNx62MnMcQqRVlswenC1hsD2QFFwqdSlsMY=",
+  "Hash": "xBb8vj12JSEme0fR8ZMO4vB6fr7oRiUHEvoqp9B+b6Y=",
   "Source": "SoundSystemShop",
   "BasePath": "_content/SoundSystemShop",
   "Mode": "Default",
@@ -11475,6 +11475,23 @@
       "OriginalItemSpec": "wwwroot\\assets\\img\\banner\\banner-3.jpg"
     },
     {
+      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\blog\\1a323baf-b20d-4ca0-ad1d-7712bd3de8d2blog-7.jpg",
+      "SourceId": "SoundSystemShop",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\",
+      "BasePath": "_content/SoundSystemShop",
+      "RelativePath": "assets/img/blog/1a323baf-b20d-4ca0-ad1d-7712bd3de8d2blog-7.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\blog\\1a323baf-b20d-4ca0-ad1d-7712bd3de8d2blog-7.jpg"
+    },
+    {
       "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\blog\\4c5f901e-fcc8-494a-937a-e24b974ffb4dblog-6.jpg",
       "SourceId": "SoundSystemShop",
       "SourceType": "Discovered",
@@ -11609,6 +11626,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\img\\blog\\details\\blog-details.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\blog\\f675bb55-8fcd-4ddc-9853-309b9ce5a472blog-5.jpg",
+      "SourceId": "SoundSystemShop",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\",
+      "BasePath": "_content/SoundSystemShop",
+      "RelativePath": "assets/img/blog/f675bb55-8fcd-4ddc-9853-309b9ce5a472blog-5.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\blog\\f675bb55-8fcd-4ddc-9853-309b9ce5a472blog-5.jpg"
     },
     {
       "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\breadcrumb-bg.jpg",
@@ -13173,6 +13207,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\Source\\SlickNav-master.zip"
+    },
+    {
+      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\template\\ForgotPassword.html",
+      "SourceId": "SoundSystemShop",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\",
+      "BasePath": "_content/SoundSystemShop",
+      "RelativePath": "template/ForgotPassword.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\template\\ForgotPassword.html"
+    },
+    {
+      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\template\\verify.html",
+      "SourceId": "SoundSystemShop",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\",
+      "BasePath": "_content/SoundSystemShop",
+      "RelativePath": "template/verify.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\template\\verify.html"
     }
   ]
 }

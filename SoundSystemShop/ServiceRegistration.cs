@@ -10,7 +10,10 @@ namespace SoundSystemShop
     {
         public static void ServiceRegister(this IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(option =>
+            {
+                option.Filters.Add(typeof(UserActivityFilter));
+            });
 
             services.AddSession(option =>
             {

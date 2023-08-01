@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SoundSystemShop.DAL;
+using SoundSystemShop.Models;
 using SoundSystemShop.Services;
 using SoundSystemShop.Services.Interfaces;
 using SoundSystemShop.ViewModels;
@@ -28,6 +29,15 @@ public class HomeController : Controller
         //homeVW.SocialMedias = _unitOfWork.SocialMediaRepo.GetAll();
         homeVW.Blogs = _blogService.GetAllBlogs().Result.ToList();
         return View(homeVW);
+    }
+    public IActionResult New()
+    {
+        return View(new Employee());
+    }
+    [HttpPost]
+    public IActionResult New(Employee employee)
+    {
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Search(string search)

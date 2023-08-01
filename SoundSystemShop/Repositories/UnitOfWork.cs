@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SoundSystemShop.DAL;
 using SoundSystemShop.Models;
+using SoundSystemShop.Repositories.Interfaces;
 using SoundSystemShop.Services.Interfaces;
 
 namespace SoundSystemShop.Services
@@ -13,13 +14,14 @@ namespace SoundSystemShop.Services
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         public IProductRepository ProductRepo { get ; set ; }
+        public ICategoryRepository CategoryRepo { get ; set ; }
         public ISliderRepository SliderRepo { get; set; }
         public IBannerRepository BannerRepo { get; set; }
         public ISocialMediaRepository SocialMediaRepo { get ; set ; }
         public IBlogRepository BlogRepo { get ; set ; }
         public IGenericRepository<AppUser> AppUserRepo { get; private set; }
 
-        public UnitOfWork(AppDbContext appDbContext, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public UnitOfWork(AppDbContext appDbContext, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager, ICategoryRepository categoryRepo)
         {
             _appDbContext = appDbContext;
             SliderRepo = new SliderRepository(_appDbContext);
@@ -31,6 +33,7 @@ namespace SoundSystemShop.Services
             _signInManager = signInManager;
             _roleManager = roleManager;
             AppUserRepo = new GenericRepository<AppUser>(_appDbContext);
+            CategoryRepo = categoryRepo;
         }
 
         public void Commit()

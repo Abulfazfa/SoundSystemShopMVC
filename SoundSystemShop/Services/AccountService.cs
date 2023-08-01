@@ -19,6 +19,8 @@ namespace SoundSystemShop.Services
         Task<LoginResult> Login(LoginVM loginVM);
         Task Logout();
         Task<bool> GetRoleList(string userNameOrEmail);
+        Task<AppUser> GetUserByNameOrEmail(string userNameOrEmail);
+        Task<string> GeneratePasswordResetToken(AppUser existUser);
     }
 
 
@@ -47,7 +49,6 @@ namespace SoundSystemShop.Services
 
         public async Task<UserRegistrationResult> RegisterUser(RegisterVM registerVM)
         {
-            string otp = GenerateOTP();
             AppUser appUser = CreateAppUserFromViewModel(registerVM);
             IdentityResult result = await _userManager.CreateAsync(appUser, registerVM.Password);
 
@@ -68,6 +69,7 @@ namespace SoundSystemShop.Services
                 Fullname = registerVM.Fullname,
                 Email = registerVM.Email,
                 UserName = registerVM.Username,
+                Location = registerVM.Location,
                 OTP = GenerateOTP()
             };
         }
@@ -147,8 +149,8 @@ namespace SoundSystemShop.Services
                 return false; 
             }
 
-            string token = await _userManager.GeneratePasswordResetTokenAsync(existUser);
-            string link = resetLink.Replace("{userId}", existUser.Id).Replace("{token}", token);
+            
+            string link = resetLink;
 
             string body = string.Empty;
             string path = "wwwroot/template/ForgotPassword.html";
@@ -178,7 +180,7 @@ namespace SoundSystemShop.Services
         }
         public async Task<LoginResult> Login(LoginVM loginVM)
         {
-            AppUser appUser = await _userManager.FindByNameAsync(loginVM.UsernameOrEmail) ?? await _userManager.FindByEmailAsync(loginVM.UsernameOrEmail);
+            AppUser appUser = GetUserByNameOrEmail(loginVM.UsernameOrEmail).Result;
             if (appUser == null)
             {
                 return LoginResult.UserNotFound;
@@ -195,7 +197,6 @@ namespace SoundSystemShop.Services
             {
                 return LoginResult.InvalidCredentials;
             }
-
             return LoginResult.Success;
         }
         public async Task Logout()
@@ -204,7 +205,7 @@ namespace SoundSystemShop.Services
         }
         public async Task<bool> GetRoleList(string userNameOrEmail)
         {
-            AppUser appUser = await _userManager.FindByNameAsync(userNameOrEmail) ?? await _userManager.FindByEmailAsync(userNameOrEmail);
+            AppUser appUser = await GetUserByNameOrEmail(userNameOrEmail);
             var roles = await _userManager.GetRolesAsync(appUser);
             return roles.Contains(RoleEnum.Admin.ToString());
         }
@@ -213,6 +214,16 @@ namespace SoundSystemShop.Services
             Random random = new();
             int otpNumber = random.Next(1000, 9999);
             return otpNumber.ToString();
+        }
+
+        public async Task<AppUser> GetUserByNameOrEmail(string userNameOrEmail)
+        {
+           return await _userManager.FindByNameAsync(userNameOrEmail) ?? await _userManager.FindByEmailAsync(userNameOrEmail);
+        }
+
+        public async Task<string> GeneratePasswordResetToken(AppUser existUser)
+        {
+            return await _userManager.GeneratePasswordResetTokenAsync(existUser);
         }
     }
 

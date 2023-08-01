@@ -125,8 +125,9 @@ public class AccountController : Controller
         {
             return View(forgetPasswordVM);
         }
-
-        string resetLink = Url.Action(nameof(ResetPassword), "Account", new { userId = "{userId}", token = "{token}" }, Request.Scheme, Request.Host.ToString());
+        AppUser appUser = _accountService.GetUserByNameOrEmail(forgetPasswordVM.Email).Result;
+        string token = _accountService.GeneratePasswordResetToken(appUser).Result;
+        string resetLink = Url.Action(nameof(ResetPassword), "Account", new { userId = appUser.Id, token = token }, Request.Scheme, Request.Host.ToString());
         bool success = await _accountService.InitiatePasswordReset(forgetPasswordVM.Email, resetLink);
 
         if (success)

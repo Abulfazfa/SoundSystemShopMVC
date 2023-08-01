@@ -16,7 +16,7 @@ namespace SoundSystemShop.Controllers
 
         public IActionResult Index()
         {
-            return View(_blogService.GetAllBlogs());
+            return View(_blogService.GetAllBlogs().Result);
         }
         public IActionResult Detail(int id)
         {

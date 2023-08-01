@@ -13,6 +13,12 @@
 
 
 
+    $(document).ready(function () {
+        var firstName = $('#firstName').val();
+        var intials = $('#firstName').val().charAt(0);
+        var profileImage = $('#profileImage').text(intials);
+    });
+
     //$(document).on("keyup", "#input-search", function () {
     //    $("#searchList ul").remove();
     //    var search = $("#input-search").val().trim();

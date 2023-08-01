@@ -1,4 +1,5 @@
 ﻿using SoundSystemShop.Models;
+using SoundSystemShop.Repositories.Interfaces;
 
 namespace SoundSystemShop.Services.Interfaces
 {
@@ -6,6 +7,7 @@ namespace SoundSystemShop.Services.Interfaces
     {
         void Commit();
         IProductRepository ProductRepo { get; set; }
+        ICategoryRepository CategoryRepo { get; set; }
         ISliderRepository SliderRepo { get; set; }
         IBannerRepository BannerRepo { get; set; }
         ISocialMediaRepository SocialMediaRepo { get; set; }

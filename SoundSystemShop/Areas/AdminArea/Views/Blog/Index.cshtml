@@ -3,7 +3,17 @@
     ViewData["Title"] = "Index";
     Layout = "_AdminLayout";
 }
+<style>
+    table {
+        width: 100%; /* Set the table width as needed */
+    }
 
+
+    .scrollable-content {
+        max-height: 100px; /* Set the desired maximum height for the scrolling area */
+        overflow-y: auto; /* Enable vertical scrolling when content overflows */
+    }
+</style>
 <div class="row">
     <div class="col-lg-9 grid-margin stretch-card">
         <div class="card mt-5">
@@ -31,7 +41,11 @@
                                         <img alt="" src="~/assets/img/blog/@item.ImgUrl" width="100" height="100" />
                                     </td>
                                     <td>@item.Name</td>
-                                    <td>@item.Description</td>
+                                    <td>
+                                        <div class="scrollable-content">
+                                            @item.Description
+                                        </div>
+                                    </td>
                                     <td>@item.Author</td>
                                     <td>@item.CreationDate</td>
                                     <td>
