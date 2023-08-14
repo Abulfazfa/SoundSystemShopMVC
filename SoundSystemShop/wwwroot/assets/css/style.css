@@ -29,6 +29,15 @@
 /*----------------------------------------*/
 /* Template default CSS
 /*----------------------------------------*/
+.header{
+	position: fixed;
+	top: 0;
+	z-index: 15;
+	width: 100%;
+}
+.hero{
+	margin-top: 113px;
+}
 
 html,
 body {

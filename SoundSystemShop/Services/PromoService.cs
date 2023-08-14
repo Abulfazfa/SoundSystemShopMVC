@@ -1,51 +1,87 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Powells.CouponCode;
+using SoundSystemShop.DAL;
 using SoundSystemShop.Models;
+using SoundSystemShop.Services.Interfaces;
+using System.Linq;
 using Options = Powells.CouponCode.Options;
 
 namespace SoundSystemShop.Services
 {
     public class PromoService
     {
+        private readonly IEmailService _emailService;
+        private readonly IFileService _fileService;
         private readonly UserManager<AppUser> _userManager;
+        private readonly AppDbContext _appDbContext;
 
-        public PromoService(UserManager<AppUser> userManager)
+        public PromoService(IEmailService emailService, IFileService fileService, IServiceScopeFactory scopeFactory, UserManager<AppUser> userManeger, AppDbContext appDbContext)
         {
-            _userManager = userManager;
+            _emailService = emailService;
+            _fileService = fileService;
+            _userManager = userManeger;
+            _appDbContext = appDbContext;
         }
-        public List<PromoVM> GenerateLuckyPersons(List<AppUser> users, int count = 3)
+
+        public void GenerateLuckyPeopleAsync()
         {
-            List<PromoVM> luckyUsers = new List<PromoVM>();
-            Random random = new Random();
-            HashSet<int> selectedIndices = new HashSet<int>();
+                var count = _appDbContext.AdminPromos.FirstOrDefault(p => p.Name == "WeeklyPromo").UserCount;
+                var users = _userManager.Users.ToList(); 
 
-            while (luckyUsers.Count < count && selectedIndices.Count < users.Count)
-            {
-                int userNumber = random.Next(0, users.Count);
-                PromoVM promoVM = new();
+                List<PromoVM> luckyUsers = new List<PromoVM>();
+                Random random = new Random();
+                HashSet<int> selectedIndices = new HashSet<int>();
 
-                if (!selectedIndices.Contains(userNumber))
+                while (luckyUsers.Count < count && selectedIndices.Count < users.Count)
                 {
-                    string promoCode = GeneratePromoCode();
-                    selectedIndices.Add(userNumber);
-                    luckyUsers.Add(new PromoVM { User = users[userNumber], PromoCode = promoCode });
+                    int userNumber = random.Next(0, users.Count);
+                    PromoVM promoVM = new PromoVM();
+                    if (!selectedIndices.Contains(userNumber))
+                    {
+                        string promoCode = GeneratePromoCode();
+                        selectedIndices.Add(userNumber);
+
+                        promoVM.User = users[userNumber];
+                        promoVM.PromoCode = promoCode;
+                        luckyUsers.Add(promoVM);                        
+                    }
                 }
-            }
 
-            return luckyUsers;
+                foreach (var luckyUser in luckyUsers)
+                {
+                    SendMailToLuckyPerson(luckyUser);
+                }
+            
         }
-
-
         public string GeneratePromoCode()
         {
             var opts = new Options();
             var ccb = new CouponCodeBuilder();
             var badWords = ccb.BadWordsList;
             var code = ccb.Generate(opts);
-
+            var finish = _appDbContext.AdminPromos.FirstOrDefault(p => p.Name == "WeeklyPromo").FinishTime;
+            PromoCode promoCode = new PromoCode()
+            {
+                Name = code,
+                FinishDate = DateTime.Now.AddDays(finish),
+            };
+            _appDbContext.PromoCodes.Add(promoCode);
+            _appDbContext.SaveChanges();
             return code;
         }
+        public void SendMailToLuckyPerson(PromoVM promoVM)
+        {
+                string body = string.Empty;
+                string path = "wwwroot/template/verify.html";
+                string subject = "Get Promo code";
+                body = _fileService.ReadFile(path, body);
+                body = body.Replace("{{Confirm Account}}", promoVM.PromoCode);
+                body = body.Replace("{{Welcome!}}", promoVM.User.Fullname);
+                //_emailService.Send(promoVM.User.Email, subject, body); 
+        }
+
     }
 
     public class PromoVM

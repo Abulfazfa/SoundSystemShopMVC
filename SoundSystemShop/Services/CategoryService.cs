@@ -10,12 +10,13 @@ namespace SoundSystemShop.Services
 {
     public interface ICategoryService
     {
-        Task<List<Category>> GetAllBlogs();
-        //Task CreateBlog(BlogVM blogVM);
-        Task<bool> DeletBlog(int id);
-        Category GetBlogById(int id);
-        //BlogVM MapBlogVMAndBlog(int id);
-        //Task<bool> UpdateBlog(int id, BlogVM blogVM);
+        Task<List<Category>> GetCategories();
+        Task AddCategory(CategoryVM categoryVM);
+        Task<bool> DeleteCategory(int id);
+        Category GetCategoryById(int id);
+        CategoryVM MapCategoryVMAndCategory(int id);
+        bool UpdateCategory(int id, CategoryVM categoryVM);
+        SelectList GetCategorySelectList(int? selectedCategoryId = null);
         //bool CreateBlogComment(int blogId, string name, string email, string comment);
         //bool DeleteComment(int id, int commentId);
     }
@@ -35,51 +36,47 @@ namespace SoundSystemShop.Services
             return await _unitOfWork.CategoryRepo.GetAllAsync();
         }
 
-        //public SelectList GetCategorySelectList(int? selectedCategoryId = null)
-        //{
-        //    return new SelectList(_appDbContext.Categories.Where(c => c.Id != selectedCategoryId).ToList(), "Id", "Name");
-        //}
+        public SelectList GetCategorySelectList(int? selectedCategoryId = null)
+        {
+            return new SelectList(_unitOfWork.CategoryRepo.Where(c => c.Id != selectedCategoryId).ToList(), "Id", "Name");
+        }
 
         public Category GetCategoryById(int id)
         {
             return _unitOfWork.CategoryRepo.GetByIdAsync(id).Result;
         }
 
-        //public void AddCategory(CategoryVM categoryVM)
-        //{
-        //    Category category = new Category
-        //    {
-        //        Name = categoryVM.Name,
-        //        IsMain = categoryVM.IsMain,
-        //        ParentId = categoryVM.ParentId,
-        //    };
+        public async Task AddCategory(CategoryVM categoryVM)
+        {
+            var category = _mapper.Map<Category>(categoryVM);
 
-        //    if (categoryVM.Photo != null)
-        //    {
-        //        category.ImgUrl = categoryVM.Photo.SaveImage(_webHostEnvironment, "images");
-        //    }
+            if (categoryVM.Photo != null)
+            {
+                category.ImgUrl = categoryVM.Photo.SaveImage(_webHostEnvironment, "assets/img/category");
+            }
 
-        //    _appDbContext.Categories.Add(category);
-        //    _appDbContext.SaveChanges();
-        //}
+            await _unitOfWork.CategoryRepo.AddAsync(category);
+            _unitOfWork.Commit();
+        }
 
-        //public void UpdateCategory(int? id, CategoryVM categoryVM)
-        //{
-        //    var exist = _appDbContext.Categories.FirstOrDefault(c => c.Id == id);
-        //    if (exist == null) return;
+        public bool UpdateCategory(int id, CategoryVM categoryVM)
+        {
+            var exist = GetCategoryById(id);
+            if (exist == null) return false;
 
-        //    if (categoryVM.Photo != null)
-        //    {
-        //        string path = Path.Combine(_webHostEnvironment.WebRootPath, "img", exist.ImgUrl);
-        //        DeleteHelper.DeleteFile(path);
-        //        exist.ImgUrl = categoryVM.Photo.FileName;
-        //    }
+            if (exist.ImgUrl != null)
+            {
+                string path = Path.Combine(_webHostEnvironment.WebRootPath, "assets/img/category", exist.ImgUrl);
+                DeleteHelper.DeleteFile(path);
+            }
+            if (categoryVM.Photo != null) exist.ImgUrl = categoryVM.Photo.SaveImage(_webHostEnvironment, "assets/img/category");
 
-        //    exist.Name = categoryVM.Name;
-        //    exist.IsMain = categoryVM.IsMain;
-        //    exist.ParentId = categoryVM.ParentId;
-        //    _appDbContext.SaveChanges();
-        //}
+            exist.Name = categoryVM.Name;
+            exist.IsMain = categoryVM.IsMain;
+            exist.ParentId = categoryVM.ParentId;
+            _unitOfWork.Commit();
+            return true;
+        }
 
         public async Task<bool> DeleteCategory(int id)
         {
@@ -95,6 +92,12 @@ namespace SoundSystemShop.Services
             await _unitOfWork.CategoryRepo.DeleteAsync(exist);
             _unitOfWork.Commit();
             return true;
+        }
+
+        public CategoryVM MapCategoryVMAndCategory(int id)
+        {
+            var category = GetCategoryById(id);
+            return _mapper.Map<CategoryVM>(category);
         }
     }
 }

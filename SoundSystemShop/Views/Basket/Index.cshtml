@@ -1,0 +1,22 @@
+﻿
+@model List<BasketVM>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    double totalPrice = 0;
+}
+
+<section id="basket" style="margin-top: 113px;">
+        <div class="container mb-5">
+            <div class="row">
+                <div class="col-md-12 mt-5 mb-4">
+                    <div class="head-title">
+                        <h3 class="headline-sm fw-bold">Basket</h3>
+                    @await Component.InvokeAsync("Basket")
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+    </section>

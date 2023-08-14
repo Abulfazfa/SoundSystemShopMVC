@@ -1,8 +1,62 @@
-@model dynamic
-
+@model PaginationVM<Product>
 @{
-    ViewBag.Title = "title";
-    Layout = "_AdminLayout";
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>title</h2>
+<div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Product Table</h4>
+                <a class="btn btn-success" asp-controller="product" asp-action="create">Add Category</a>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Count</th>
+
+                                <th>Settings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td>
+                                        <img src="~/assets/img/product/@(item.Images.Where(i => i.IsMain == true).FirstOrDefault().ImgUrl)" width="100" />
+                                    </td>
+                                    <td>@item.Name</td>
+                                    <td>@item.ProductCount</td>
+                                    <td>
+                                        <a class="btn btn-secondary" asp-controller="product" asp-action="detail" asp-route-id="@item.Id">Detail</a>
+                                        <a class="btn btn-primary" asp-controller="product" asp-action="update" asp-route-id="@item.Id">Update</a>
+                                        <a class="btn btn-danger" asp-controller="product" asp-action="delete" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <nav aria-label="...">
+        <ul class="pagination pagination-lg">
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                <li class="page-item @(Model.CurrentPage == i?"active": "")">
+                    <a asp-action="index" asp-route-page="@i">
+                        <span class="page-link">@i</span>
+                    </a>
+                </li>
+
+            }
+        </ul>
+    </nav>
+</div>

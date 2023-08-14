@@ -1,0 +1,54 @@
+﻿@model SaleVM
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card mt-5">
+            <div class="card-body">
+                <h4 class="card-title"></h4>
+
+
+
+                <form method="post" class="forms-sample" enctype="multipart/form-data">
+                    <img src="~/assets/img/sale/@Model.ImgUrl" width="100" height="100" />
+                    <div class="form-group">
+                        <label asp-for="Photo"></label>
+                        <input class="form-control" asp-for="Photo" id="fileInput">
+                        <span asp-validation-for="Photo"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input class="form-control" asp-for="Name" id="fileInput">
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Desc"></label>
+                        <input class="form-control" asp-for="Desc" id="fileInput">
+                        <span asp-validation-for="Desc"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Percent"></label>
+                        <input class="form-control" asp-for="Percent" id="fileInput">
+                        <span asp-validation-for="Percent"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="StartDate"></label>
+                        <input class="form-control" asp-for="StartDate" id="fileInput">
+                        <span asp-validation-for="StartDate"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FinishDate"></label>
+                        <input class="form-control" asp-for="FinishDate" id="fileInput">
+                        <span asp-validation-for="FinishDate"></span>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <a class="btn btn-dark" asp-controller="sale" asp-action="index">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

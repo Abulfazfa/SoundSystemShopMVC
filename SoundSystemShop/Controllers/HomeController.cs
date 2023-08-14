@@ -13,12 +13,16 @@ public class HomeController : Controller
     private readonly IBannerService _bannerService;
     private readonly IBlogService _blogService;
     private readonly ISliderService _sliderService;
+    private readonly UserActivityFilter _userActivityFilter;
+    private readonly IProductService _productService;
 
-    public HomeController(IUnitOfWork unitOfWork, IBannerService bannerService, IBlogService blogService, ISliderService sliderService)
+    public HomeController(IUnitOfWork unitOfWork, IBannerService bannerService, IBlogService blogService, ISliderService sliderService, UserActivityFilter userActivityFilter, IProductService productService, PromoService promo)
     {
         _bannerService = bannerService;
         _blogService = blogService;
         _sliderService = sliderService;
+        _userActivityFilter = userActivityFilter;
+        _productService = productService;
     }
 
     public IActionResult Index()
@@ -27,7 +31,10 @@ public class HomeController : Controller
         homeVW.Sliders = _sliderService.GetAllSliders().Result.ToList();
         homeVW.Banners = _bannerService.GetAllBanners().Result.ToList();
         //homeVW.SocialMedias = _unitOfWork.SocialMediaRepo.GetAll();
+        homeVW.Products = _productService.GetAll();
         homeVW.Blogs = _blogService.GetAllBlogs().Result.ToList();
+        homeVW.UserActivities = _userActivityFilter.GetUserActivity("NULL");
+        homeVW.DayOfDiscount = _productService.SaleOfDay();
         return View(homeVW);
     }
     public IActionResult New()

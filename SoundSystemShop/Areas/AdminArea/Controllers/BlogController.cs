@@ -56,7 +56,6 @@ public class BlogController : Controller
         if (!result)
         {
             ModelState.AddModelError("", "Happen some problems");
-            return View();
         }
         return RedirectToAction("Index");
     }

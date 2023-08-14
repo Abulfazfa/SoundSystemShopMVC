@@ -10,15 +10,126 @@
 'use strict';
 
 (function ($) {
+    $(document).ready(function () {
+        // Make an AJAX request to get the updated basket count
+        function updateBasketCount() {
+            var basketCountElement = $("#basketCount"); // Replace with the actual ID of your basket count element
+
+            $.ajax({
+                url: 'https://localhost:44392/basket/GetBasketCount', // Replace with the actual URL to your endpoint
+                type: 'GET',
+                success: function (data) {
+                    basketCountElement.text(data);
+                },
+                error: function () {
+                    console.log('Error retrieving basket count.');
+                }
+            });
+        }
+        function updateProductCount() {
+            var productCount = $("#productCount"); // Replace with the actual ID of your basket count element
+            var itemId = $("#minusIcon").data("id");
+            $.ajax({
+                
+                url: `https://localhost:44392/basket/GetProductCount/${itemId}`, // Replace with the actual URL to your endpoint
+                type: 'GET',
+                success: function (data) {
+                    productCount.text(data);
+                    
+                    if (productCount.text() == '0') {
+                        $.ajax({
+
+                            url: `https://localhost:44392/basket/RemoveItem/${itemId}`, // Replace with the actual URL to your endpoint
+                            type: 'GET',
+                            success: function () {
+                                location.reload();
+                            },
+                            error: function () {
+                                console.log('Error retrieving basket count.');
+                            }
+                        });
+                    }
+                },
+                error: function () {
+                    console.log('Error retrieving basket count.');
+                }
+            });
+            
+        }
+        function updateTotalPrice() {
+            var productCount = $(".totalPriceArea"); // Replace with the actual ID of your basket count element
+
+            $.ajax({
+                url: `https://localhost:44392/basket/GetTotalPrice`, // Replace with the actual URL to your endpoint
+                type: 'GET',
+                success: function (data) {
+                    productCount.text(`${data}`);
+                    console.log(data)
+                },
+                error: function () {
+                    console.log('Error retrieving basket count.');
+                }
+            });
+        }
+
+        updateBasketCount();
+        updateProductCount();
+        updateTotalPrice();
+        
+
+        ////////////////////////////////////////////////////
+        $("#minusIcon").click(function () {
+            var itemId = $(this).data("id");
+            $.ajax({
+                url: `https://localhost:44392/basket/AddBasket/${itemId}`, // Replace with your actual route
+                method: "POST",
+                success: function (response) {
+                    updateBasketCount();
+                    updateProductCount();
+                    updateTotalPrice();
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error adding item: " + error);
+                }
+                
+            });
+            
+        });
+
+        $("#plusIcon").click(function () {
+            var itemId = $(this).data("id");
+            
+            $.ajax({
+                url: `https://localhost:44392/basket/DecreaseBasket/${itemId}`,
+                method: "POST",
+                success: function (response) {
+                    updateBasketCount();
+                    updateProductCount();
+                    updateTotalPrice();
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error deleting item: " + error);
+                }
+            });
+            
+        });
+    });
 
 
 
     $(document).ready(function () {
         var firstName = $('#firstName').val();
-        var intials = $('#firstName').val().charAt(0);
-        var profileImage = $('#profileImage').text(intials);
+        if (firstName != null) {
+            var intials = $('#firstName').val().charAt(0);
+            var profileImage = $('#profileImage').text(intials);
+        }
+        
     });
-
+    $(".thumbProductPhoto").click(function() {
+                var newImageSrc = $(this).data("src"); // Get the new image source from the data-src attribute
+        $("#mainImage").attr("src", "/assets/img/product/"+ newImageSrc); // Change the source of the main image
+                $("#mainImageLink").attr("href", newImageSrc); // Change the href of the main image link
+            });
     //$(document).on("keyup", "#input-search", function () {
     //    $("#searchList ul").remove();
     //    var search = $("#input-search").val().trim();

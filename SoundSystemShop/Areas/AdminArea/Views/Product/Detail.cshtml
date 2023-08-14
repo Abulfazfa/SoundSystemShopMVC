@@ -1,0 +1,39 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                @foreach (var item in Model.Images)
+                {
+                    <div class="form-group">
+                        <img src="~/assets/img/product/@item.ImgUrl" width="250" height="250" />
+                    </div>
+                }
+                <div class="form-group">
+                    <h2>@Model.Name</h2>
+                </div>
+                <div class="form-group">
+                    <p>@Model.Brand</p>
+                </div>
+                <div class="form-group">
+                    <p>@Model.Desc</p>
+                </div>
+                <div class="form-group">
+                    <p>@Model.ProductCount</p>
+                </div>
+                <div class="form-group">
+                    <p>@Model.Price</p>
+                </div>
+
+
+                <a class="btn btn-dark" asp-controller="product" asp-action="index">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+

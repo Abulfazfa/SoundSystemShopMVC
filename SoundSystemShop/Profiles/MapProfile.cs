@@ -18,6 +18,15 @@ namespace SoundSystemShop.Profiles
             CreateMap<Banner, BannerVM>();
             CreateMap<BannerVM, Banner>()
                 .ForMember(dest => dest.ImgUrl, opt => opt.Ignore());
+            CreateMap<Category, CategoryVM>();
+            CreateMap<CategoryVM, Category>()
+                .ForMember(dest => dest.ImgUrl, opt => opt.Ignore());
+            CreateMap<Product, ProductVM>();
+            CreateMap<ProductVM, Product>()
+                .ForMember(dest => dest.Images, opt => opt.Ignore());
+            CreateMap<Sale, SaleVM>();
+            CreateMap<SaleVM, Sale>()
+                .ForMember(dest => dest.ImgUrl, opt => opt.Ignore());
         }
     }
 

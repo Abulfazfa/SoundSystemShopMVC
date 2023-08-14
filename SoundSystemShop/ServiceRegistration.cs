@@ -3,6 +3,8 @@ using SoundSystemShop.DAL;
 using SoundSystemShop.Models;
 using SoundSystemShop.Services.Interfaces;
 using SoundSystemShop.Services;
+using SoundSystemShop.Repositories.Interfaces;
+using SoundSystemShop.Repositories;
 
 namespace SoundSystemShop
 {
@@ -43,6 +45,16 @@ namespace SoundSystemShop
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ISaleRepository, SaleRepository>();
+            services.AddScoped<ISaleService, SaleService>();
+            services.AddScoped<UserActivityFilter>();
+            services.AddScoped<PaginationService>();
+            services.AddScoped<PromoService>();
+            services.AddHostedService<PromoEmailSenderHostedService>();
             services.AddSignalR();
         }
     }

@@ -14,28 +14,33 @@ namespace SoundSystemShop.Controllers
 {
     public class ShopController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IProductService _productService;
+        private readonly IBlogService _blogService;
         private readonly GenerateQRCode _generateQRCode;
 
-        public ShopController(IUnitOfWork unitOfWork, GenerateQRCode generateQRCode)
+        public ShopController(IProductService productService, IBlogService blogService)
         {
-            _unitOfWork = unitOfWork;
-            _generateQRCode = generateQRCode;
+            _productService = productService;
+            _blogService = blogService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page = 1, int take = 2)
         {
-
-            return View();
+            var paginationVM = _productService.GetProducts(page, take);
+            return View(paginationVM);
         }
-        public IActionResult Detail(int id)
+        public IActionResult Product(int id)
         {
-            return View(_unitOfWork.ProductRepo.GetByIdAsync(id));
+            var exist = _productService.GetProductDetail(id);
+            if(exist == null) return NotFound();
+            return View(exist);
         }
 
-        public IActionResult GetAll(string? categoryName)
+        public IActionResult CreateProductComment(int productId, string name, string email, string comment)
         {
-            return categoryName == null ? Json(_unitOfWork.BannerRepo.GetAllAsync().Result) : Json(_unitOfWork.BannerRepo.GetByPredicateAsync(b => b.Name == categoryName).Result);
+            if (name == null || email == null || comment == null) return RedirectToAction(nameof(Product), new { id = productId});
+            _blogService.CreateBlogComment(productId, name, email, comment);
+            return RedirectToAction(nameof(Product), new { id = productId });
         }
 
         [HttpPost]
@@ -45,6 +50,4 @@ namespace SoundSystemShop.Controllers
             return View();
         }
     }
-
-    
 }

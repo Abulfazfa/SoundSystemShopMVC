@@ -12,10 +12,12 @@ public class Product : BaseEntity
     public List<ProductImage> Images { get; set; }
     public Category Category { get; set; }
     public int CategoryId { get; set; }
+    public bool InDiscount { get; set; }
     public Product()
     {
         Images = new List<ProductImage>();
         IsDeleted = false;
+        InDiscount = false;
     }
 }
 

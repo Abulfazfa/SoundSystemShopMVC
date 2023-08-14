@@ -1,8 +1,54 @@
-@model dynamic
-
+@model List<Category>
 @{
-    ViewBag.Title = "title";
-    Layout = "_AdminLayout";
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>title</h2>
+<div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card mt-3">
+            <div class="card-body">
+                <h4 class="card-title">Role Table</h4>
+                <a class="btn btn-success" asp-controller="category" asp-action="create">Add Category</a>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Img</th>
+                                <th>Name</th>
+                                <th>Children's name</th>
+                                <th>Settings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var category in Model)
+                            {
+                                <tr>
+                                    <td><img src="~/assets/img/category/@category.ImgUrl" width="100" /></td>
+                                    <td>@category.Name</td>
+                                    <td>
+                                        @if (category.Children != null)
+                                        {
+                                            @foreach (var child in category.Children)
+                                            {
+                                                <p>@child.Name</p>
+                                            }
+                                        }
+
+                                    </td>
+
+                                    <td>
+                                        @* <a class="btn btn-secondary" asp-controller="category" asp-action="detail" asp-route-id="@category.Id">Detail</a>*@
+                                        <a class="btn btn-primary" asp-controller="category" asp-action="update" asp-route-id="@category.Id">Update</a>
+                                        <a class="btn btn-danger" asp-controller="category" asp-action="delete" asp-route-id="@category.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

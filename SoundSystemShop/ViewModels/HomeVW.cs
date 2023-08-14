@@ -12,5 +12,7 @@ namespace SoundSystemShop.ViewModels
         public List<Category> Categories { get; set; }
         public List<Blog> Blogs { get; set; }
         public List<SocialMedia> SocialMedias { get; set; }
+        public List<Product> UserActivities { get; set; }
+        public Product DayOfDiscount { get; set; }
     }
 }

@@ -23,7 +23,9 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<SocialMediaImg> SocialMediaImgs { get; set; }
     public DbSet<BlogComment> BlogComments { get; set; }
     public DbSet<UserActivity> UserActivities { get; set; }
-
+    public DbSet<Sale> Sales { get; set; }
+    public DbSet<PromoCode> PromoCodes { get; set; }
+    public DbSet<AdminPromo> AdminPromos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -67,5 +69,6 @@ public class AppDbContext : IdentityDbContext<AppUser>
             new IdentityUserRole<string>() { RoleId = "fab4fac1-c546-41de-aebc-a14da6895711", UserId = "b74ddd14-6340-4840-95c2-db12554843e5" }
         );
     }
+    
 
 }

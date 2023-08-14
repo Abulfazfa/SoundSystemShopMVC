@@ -43,7 +43,7 @@ namespace SoundSystemShop.Services
             await Task.CompletedTask;
         }
 
-        public async Task<T> GetByPredicateAsync(Func<T, bool> func)
+        public async Task<T> GetByPredicateAsync(Predicate<T> func)
         {
             return await _dbSet.FindAsync(func);
         }
@@ -52,5 +52,13 @@ namespace SoundSystemShop.Services
             return _dbSet.Any(func);
         }
 
+        public List<T> Where(Func<T, bool> func)
+        {
+            return _dbSet.Where(func).ToList();
+        }
+        public IQueryable Queryable()
+        {
+            return _dbSet.AsQueryable();
+        }
     }
 }

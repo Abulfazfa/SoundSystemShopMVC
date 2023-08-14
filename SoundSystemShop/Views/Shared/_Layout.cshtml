@@ -64,8 +64,8 @@
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="~/assets/./index.html">Home</a></li>
-                            <li><a href="~/assets/./shop.html">Shop</a></li>
+                            <li class="active"><a asp-controller="home">Home</a></li>
+                            <li><a asp-controller="shop">Shop</a></li>
                             <li><a href="~/assets/#">Pages</a>
                                 <ul class="dropdown">
                                     <li><a asp-controller="about" asp-action="index">About Us</a></li>
@@ -76,16 +76,35 @@
                                     <li><a asp-controller="account" asp-action="login">Login</a></li>
                                 </ul>
                             </li>
-                            <li><a asp-action="blog">Blog</a></li>
-                            <li><a asp-action="contact">Contacts</a></li>
+                            <li><a asp-controller="blog">Blog</a></li>
+                            <li><a asp-controller="contact">Contacts</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3 col-md-3">
-                    <div class="header__nav__option">
+                    <div class="header__nav__option" style="display: flex;justify-content: flex-end;">
                         <a href="~/assets/#" class="search-switch" style="margin-right: 15px"><img src="~/assets/img/icon/search.png" alt=""></a>
-                        <a href="~/assets/#"><img src="~/assets/img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                        <a asp-controller="basket" asp-action="index">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="24" height="24" fill="white"></rect>
+                                <g clip-path="url(#clip0_40_562)">
+                                    <path d="M20.5556 15.0939H7.45333C7.19129 15.0939 6.96575 14.9064 6.91099 14.6442L4.73576 4.13433H1.55407C1.24836 4.13433 1 3.88011 1 3.56716C1 3.25422 1.24836 3 1.55407 3H5.18424C5.44628 3 5.67182 3.1875 5.72658 3.44973L7.90246 13.9596H20.1247L21.7335 7.48727H9.27852C8.9728 7.48727 8.72444 7.23305 8.72444 6.92011C8.72444 6.60716 8.9728 6.35294 9.27852 6.35294H22.4459C22.6167 6.35294 22.7784 6.43368 22.8833 6.5718C22.9883 6.70992 23.0248 6.89008 22.983 7.05956L21.0927 14.6662C21.0301 14.9185 20.8091 15.0939 20.5556 15.0939Z"
+                                          fill="#020A0A"></path>
+                                    <path d="M9.76744 22.0004C8.09609 22.0004 6.73633 20.6085 6.73633 18.8976C6.73633 17.1868 8.09609 15.7949 9.76744 15.7949C11.4388 15.7949 12.7986 17.1868 12.7986 18.8976C12.7986 20.6085 11.4388 22.0004 9.76744 22.0004ZM9.76744 16.9293C8.70688 16.9293 7.84448 17.812 7.84448 18.8976C7.84448 19.9833 8.70688 20.866 9.76744 20.866C10.828 20.866 11.6904 19.9833 11.6904 18.8976C11.6904 17.812 10.828 16.9293 9.76744 16.9293Z"
+                                          fill="#020A0A"></path>
+                                    <path d="M18.1763 22.0004C16.5049 22.0004 15.1451 20.6085 15.1451 18.8976C15.1451 17.1868 16.5049 15.7949 18.1763 15.7949C19.8476 15.7949 21.2074 17.1868 21.2074 18.8976C21.2074 20.6085 19.8476 22.0004 18.1763 22.0004ZM18.1763 16.9293C17.1157 16.9293 16.2533 17.812 16.2533 18.8976C16.2533 19.9833 17.1157 20.866 18.1763 20.866C19.2368 20.866 20.0992 19.9833 20.0992 18.8976C20.0992 17.812 19.2368 16.9293 18.1763 16.9293Z"
+                                          fill="#020A0A"></path>
+                                    <path d="M16.3186 13.0253H11.2341C10.9643 13.0253 10.7452 12.8011 10.7452 12.5249C10.7452 12.2486 10.9643 12.0244 11.2341 12.0244H16.3186C16.5884 12.0244 16.8075 12.2486 16.8075 12.5249C16.8075 12.8011 16.5884 13.0253 16.3186 13.0253Z"
+                                          fill="#FF003C"></path>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_40_562">
+                                        <rect width="22" height="19" fill="white" transform="translate(1 3)"></rect>
+                                    </clipPath>
+                                </defs>
+                            </svg> <span id="basketCount" style="left:10px; top:-5px;">0</span>
+                        </a>
+                        <div class="price totalPriceArea"></div>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <input id="firstName" type="text" value="@User.Identity.Name" style="display: none">
@@ -109,9 +128,6 @@
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
-                        <div class="footer__logo">
-                            <a href="~/assets/#"><img src="~/assets/img/footer-logo.png" alt=""></a>
-                        </div>
                         <p>The customer is at the heart of our unique business model, which includes design.</p>
                         <a href="~/assets/#"><img src="~/assets/img/payment.png" alt=""></a>
                     </div>

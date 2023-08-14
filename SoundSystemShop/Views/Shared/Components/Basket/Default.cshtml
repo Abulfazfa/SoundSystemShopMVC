@@ -1,0 +1,88 @@
+﻿@model List<BasketVM>
+@{
+    double totalPrice = 0;
+}
+
+<div class="mini-cart">
+    <ul class="cart-items">
+        <div class="row justify-content-between">
+                <div class="col-md-8" style="width: 840px;">
+                    <div class="item-box" style="background-color: #f0f0f0; height: 50px;">
+                        <button class="deleteBtn border-0" style="height: 50px; margin-left: 40%;">
+                        <img class="lazy loaded" src="https://kontakt.az/wp-content/themes/kontakt8/ktn-assets/assets/eraser.png" data-src="https://kontakt.az/wp-content/themes/kontakt8/ktn-assets/assets/eraser.png" alt="" data-was-processed="true">
+                        <span class="cart_remove_selecteds ms-2 text-danger fw-bold">Remove All</span>
+                        </button>
+                    </div>
+                    <div class="productTable">
+                        <table class="table ">
+                            <thead> 
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model)
+                            {                                
+                                <tr>
+                                    <td>
+                                        <img src="~/assets/img/product/@item.ImgUrl" alt="" width="100" height="100" />
+                                    </td>
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td>
+                                        <a class="text-dark minus-icon" data-id="@item.Id" id="plusIcon"><i class="fa-solid fa-square-minus" style="cursor:pointer;"></i></a>
+            <span id="productCount">@item.BasketCount</span>
+            <a class="text-dark plus-icon" data-id="@item.Id" id="minusIcon"><i class="fa-solid fa-square-plus" style="cursor:pointer;"></i></a>
+                                    </td>
+                                    <td>
+                                        $@item.Price
+                                    </td>
+                                    <td>
+                                        <i class="fa-solid fa-trash text-danger" style="cursor:pointer;"></i>
+                                    </td>
+                                </tr>
+                                <span style="display:none;">@(totalPrice += (item.BasketCount * item.Price))</span>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                
+                    <div class="right-side" >
+                        <div class="basket-info" style="border: 2px solid rgb(0,0,0,.08); padding: 20px;">
+                            <h5 class="m-0">Səbətdəki məhsullar</h5>
+                            <hr class="mt-2 mb-3">
+                            <div class="price d-flex justify-content-between">
+                                <p class="mb-1">Products</p>
+                            <p class="mb-1"><span>$</span><span class="pricespan totalPriceArea"></span></p>
+                        
+                            </div>
+                            <hr class="mt-2 mb-2">
+                            <div class="total-price d-flex justify-content-between">
+                            <span>$</span><span class="pricetotal fw-bold fs-5">0</span>
+                                
+                            </div>
+                        </div>
+                        <div class="button text-center" style="border: 2px solid rgb(0,0,0,.08); padding: 20px; margin-top: 20px;">
+                            <a asp-controller="shop" asp-action="checkOut" class="cash border-0 text-light fs-4" style="background-color: black; padding: 10px 60px; border-radius: 5px; cursor:pointer;">
+                                Check Out
+                            </a>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+        
+
+    </ul>
+</div>
+@*<div class="single-cart-item d-flex">
+                    <div class="cart-item-thumb">
+                        <a href="single-product.html"><img src="~/assets/img/product/@item.ImgUrl" alt="product" width="200" height="100"></a>
+                        <span class="product-quantity">@(item.BasketCount)x</span>
+                    </div>
+                    <div class="cart-item-content media-body">
+                        <h5 class="product-name"><a href="single-product.html">@item.Name</a></h5>
+                        <span class="product-price">€@item.Price</span>
+                        <a asp-action="RemoveItem" asp-controller="basket" asp-route-id="@item.Id" class="product-close"><i class="fal fa-times"></i></a>
+                    </div>
+                </div>*@

@@ -1,0 +1,66 @@
+﻿@model CategoryVM
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card mt-3">
+            <div class="card-body">
+                <h4 class="card-title">Update Category</h4>
+
+                <form method="post" class="forms-sample" enctype="multipart/form-data">
+                    @if (Model.ImgUrl != null)
+                    {
+                        <img src="~/images/@Model.ImgUrl" width="200" height="200" />
+                    }
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input class="form-control" asp-for="Name" placeholder="Name">
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IsMain"></label>
+                        <input type="checkbox" class="form-control" asp-for="IsMain" placeholder="IsMain">
+                        <span asp-validation-for="IsMain"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                        <select asp-for="ParentId" asp-items="@(ViewBag.Categories)" id="parentSelect">
+                            <option>Please select one</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Photo"></label>
+                        <input class="form-control" asp-for="Photo" placeholder="Photo" id="photoSelect">
+                        <span asp-validation-for="Photo"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <a class="btn btn-dark" asp-controller="category" asp-action="index">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const select = document.getElementById('parentSelect');
+            const checkbox = document.querySelector('input[type="checkbox"]');
+
+            function handleCheckboxChange() {
+                if (checkbox.checked) {
+                    select.disabled = true;
+                } else {
+                    select.disabled = false;
+                }
+            }
+
+            checkbox.addEventListener('change', handleCheckboxChange);
+        });
+    </script>
+}
+
