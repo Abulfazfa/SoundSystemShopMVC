@@ -295,7 +295,7 @@ namespace SoundSystemShop.Migrations
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
                             Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "63a7d22f-2ffb-474d-88a6-d744d45f8870",
+                            ConcurrencyStamp = "753a3c65-4e35-4f4b-8249-16e20bc5795a",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             Fullname = "Admin",
@@ -304,7 +304,7 @@ namespace SoundSystemShop.Migrations
                             LockoutEnabled = true,
                             OTP = "0000",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d2c808c5-e892-4ab8-8b1b-addd094d851c",
+                            SecurityStamp = "ef47303e-0df1-418c-840c-b6487aa28350",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -486,6 +486,9 @@ namespace SoundSystemShop.Migrations
 
                     b.Property<int?>("ProductRating")
                         .HasColumnType("int");
+
+                    b.Property<string>("Quality")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SaleId")
                         .HasColumnType("int");

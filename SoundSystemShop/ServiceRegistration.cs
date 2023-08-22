@@ -54,6 +54,7 @@ namespace SoundSystemShop
             services.AddScoped<UserActivityFilter>();
             services.AddScoped<PaginationService>();
             services.AddScoped<PromoService>();
+            services.AddScoped<GenerateQRCode>();
             services.AddHostedService<PromoEmailSenderHostedService>();
             services.AddSignalR();
         }

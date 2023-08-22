@@ -17,7 +17,7 @@ public class ProductController : Controller
         _categoryService = categoryService;
     }
 
-    public IActionResult Index(int page = 1, int take = 2)
+    public IActionResult Index(int page = 1, int take = 5)
     {
         var paginationVM = _productService.GetProducts(page, take);
         if (paginationVM.Items.Count > 0)

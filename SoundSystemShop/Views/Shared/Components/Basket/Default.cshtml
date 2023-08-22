@@ -10,7 +10,7 @@
                     <div class="item-box" style="background-color: #f0f0f0; height: 50px;">
                         <button class="deleteBtn border-0" style="height: 50px; margin-left: 40%;">
                         <img class="lazy loaded" src="https://kontakt.az/wp-content/themes/kontakt8/ktn-assets/assets/eraser.png" data-src="https://kontakt.az/wp-content/themes/kontakt8/ktn-assets/assets/eraser.png" alt="" data-was-processed="true">
-                        <span class="cart_remove_selecteds ms-2 text-danger fw-bold">Remove All</span>
+                        <span class="cart_remove_selecteds ms-2 text-danger fw-bold" id="removeAllButton">Remove All</span>
                         </button>
                     </div>
                     <div class="productTable">
@@ -28,15 +28,15 @@
                                         @item.Name
                                     </td>
                                     <td>
-                                        <a class="text-dark minus-icon" data-id="@item.Id" id="plusIcon"><i class="fa-solid fa-square-minus" style="cursor:pointer;"></i></a>
-            <span id="productCount">@item.BasketCount</span>
-            <a class="text-dark plus-icon" data-id="@item.Id" id="minusIcon"><i class="fa-solid fa-square-plus" style="cursor:pointer;"></i></a>
+                                        <a class="text-dark minus-icon plusIcon" data-id="@item.Id"><i class="fa-solid fa-square-minus" style="cursor:pointer;"></i></a>
+                                        <span id="productCount" data-id="@item.Id">@item.BasketCount</span>
+                                        <a class="text-dark plus-icon minusIcon" data-id="@item.Id"><i class="fa-solid fa-square-plus" style="cursor:pointer;"></i></a>
                                     </td>
                                     <td>
                                         $@item.Price
                                     </td>
                                     <td>
-                                        <i class="fa-solid fa-trash text-danger" style="cursor:pointer;"></i>
+                                        <i class="fa-solid fa-trash text-danger" data-id="@item.Id" style="cursor:pointer;"></i>
                                     </td>
                                 </tr>
                                 <span style="display:none;">@(totalPrice += (item.BasketCount * item.Price))</span>

@@ -23,7 +23,8 @@ namespace SoundSystemShop.Profiles
                 .ForMember(dest => dest.ImgUrl, opt => opt.Ignore());
             CreateMap<Product, ProductVM>();
             CreateMap<ProductVM, Product>()
-                .ForMember(dest => dest.Images, opt => opt.Ignore());
+                .ForMember(dest => dest.Images, opt => opt.Ignore())
+                .ForMember(dest => dest.DiscountPrice, opt => opt.Ignore());
             CreateMap<Sale, SaleVM>();
             CreateMap<SaleVM, Sale>()
                 .ForMember(dest => dest.ImgUrl, opt => opt.Ignore());

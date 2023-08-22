@@ -21,5 +21,9 @@ namespace SoundSystemShop.Controllers
         {
             return View();
         }
+        public IActionResult CreateProduct()
+        {
+            return View();
+        }
     }
 }

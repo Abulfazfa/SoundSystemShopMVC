@@ -11,12 +11,11 @@
 
 (function ($) {
     $(document).ready(function () {
-        // Make an AJAX request to get the updated basket count
         function updateBasketCount() {
-            var basketCountElement = $("#basketCount"); // Replace with the actual ID of your basket count element
+            var basketCountElement = $("#basketCount");
 
             $.ajax({
-                url: 'https://localhost:44392/basket/GetBasketCount', // Replace with the actual URL to your endpoint
+                url: '/basket/GetBasketCount', // Use relative URL
                 type: 'GET',
                 success: function (data) {
                     basketCountElement.text(data);
@@ -26,94 +25,113 @@
                 }
             });
         }
-        function updateProductCount() {
-            var productCount = $("#productCount"); // Replace with the actual ID of your basket count element
-            var itemId = $("#minusIcon").data("id");
+
+        function updateProductCount(itemId) {
+            var productCount = $("#productCount");
             $.ajax({
-                
-                url: `https://localhost:44392/basket/GetProductCount/${itemId}`, // Replace with the actual URL to your endpoint
+                url: `/basket/GetProductCount/${itemId}`,
                 type: 'GET',
                 success: function (data) {
                     productCount.text(data);
-                    
-                    if (productCount.text() == '0') {
-                        $.ajax({
-
-                            url: `https://localhost:44392/basket/RemoveItem/${itemId}`, // Replace with the actual URL to your endpoint
-                            type: 'GET',
-                            success: function () {
-                                location.reload();
-                            },
-                            error: function () {
-                                console.log('Error retrieving basket count.');
-                            }
-                        });
+                    if (data == 0) {
+                        removeItemFromBasket(itemId);
                     }
                 },
                 error: function () {
-                    console.log('Error retrieving basket count.');
+                    console.log('Error retrieving product count.');
                 }
             });
-            
         }
+
         function updateTotalPrice() {
-            var productCount = $(".totalPriceArea"); // Replace with the actual ID of your basket count element
+            var totalPriceArea = $(".totalPriceArea");
 
             $.ajax({
-                url: `https://localhost:44392/basket/GetTotalPrice`, // Replace with the actual URL to your endpoint
+                url: '/basket/GetTotalPrice',
                 type: 'GET',
                 success: function (data) {
-                    productCount.text(`${data}`);
-                    console.log(data)
+                    totalPriceArea.text(data);
                 },
                 error: function () {
-                    console.log('Error retrieving basket count.');
+                    console.log('Error retrieving total price.');
                 }
             });
         }
 
-        updateBasketCount();
-        updateProductCount();
-        updateTotalPrice();
-        
-
-        ////////////////////////////////////////////////////
-        $("#minusIcon").click(function () {
-            var itemId = $(this).data("id");
+        function removeItemFromBasket(itemId) {
             $.ajax({
-                url: `https://localhost:44392/basket/AddBasket/${itemId}`, // Replace with your actual route
+                url: `/basket/RemoveItem/${itemId}`,
+                type: 'POST',
+                success: function () {
+                    location.reload();
+                },
+                error: function () {
+                    console.log('Error removing item from basket.');
+                }
+            });
+        }
+
+        function updateBasketInteractions(itemId) {
+            updateBasketCount();
+            updateTotalPrice();
+        }
+
+        $(".plusIcon").click(function () {
+            var itemId = $(this).data("id");
+
+            $.ajax({
+                url: `/basket/DecreaseBasket/${itemId}`,
                 method: "POST",
-                success: function (response) {
-                    updateBasketCount();
-                    updateProductCount();
-                    updateTotalPrice();
+                success: function () {
+                    console.log(itemId)
+                    updateBasketInteractions();
+                    updateProductCount(itemId);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error decreasing item: " + error);
+                }
+            });
+        });
+
+        $(".minusIcon").click(function () {
+            var itemId = $(this).data("id");
+
+            $.ajax({
+                url: `/basket/AddBasket/${itemId}`,
+                method: "POST",
+                success: function () {
+                    console.log(itemId)
+                    updateBasketInteractions();
+                    updateProductCount(itemId);
                 },
                 error: function (xhr, status, error) {
                     console.error("Error adding item: " + error);
                 }
-                
             });
-            
         });
-
-        $("#plusIcon").click(function () {
-            var itemId = $(this).data("id");
+        
+        $("#removeAllButton").click(function () {
             
             $.ajax({
-                url: `https://localhost:44392/basket/DecreaseBasket/${itemId}`,
+                url: `/basket/RemoveAllItems`,
                 method: "POST",
-                success: function (response) {
-                    updateBasketCount();
-                    updateProductCount();
-                    updateTotalPrice();
+                success: function () {
+                    updateBasketInteractions();
+                    location.reload()
                 },
                 error: function (xhr, status, error) {
-                    console.error("Error deleting item: " + error);
+                    console.error("Error adding item: " + error);
                 }
             });
-            
         });
+        $(".fa-trash").click(function () {
+            var itemId = $(this).data("id");
+            removeItemFromBasket(itemId);
+        });
+
+        updateBasketInteractions();
     });
+
 
 
 

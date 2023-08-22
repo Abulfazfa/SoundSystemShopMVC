@@ -104,6 +104,7 @@ namespace SoundSystemShop.Controllers
             return NoContent();
 
         }
+
         public IActionResult RemoveItem(int id)
         {
             if (id == null) return NotFound();
@@ -113,6 +114,15 @@ namespace SoundSystemShop.Controllers
             products.Remove(existproduct);
             Response.Cookies.Append("basket", JsonConvert.SerializeObject(products), new CookieOptions { MaxAge = TimeSpan.FromMinutes(15) });
             GetBasketCount();
+            return NoContent();
+        }
+        public IActionResult RemoveAllItems()
+        {
+            var products = JsonConvert.DeserializeObject<List<BasketVM>>(Request.Cookies["basket"]);
+            foreach (var item in products)
+            {
+                RemoveItem(item.Id);
+            }
             return NoContent();
         }
         [HttpGet]
@@ -126,31 +136,36 @@ namespace SoundSystemShop.Controllers
             int totalCount = products.Sum(item => item.BasketCount);
             return Json(totalCount);
         }
+
         public IActionResult GetProductCount(int id)
         {
-            
-            if (Request.Cookies["basket"] != null)
+            var basket = Request.Cookies["basket"];
+            if (string.IsNullOrEmpty(basket))
             {
-                var products = JsonConvert.DeserializeObject<List<BasketVM>>(Request.Cookies["basket"]);
-                var existproduct = products.FirstOrDefault(x => x.Id == id);
-                return Json(existproduct.BasketCount);
+                return Json(0);
             }
-            return Json(0);
+
+            var products = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
+            var existproduct = products.FirstOrDefault(x => x.Id == id);
+
+           
+            return Json(existproduct.BasketCount);
         }
+
         public IActionResult GetTotalPrice()
         {
-            var totalPrice = 0.00;
-            if (Request.Cookies["basket"] != null)
+            var basket = Request.Cookies["basket"];
+            if (string.IsNullOrEmpty(basket))
             {
-                var products = JsonConvert.DeserializeObject<List<BasketVM>>(Request.Cookies["basket"]);
-                foreach (var product in products)
-                {
-                    totalPrice = product.Price * product.BasketCount;
-                }
+                return Json("0.00");
             }
+
+            var products = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
+            var totalPrice = products.Sum(product => product.Price * product.BasketCount);
             string formattedTotalPrice = totalPrice.ToString("0.00");
             return Json(formattedTotalPrice);
         }
+
         public IActionResult CheckOut()
         {
             return View();

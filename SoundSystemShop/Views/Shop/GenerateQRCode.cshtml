@@ -1,17 +1,17 @@
-﻿@model QRCodeModel
+﻿
 
 @{
     ViewData["Title"] = "";
 }
 <hr />
-<div class="row">
+<div class="row" style="margin-top: 113px;">
     <div class="col-md-4">
-        <form asp-action="GenerateQRCode">
+        <form asp-action="GenerateQRCode" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="QRCodeText" class="control-label"></label>
-                <input asp-for="QRCodeText" class="form-control" />
-                <span asp-validation-for="QRCodeText" class="text-danger"></span>
+                <label class="control-label">QR</label>
+                <input name="json"; type="text" class="form-control" />
+                <span class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Generate QR Code" class="btn btn-primary text-center" />

@@ -18,10 +18,11 @@ namespace SoundSystemShop.Controllers
         private readonly IBlogService _blogService;
         private readonly GenerateQRCode _generateQRCode;
 
-        public ShopController(IProductService productService, IBlogService blogService)
+        public ShopController(IProductService productService, IBlogService blogService, GenerateQRCode generateQRCode)
         {
             _productService = productService;
             _blogService = blogService;
+            _generateQRCode = generateQRCode;
         }
 
         public IActionResult Index(int page = 1, int take = 2)
@@ -35,6 +36,13 @@ namespace SoundSystemShop.Controllers
             if(exist == null) return NotFound();
             return View(exist);
         }
+        public IActionResult GetCategoryProduct(string categoryName)
+        {
+            var exist = _productService.GetAll().Where(c => c.Category.Name == categoryName).ToList();
+            if (exist == null) return NotFound();
+            return Json(exist);
+        }
+
 
         public IActionResult CreateProductComment(int productId, string name, string email, string comment)
         {
@@ -43,6 +51,12 @@ namespace SoundSystemShop.Controllers
             return RedirectToAction(nameof(Product), new { id = productId });
         }
 
+        [HttpGet]
+        public ActionResult GenerateQRCode()
+        {
+            //ViewBag.QrCodeUri = _generateQRCode.GenerateQR(json);
+            return View();
+        }
         [HttpPost]
         public ActionResult GenerateQRCode(string json)
         {

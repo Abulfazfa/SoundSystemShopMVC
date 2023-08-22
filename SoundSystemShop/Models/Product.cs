@@ -6,6 +6,7 @@ public class Product : BaseEntity
     public double Price { get; set; }
     public double DiscountPrice { get; set; }
     public string? Desc { get; set; }
+    public string? Quality { get; set; }
     public string? Brand { get; set; }
     public int ProductCount { get; set; }
     public int? ProductRating { get; set; }
