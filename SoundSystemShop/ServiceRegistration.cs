@@ -48,6 +48,7 @@ namespace SoundSystemShop
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICustomerProductRepository, CustomerRepository>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ISaleRepository, SaleRepository>();
             services.AddScoped<ISaleService, SaleService>();

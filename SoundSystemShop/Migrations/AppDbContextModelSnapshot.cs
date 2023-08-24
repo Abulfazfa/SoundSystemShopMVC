@@ -295,7 +295,7 @@ namespace SoundSystemShop.Migrations
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
                             Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "753a3c65-4e35-4f4b-8249-16e20bc5795a",
+                            ConcurrencyStamp = "aa889d22-8e08-4d4e-bebd-9aec1efc3505",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             Fullname = "Admin",
@@ -304,7 +304,7 @@ namespace SoundSystemShop.Migrations
                             LockoutEnabled = true,
                             OTP = "0000",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ef47303e-0df1-418c-840c-b6487aa28350",
+                            SecurityStamp = "f1234336-be9b-4c31-a6d4-db9bf626c8b9",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -442,6 +442,39 @@ namespace SoundSystemShop.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("SoundSystemShop.Models.CustomerProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Desc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<string>("QrCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RandomNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomerProducts");
+                });
+
             modelBuilder.Entity("SoundSystemShop.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -515,6 +548,9 @@ namespace SoundSystemShop.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("CustomerProductId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImgUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -529,6 +565,8 @@ namespace SoundSystemShop.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerProductId");
 
                     b.HasIndex("ProductId");
 
@@ -807,6 +845,10 @@ namespace SoundSystemShop.Migrations
 
             modelBuilder.Entity("SoundSystemShop.Models.ProductImage", b =>
                 {
+                    b.HasOne("SoundSystemShop.Models.CustomerProduct", null)
+                        .WithMany("Images")
+                        .HasForeignKey("CustomerProductId");
+
                     b.HasOne("SoundSystemShop.Models.Product", null)
                         .WithMany("Images")
                         .HasForeignKey("ProductId")
@@ -834,6 +876,11 @@ namespace SoundSystemShop.Migrations
             modelBuilder.Entity("SoundSystemShop.Models.Category", b =>
                 {
                     b.Navigation("Children");
+                });
+
+            modelBuilder.Entity("SoundSystemShop.Models.CustomerProduct", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("SoundSystemShop.Models.Product", b =>

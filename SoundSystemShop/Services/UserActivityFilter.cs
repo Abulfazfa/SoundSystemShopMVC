@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using SoundSystemShop.DAL;
+using SoundSystemShop.Migrations;
 using SoundSystemShop.Models;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -50,7 +51,9 @@ namespace SoundSystemShop.Services
         }
         public void StoreUserActivity(string data, string url, string? userName, string ipAddress)
         {
-            if (url.Contains("Product/"))
+            string pattern = @".*Product/\d+.*|Product/\d+.*";
+            Match match = Regex.Match(url, pattern);
+            if (match.Success)
             {
                 var userActivity = new UserActivity
                 {
@@ -74,8 +77,9 @@ namespace SoundSystemShop.Services
                 if (match.Success)
                 {
                     string matchedPart = match.Value;
-                    result.Add(matchedPart); ;
+                    result.Add(matchedPart);
                 }
+                
                 
             }
             return GetProductsOfUserActivity(result);

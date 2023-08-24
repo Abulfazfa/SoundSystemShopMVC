@@ -26,6 +26,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<Sale> Sales { get; set; }
     public DbSet<PromoCode> PromoCodes { get; set; }
     public DbSet<AdminPromo> AdminPromos { get; set; }
+    public DbSet<CustomerProduct> CustomerProducts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

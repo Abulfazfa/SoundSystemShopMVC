@@ -1,0 +1,39 @@
+﻿@model CustomerProduct
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card mt-5">
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            @foreach (var image in Model.Images)
+                            {
+                                <img src="~/assets/img/product/@image.ImgUrl" width="200" height="150" alt="" />
+                            }
+                        </div>
+                        <div class="form-group">
+                            <p>@Model.Desc</p>
+                        </div>
+                        <div class="form-group">
+                            <h2>$@Model.Price</h2>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

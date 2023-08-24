@@ -1,29 +1,79 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SoundSystemShop.DAL;
+using SoundSystemShop.Models;
+using SoundSystemShop.Services;
 using SoundSystemShop.Services.Interfaces;
+using SoundSystemShop.ViewModels;
+using System.Linq;
 
 namespace SoundSystemShop.Controllers
 {
     public class OwnProductController : Controller
     {
+        private readonly IProductService _productService;
         private readonly IUnitOfWork _unitOfWork;
-
-        public OwnProductController(IUnitOfWork unitOfWork)
+        private readonly GenerateQRCode _generateQRCode;
+        private readonly AppDbContext _appDbContext;
+        public OwnProductController(IProductService productService, IUnitOfWork unitOfWork, GenerateQRCode generateQRCode, AppDbContext appDbContext)
         {
+            _productService = productService;
             _unitOfWork = unitOfWork;
+            _generateQRCode = generateQRCode;
+            _appDbContext = appDbContext;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var cproducts = _appDbContext.CustomerProducts.Include(cp => cp.Images).ToList();
+            return View(cproducts);
         }
 
         public IActionResult Create()
         {
             return View();
         }
-        public IActionResult CreateProduct()
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateProductVM createProduct)
         {
-            return View();
+            if (createProduct == null) return Json(null);
+            CustomerProduct customerProduct = new CustomerProduct();
+            List<Product> products = new();
+            var frame = _productService.GetAll().FirstOrDefault(p => p.Name == createProduct.Frame.Split(" -")[0]);
+            var subwoofer = _productService.GetAll().FirstOrDefault(p => p.Name == createProduct.Subwoofer.Split(" -")[0]);
+            var horn = _productService.GetAll().FirstOrDefault(p => p.Name == createProduct.Horn.Split(" -")[0]);
+            var more = _productService.GetAll().FirstOrDefault(p => p.Name == createProduct.More.Split(" -")[0]);
+            products.Add(more);
+            products.Add(frame);
+            products.Add(subwoofer);
+            products.Add(horn);
+            customerProduct.Price = products.Sum(p => p.Price);
+            customerProduct.Desc = string.Join("; ", products.ConvertAll(p => p.Name));
+            foreach (var item in products)
+            {
+                customerProduct.Images.Add(item.Images.FirstOrDefault());
+            }
+            Random random = new Random();
+            int randomNumber = random.Next(100000, 1000000);
+            customerProduct.RandomNumber = randomNumber;
+            customerProduct.QrCode = _generateQRCode.GenerateQR("https://localhost:44392/SpecialProducts?randomNumber=" + randomNumber);
+            await _unitOfWork.CustomerProductRepo.AddAsync(customerProduct);
+            _unitOfWork.Commit();
+            return Json(customerProduct);
+        }
+
+        public IActionResult Detail(int id)
+        {
+            var cproduct = _appDbContext.CustomerProducts.Include(cp => cp.Images).FirstOrDefault(cp => cp.Id == id);
+            return View(cproduct);
+        }
+        public IActionResult SpecialProducts(int randomNumber)
+        {
+            
+                var cproduct = _appDbContext.CustomerProducts.Include(cp => cp.Images).FirstOrDefault(cp => cp.Id == randomNumber);
+                return View(cproduct);
+            
         }
     }
 }

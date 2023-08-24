@@ -1,0 +1,57 @@
+@model List<CustomerProduct>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <a class="btn btn-success" asp-controller="ownProduct" asp-action="create">Create Own Product</a>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Price</th>
+                                <th>Description</th>
+    
+                                <th>Settings</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var product in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <img src="~/assets/img/product/@product.Images.FirstOrDefault().ImgUrl" width="90" height="70" alt=""/>
+                                    </td>
+                                    <td>@product.Price</td>
+                                    <td>@product.Desc</td>
+                                    <td>
+                                        <a class="btn btn-secondary" asp-controller="OwnProduct" asp-action="detail" asp-route-id="@product.Id">Detail</a>
+                                        @* <a class="btn btn-danger" asp-controller="OwnProduct" asp-action="delete" asp-route-id="@product.Id">Reject</a> *@
+                                    </td>
+                                </tr>
+                            }
+    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

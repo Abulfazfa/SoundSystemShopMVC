@@ -13,6 +13,7 @@ namespace SoundSystemShop.Services.Interfaces
         ISocialMediaRepository SocialMediaRepo { get; set; }
         ISaleRepository SaleRepo { get; set; }
         IBlogRepository BlogRepo { get; set; }
+        ICustomerProductRepository CustomerProductRepo { get; set; }
         IGenericRepository<AppUser> AppUserRepo { get; }
 
     }

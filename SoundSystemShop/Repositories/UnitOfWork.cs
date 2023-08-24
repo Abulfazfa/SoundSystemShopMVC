@@ -21,8 +21,9 @@ namespace SoundSystemShop.Services
         public IBlogRepository BlogRepo { get ; set ; }
         public IGenericRepository<AppUser> AppUserRepo { get; private set; }
         public ISaleRepository SaleRepo { get ; set ; }
+        public ICustomerProductRepository CustomerProductRepo { get ; set ; }
 
-        public UnitOfWork(AppDbContext appDbContext, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager, ICategoryRepository categoryRepo, ISaleRepository saleRepo)
+        public UnitOfWork(AppDbContext appDbContext, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager, ICategoryRepository categoryRepo, ISaleRepository saleRepo, ICustomerProductRepository customerProductRepo)
         {
             _appDbContext = appDbContext;
             SliderRepo = new SliderRepository(_appDbContext);
@@ -36,6 +37,7 @@ namespace SoundSystemShop.Services
             AppUserRepo = new GenericRepository<AppUser>(_appDbContext);
             CategoryRepo = categoryRepo;
             SaleRepo = saleRepo;
+            CustomerProductRepo = customerProductRepo;
         }
 
         public void Commit()

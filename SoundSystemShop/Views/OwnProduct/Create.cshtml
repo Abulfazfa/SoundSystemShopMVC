@@ -1,14 +1,36 @@
-﻿<section style="margin: 113px;">
+﻿@model CreateProductVM
+<section style="margin: 113px;">
     <h2>Create Your Product</h2>
     <div class="selectedArea" style="margin: 20px 0;">
-        <ul id="selectedList">
-            <li data-li="frame"></li>
-            <li data-li="horn"></li>
-            <li data-li="subwoofer"></li>
-            <li data-li="more"></li>
-            <li class="totalPrice"></li>
-            <button id="createButton">Create</button>
-        </ul>
+        <div class="col-4 ctgry">
+            <form method="post">
+                <div class="inputGroup d-flex">
+                    <label asp-for="Frame"></label>
+                    <input class="form-control" asp-for="Frame" id="frame">
+                    <button class="clearButton">Clear</button>
+                </div>
+
+                <div class="inputGroup d-flex">
+                    <label asp-for="Horn"></label>
+                    <input class="form-control" asp-for="Horn" id="horn">
+                    <button class="clearButton">Clear</button>
+                </div>
+
+                <div class="inputGroup d-flex">
+                    <label asp-for="Subwoofer"></label>
+                    <input class="form-control" asp-for="Subwoofer" id="subwoofer">
+                    <button class="clearButton">Clear</button>
+                </div>
+
+                <div class="inputGroup d-flex">
+                    <label asp-for="More"></label>
+                    <input class="form-control" asp-for="More" id="more">
+                    <button class="clearButton">Clear</button>
+                </div>
+                <button id="createButton" type="submit">Create</button>
+            </form>
+            
+        </div>
     </div>
     <button class="productButton" data-category="Frame">Frame</button>
     <button class="productButton" data-category="Horn">Horn</button>
@@ -18,19 +40,17 @@
     </div>
 </section>
 
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        var totalPrice = 0; // Initialize total price to 0
-        var totalPriceElement = $(".totalPrice"); // Reference to the Total Price element
+        var totalPrice = 0;
+        var totalPriceElement = $(".totalPrice");
         var allButtons = $(".productButton");
         var area = $(".area");
         var selectedList = $("#selectedList");
-        var selectedCategory = null; // To keep track of selected category
-
-        function updateTotalPrice() {
-            totalPriceElement.text(`Total Price: $${totalPrice.toFixed(2)}`);
-        }
+        var selectedCategory = null;
 
         function clearSelected() {
             selectedCategory = null;
@@ -76,44 +96,78 @@
                     });
 
                     $(".selectButton").click(function () {
-                        var productPrice = parseFloat($(this).siblings(".form-group").find("span").text().replace("$", ""));
-                        totalPrice += productPrice; // Update the total price
-                        updateTotalPrice(); // Update the displayed total price
-
                         var productName = $(this).siblings(".form-group").find("p").text();
-                        var productPriceFormatted = $(this).siblings(".form-group").find("span").text();
+                        var productPrice = $(this).siblings(".form-group").find("span").text();
                         var categoryName = selectedCategory.toLowerCase();
-                        var listItem = selectedList.find(`li[data-li="${categoryName}"]`);
-                        listItem.html(`${productName} (${categoryName}) - ${productPriceFormatted} <button class="deleteButton">Delete</button>`);
+
+                        // Set the value of the input field for the selected category
+                        $("#" + categoryName).val(productName + " - " + productPrice);
                     });
 
                     selectedList.on("click", ".deleteButton", function () {
                         var listItem = $(this).parent();
                         var productPriceFormatted = listItem.find("span").text();
-                        var productPrice = parseFloat(productPriceFormatted.replace("$", ""));
-                        totalPrice -= productPrice; // Update the total price
-                        updateTotalPrice(); // Update the displayed total price
 
                         listItem.html('');
                     });
+                    
                 },
                 error: function (xhr, status, error) {
                     console.error("AJAX request failed:", status, error);
                 }
             });
         });
-
-        $("#createButton").click(function () {
-            var emptyElements = selectedList.find("li").filter(function () {
-                return $(this).text().trim() === "";
-            });
-
-            if (emptyElements.length > 0) {
-                alert("Please fill in all categories before creating.");
-            } else {
-                
-            }
+        $(".clearButton").click(function () {
+            var inputField = $(this).prev(".form-control");
+            inputField.val(""); // Clear the input value
         });
+        //$("#createButton").click(function () {
+        //    var inputs = $(".ctgry input.form-control");  // Update selector here
+        //    var isAnyInputEmpty = false;
+
+        //    inputs.each(function () {
+        //        var inputValue = $(this).val().trim();
+        //        if (inputValue.length === 0) {
+        //            isAnyInputEmpty = true;
+        //            return false;
+        //        }
+        //    });
+
+        //    if (isAnyInputEmpty) {
+        //        alert("Please fill in all categories before creating.");
+        //    } 
+        //    else {
+        //        var products = {
+        //            Frame: $("#Frame").val(),
+        //            Horn: $("#Horn").val(),
+        //            Subwoofer: $("#Subwoofer").val(),
+        //            More: $("#More").val()
+        //        };
+
+        //        $.ajax({
+        //            url: "/YourController/CreateProduct", // Update with the correct URL
+        //            type: "POST",
+        //            data: { products: products },
+        //            success: function (response) {
+        //                if (response.success) {
+        //                    alert("Products created successfully!");
+        //                    // Clear inputs and update UI as needed
+        //                    inputs.val("");  // Clear input values
+        //                } 
+        //                else 
+        //                {
+        //                    alert("An error occurred while creating products.");
+        //                }
+        //            },
+        //            error: function (xhr, status, error) {
+        //                console.error("AJAX request failed:", status, error);
+        //            }
+        //        });
+        //    }
+        //});
+
+
+
     });
 
 
@@ -131,4 +185,22 @@
     ul {
         list-style: none;
     }
+    .ctgry span{
+        margin-right: 10px;
+    }
+    .inputGroup{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    label{
+        margin-bottom: 0;
+    }
+    input{
+        margin: 0 10px;
+    }
 </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
