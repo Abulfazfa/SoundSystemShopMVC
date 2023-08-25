@@ -200,32 +200,33 @@
     <section class="categories spad">
         <div class="container">
             <div class="row">
-                @if (Model.DayOfDiscount != null)
+                @if (Model.DayOfDiscount.InDiscount == true)
                 {
                     <div class="col-lg-4">
                     <div class="categories__hot__deal">
-                        <img src="img/product-sale.png" alt="">
+                        <a asp-controller="shop" asp-action="product"><img src="~/assets/img/product/@Model.DayOfDiscount.Images.FirstOrDefault().ImgUrl" alt=""></a>
                         <div class="hot__deal__sticker">
                             <span>Sale Of</span>
-                            <h5>$@Model.DayOfDiscount.DiscountPrice</h5>
+                            <h5>$@(Model.DayOfDiscount.Price - Model.DayOfDiscount.DiscountPrice)</h5>
                         </div>
                     </div>
                 </div>
                     <div class="col-lg-4 offset-lg-1">
                     <div class="categories__deal__countdown">
-                        <span>Deal Of The Week</span>
+                        <span>Deal Of The Day</span>
                         <h2>@Model.DayOfDiscount.Name</h2>
-                        <div class="categories__deal__countdown__timer" id="countdown">
+                        
+                        <div class="categories__deal__countdown__timer" >
                             <div class="cd-item">
-                                <span id="hourArea">1</span>
+                                <span id="hourArea"></span>
                                 <p>Hours</p>
                             </div>
                             <div class="cd-item">
-                                <span id="minuteArea" cl>50</span>
+                                <span id="minuteArea" cl></span>
                                 <p>Minutes</p>
                             </div>
                             <div class="cd-item">
-                                <span id="secondArea">18</span>
+                                <span id="secondArea"></span>
                                 <p>Seconds</p>
                             </div>
                         </div>
@@ -295,40 +296,3 @@
     </section>
 
     <!-- Latest Blog Section End -->
-    <script>
-        function startCountdown(finishDate) {
-            var countDownDate = new Date(finishDate).getTime();
-            Counter(countDownDate);
-        }
-
-        function Counter(countDownDate, num) {
-
-            clearInterval(myInterval);
-
-            myInterval = setInterval(function () {
-            var now = new Date().getTime();
-            var distance = countDownDate - now;
-
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            if (minutes < 10) {
-                minutes = "0" + minutes;
-            }
-            if (hours < 10) {
-                hours = "0" + hours;
-            }
-            if (seconds < 10) {
-                seconds = "0" + seconds;
-            }
-
-
-            document.getElementById("hourArea").innerHTML = hours;
-            document.getElementById("minuteArea").innerHTML = minutes;
-            document.getElementById("secondArea").innerHTML = seconds;
-
-        }, 1000);
-
-
-    }
-    </script>

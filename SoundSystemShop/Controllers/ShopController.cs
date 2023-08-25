@@ -25,7 +25,7 @@ namespace SoundSystemShop.Controllers
             _generateQRCode = generateQRCode;
         }
 
-        public IActionResult Index(int page = 1, int take = 2)
+        public IActionResult Index(int page = 1, int take = 10)
         {
             var paginationVM = _productService.GetProducts(page, take);
             return View(paginationVM);
@@ -62,6 +62,11 @@ namespace SoundSystemShop.Controllers
         {
             ViewBag.QrCodeUri = _generateQRCode.GenerateQR(json);
             return View();
+        }
+        public ActionResult FinishDateOfSale(string name)
+        {
+            var finishDate = _productService.FinishDateOfSale(name);
+            return Json(finishDate);
         }
     }
 }

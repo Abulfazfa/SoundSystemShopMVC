@@ -295,7 +295,7 @@ namespace SoundSystemShop.Migrations
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
                             Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "aa889d22-8e08-4d4e-bebd-9aec1efc3505",
+                            ConcurrencyStamp = "04e71250-e7eb-468d-817a-016981d4886a",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             Fullname = "Admin",
@@ -304,7 +304,7 @@ namespace SoundSystemShop.Migrations
                             LockoutEnabled = true,
                             OTP = "0000",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f1234336-be9b-4c31-a6d4-db9bf626c8b9",
+                            SecurityStamp = "9ad7818a-692b-4bc0-a681-aa6b5d6ba6c9",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -520,9 +520,6 @@ namespace SoundSystemShop.Migrations
                     b.Property<int?>("ProductRating")
                         .HasColumnType("int");
 
-                    b.Property<string>("Quality")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("SaleId")
                         .HasColumnType("int");
 
@@ -571,6 +568,38 @@ namespace SoundSystemShop.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductImages");
+                });
+
+            modelBuilder.Entity("SoundSystemShop.Models.ProductSpecification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Desc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductSpecifications");
                 });
 
             modelBuilder.Entity("SoundSystemShop.Models.PromoCode", b =>
@@ -856,6 +885,13 @@ namespace SoundSystemShop.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SoundSystemShop.Models.ProductSpecification", b =>
+                {
+                    b.HasOne("SoundSystemShop.Models.Product", null)
+                        .WithMany("ProductSpecifications")
+                        .HasForeignKey("ProductId");
+                });
+
             modelBuilder.Entity("SoundSystemShop.Models.SocialMediaImg", b =>
                 {
                     b.HasOne("SoundSystemShop.Models.SocialMedia", null)
@@ -886,6 +922,8 @@ namespace SoundSystemShop.Migrations
             modelBuilder.Entity("SoundSystemShop.Models.Product", b =>
                 {
                     b.Navigation("Images");
+
+                    b.Navigation("ProductSpecifications");
                 });
 
             modelBuilder.Entity("SoundSystemShop.Models.Sale", b =>

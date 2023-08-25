@@ -16,12 +16,16 @@ namespace SoundSystemShop.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly GenerateQRCode _generateQRCode;
         private readonly AppDbContext _appDbContext;
-        public OwnProductController(IProductService productService, IUnitOfWork unitOfWork, GenerateQRCode generateQRCode, AppDbContext appDbContext)
+        private readonly EmailService _emailService;
+        private readonly FileService _fileService;
+        public OwnProductController(IProductService productService, IUnitOfWork unitOfWork, GenerateQRCode generateQRCode, AppDbContext appDbContext, EmailService emailService, FileService fileService)
         {
             _productService = productService;
             _unitOfWork = unitOfWork;
             _generateQRCode = generateQRCode;
             _appDbContext = appDbContext;
+            _emailService = emailService;
+            _fileService = fileService;
         }
 
         public IActionResult Index()
@@ -83,6 +87,19 @@ namespace SoundSystemShop.Controllers
             var cproduct = _appDbContext.CustomerProducts.Include(cp => cp.Images).FirstOrDefault(cp => cp.Id == randomNumber);
             if(cproduct == null) return NotFound();
             return View(cproduct);
+        }
+        public IActionResult ShareProduct(string email)
+        {
+            
+            string body = string.Empty;
+            string path = "wwwroot/template/verify.html";
+            string subject = "Get Promo code";
+            body = _fileService.ReadFile(path, body);
+            body = body.Replace("{{Confirm Account}}", "Go to");
+            body = body.Replace("{{Welcome!}}", User.Identity.Name);
+            body = body.Replace("{{link!}}", User.Identity.Name);
+            _emailService.Send(email, subject, body);
+            return NoContent();
         }
     }
 }

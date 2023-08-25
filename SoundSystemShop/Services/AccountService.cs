@@ -20,6 +20,7 @@ namespace SoundSystemShop.Services
         Task<bool> GetRoleList(string userNameOrEmail);
         Task<AppUser> GetUserByNameOrEmail(string userNameOrEmail);
         Task<string> GeneratePasswordResetToken(AppUser existUser);
+        List<AppUser> GetAllUsers();
     }
 
 
@@ -223,6 +224,10 @@ namespace SoundSystemShop.Services
         public async Task<string> GeneratePasswordResetToken(AppUser existUser)
         {
             return await _userManager.GeneratePasswordResetTokenAsync(existUser);
+        }
+        public List<AppUser> GetAllUsers()
+        {
+            return _userManager.Users.ToList();
         }
     }
 

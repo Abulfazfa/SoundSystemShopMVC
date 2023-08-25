@@ -21,6 +21,7 @@ namespace SoundSystemShop.Services
         SelectList GetProductSelectList();
         List<Product> GetAll();
         Product SaleOfDay();
+        DateTime FinishDateOfSale(string name);
     }
     public class ProductService : IProductService
     {
@@ -80,7 +81,16 @@ namespace SoundSystemShop.Services
             }
             images.FirstOrDefault().IsMain = true;
             product.Images = images;
-
+            
+            List<ProductSpecification> productSpecifications = new List<ProductSpecification>();
+            string[] splitArray = productVM.Quality.Split(';');
+            foreach (var item in splitArray)
+            {
+                var productSpecification = new ProductSpecification();
+                productSpecification.Name = item.Split('=')[0]; 
+                productSpecification.Desc = item.Split('=')[1];
+                productSpecifications.Add(productSpecification);
+            }
             await _unitOfWork.ProductRepo.AddAsync(product);
             _unitOfWork.Commit();
             return true;
@@ -174,29 +184,37 @@ namespace SoundSystemShop.Services
         }
         public Product SaleOfDay()
         {
-            //var sale = _unitOfWork.SaleRepo.GetAllAsync().Result.FirstOrDefault(s => s.Name == "SaleOfDay");
-            //if (sale != null)
-            //{
-            //    var percent = sale.Percent;
-            //    var product = sale.Products.FirstOrDefault();
+            var sale = _unitOfWork.SaleRepo.GetAllAsync().Result.FirstOrDefault(s => s.Name == "Dayly");
+            if (sale != null)
+            {
+                var percent = sale.Percent;
+                var product = sale.Products.FirstOrDefault();
 
-            //    if (IsWithinDiscountInterval(sale.StartDate, sale.FinishDate))
-            //    {
-            //        product.DiscountPrice = product.Price * (percent / 100);
-            //        product.InDiscount = true;
-            //        string script = $"startCountdown('{sale.FinishDate.ToString("yyyy-MM-ddTHH:mm:ss")}')";
-            //    }
-            //    else
-            //    {
-            //        product.DiscountPrice = product.Price;
-            //        product.InDiscount = false;
-            //    }
-            //    _unitOfWork.Commit();
-            //    return product;
-            //}
+                if (IsWithinDiscountInterval(sale.StartDate, sale.FinishDate))
+                {
+                    product.DiscountPrice = product.Price * (percent / 100);
+                    product.InDiscount = true;
+                    string script = $"startCountdown('{sale.FinishDate.ToString("yyyy-MM-ddTHH:mm:ss")}')";
+                }
+                else
+                {
+                    product.DiscountPrice = product.Price;
+                    product.InDiscount = false;
+                }
+                _unitOfWork.Commit();
+                return product;
+            }
             return null;
         }
-
+        public DateTime FinishDateOfSale(string name)
+        {
+            var sale = _unitOfWork.SaleRepo.GetAllAsync().Result.FirstOrDefault(s => s.Name == name);
+            if (sale != null)
+            {
+                return sale.FinishDate;
+            }
+            return DateTime.Now;
+        }
 
         public void Discount()
         {

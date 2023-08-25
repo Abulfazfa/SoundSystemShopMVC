@@ -243,4 +243,13 @@ public class AccountController : Controller
         return RedirectToAction("Login");
     }
 
+    public IActionResult GetUser(string userName)
+    {
+        if (string.IsNullOrEmpty(userName)) return null;
+        var exist = _accountService.GetAllUsers().Where(p => p.UserName.ToLower().Contains(userName.ToLower()))
+                .Take(3)
+                .OrderByDescending(p => p.Id).ToList();
+        return Json(exist);
+    }
+
 }

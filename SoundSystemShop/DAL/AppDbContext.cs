@@ -16,6 +16,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<Category> Categories { get;  set; }
     public DbSet<Product> Products { get;  set; }
     public DbSet<ProductImage> ProductImages { get;  set; }
+    public DbSet<ProductSpecification> ProductSpecifications { get;  set; }
     public DbSet<Slider> Sliders { get; set; }
     public DbSet<Banner> Banners { get; set; }
     public DbSet<Blog> Blogs { get; set; }

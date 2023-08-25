@@ -10,6 +10,54 @@
 'use strict';
 
 (function ($) {
+    $(document).on("keyup", "#usernameInput", function () {
+        var search = $("#usernameInput").val().trim();
+        $.ajax({
+            url: '/Account/GetUser?userName=' + search,  // Replace with your server endpoint URL
+            type: 'GET',
+            success: function (data) {
+                modalSearchResults.innerHTML = '';
+
+                data.forEach(result => {
+                    const userDiv = document.createElement('div');
+                    userDiv.innerHTML = `
+                                                                            <p>${result.userName}</p>
+                                                                            <button class="btn btn-success select-button" data-userid="${result.email}">Send</button>
+                                                                        `;
+                    modalSearchResults.appendChild(userDiv);
+                });
+
+                // Attach click event to Select buttons
+                const selectButtons = document.querySelectorAll('.select-button');
+                selectButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const userId = button.getAttribute('data-userid');
+                        // Call a function to handle the user selection
+                        handleUserSelection(userId);
+                    });
+                });
+            },
+            error: function () {
+                modalSearchResults.innerHTML = 'Error occurred while searching.';
+            }
+        });
+    })
+
+    function searchForUserInModal(username) {
+        const modalSearchResults = document.getElementById('modalSearchResults');
+
+        // Clear previous results
+        modalSearchResults.innerHTML = 'Searching...';
+
+        // Perform AJAX request to fetch user data
+
+    }
+
+    function handleUserSelection(userId) {
+        // Replace this with your actual logic to handle the selected user
+        console.log(`User selected with ID: ${userId}`);
+    }
+
     $(document).ready(function () {
         function updateBasketCount() {
             var basketCountElement = $("#basketCount");
@@ -133,7 +181,56 @@
     });
 
 
+    //////COUNTDOWN/////////////
 
+    function startCountdown() {
+        var saleName = "Dayly"; // Provide the sale name here
+
+        $.ajax({
+            url: "/shop/FinishDateOfSale?name=" + saleName, // Use the correct URL for your action
+            method: "GET",
+            data: { name: saleName },
+            success: function (response) {
+                console.log("success")
+                var finishDate = new Date(response).getTime();
+                Counter(finishDate);
+            },
+            error: function () {
+                console.error("Failed to fetch finish date");
+            }
+        });
+    }
+
+    function Counter(countDownDate) {
+        clearInterval(myInterval);
+
+        var myInterval = setInterval(function () {
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+            if (hours < 10) {
+                hours = "0" + hours;
+            }
+            if (seconds < 10) {
+                seconds = "0" + seconds;
+            }
+
+            document.getElementById("hourArea").innerHTML = hours;
+            document.getElementById("minuteArea").innerHTML = minutes;
+            document.getElementById("secondArea").innerHTML = seconds;
+
+        }, 1000);
+    }
+
+    startCountdown();
+
+    ///////////////////////////
 
     $(document).ready(function () {
         var firstName = $('#firstName').val();
@@ -297,9 +394,7 @@
 
     /* var timerdate = "2020/12/30" */
 
-    $("#countdown").countdown(timerdate, function (event) {
-        $(this).html(event.strftime("<div class='cd-item'><span>%D</span> <p>Days</p> </div>" + "<div class='cd-item'><span>%H</span> <p>Hours</p> </div>" + "<div class='cd-item'><span>%M</span> <p>Minutes</p> </div>" + "<div class='cd-item'><span>%S</span> <p>Seconds</p> </div>"));
-    });
+    
 
     /*------------------
 		Magnific
