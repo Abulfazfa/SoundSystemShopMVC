@@ -66,14 +66,23 @@ namespace SoundSystemShop.Controllers
         public IActionResult Detail(int id)
         {
             var cproduct = _appDbContext.CustomerProducts.Include(cp => cp.Images).FirstOrDefault(cp => cp.Id == id);
+            if (cproduct == null) return NotFound();
             return View(cproduct);
+        }
+        public IActionResult Delete(int id)
+        {
+            var cproduct = _appDbContext.CustomerProducts.FirstOrDefault(cp => cp.Id == id);
+            if (cproduct == null) return NotFound();
+            _appDbContext.CustomerProducts.Remove(cproduct);
+            _appDbContext.SaveChanges();
+            return RedirectToAction("Index");
         }
         public IActionResult SpecialProducts(int randomNumber)
         {
-            
-                var cproduct = _appDbContext.CustomerProducts.Include(cp => cp.Images).FirstOrDefault(cp => cp.Id == randomNumber);
-                return View(cproduct);
-            
+            if (randomNumber <= 0) return NotFound();
+            var cproduct = _appDbContext.CustomerProducts.Include(cp => cp.Images).FirstOrDefault(cp => cp.Id == randomNumber);
+            if(cproduct == null) return NotFound();
+            return View(cproduct);
         }
     }
 }
