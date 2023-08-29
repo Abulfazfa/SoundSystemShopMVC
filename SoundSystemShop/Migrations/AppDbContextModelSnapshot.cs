@@ -295,7 +295,7 @@ namespace SoundSystemShop.Migrations
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
                             Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "04e71250-e7eb-468d-817a-016981d4886a",
+                            ConcurrencyStamp = "1358bfaa-d6ae-4e11-bddf-3c0026743561",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             Fullname = "Admin",
@@ -304,7 +304,7 @@ namespace SoundSystemShop.Migrations
                             LockoutEnabled = true,
                             OTP = "0000",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9ad7818a-692b-4bc0-a681-aa6b5d6ba6c9",
+                            SecurityStamp = "85c7f234-a756-4cc7-8b80-b999d79f2d4d",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -532,6 +532,41 @@ namespace SoundSystemShop.Migrations
                     b.HasIndex("SaleId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("SoundSystemShop.Models.ProductComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductComments");
                 });
 
             modelBuilder.Entity("SoundSystemShop.Models.ProductImage", b =>
@@ -872,6 +907,13 @@ namespace SoundSystemShop.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("SoundSystemShop.Models.ProductComment", b =>
+                {
+                    b.HasOne("SoundSystemShop.Models.Product", null)
+                        .WithMany("ProductComments")
+                        .HasForeignKey("ProductId");
+                });
+
             modelBuilder.Entity("SoundSystemShop.Models.ProductImage", b =>
                 {
                     b.HasOne("SoundSystemShop.Models.CustomerProduct", null)
@@ -922,6 +964,8 @@ namespace SoundSystemShop.Migrations
             modelBuilder.Entity("SoundSystemShop.Models.Product", b =>
                 {
                     b.Navigation("Images");
+
+                    b.Navigation("ProductComments");
 
                     b.Navigation("ProductSpecifications");
                 });

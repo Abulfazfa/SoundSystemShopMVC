@@ -21,7 +21,9 @@ namespace SoundSystemShop.Services
         SelectList GetProductSelectList();
         List<Product> GetAll();
         Product SaleOfDay();
-        DateTime FinishDateOfSale(string name);
+        Sale FinishDateOfSale(string name);
+        bool CreateProductComment(int productId, string? name, string? email, string comment);
+
     }
     public class ProductService : IProductService
     {
@@ -91,6 +93,7 @@ namespace SoundSystemShop.Services
                 productSpecification.Desc = item.Split('=')[1];
                 productSpecifications.Add(productSpecification);
             }
+            product.ProductSpecifications = productSpecifications;  
             await _unitOfWork.ProductRepo.AddAsync(product);
             _unitOfWork.Commit();
             return true;
@@ -184,77 +187,51 @@ namespace SoundSystemShop.Services
         }
         public Product SaleOfDay()
         {
-            var sale = _unitOfWork.SaleRepo.GetAllAsync().Result.FirstOrDefault(s => s.Name == "Dayly");
+            var sale = _unitOfWork.SaleRepo.GetSaleWithIncludes().FirstOrDefault(s => s.Name == "Daiyly");
             if (sale != null)
             {
-                var percent = sale.Percent;
                 var product = sale.Products.FirstOrDefault();
-
-                if (IsWithinDiscountInterval(sale.StartDate, sale.FinishDate))
-                {
-                    product.DiscountPrice = product.Price * (percent / 100);
-                    product.InDiscount = true;
-                    string script = $"startCountdown('{sale.FinishDate.ToString("yyyy-MM-ddTHH:mm:ss")}')";
-                }
-                else
-                {
-                    product.DiscountPrice = product.Price;
-                    product.InDiscount = false;
-                }
-                _unitOfWork.Commit();
                 return product;
             }
             return null;
         }
-        public DateTime FinishDateOfSale(string name)
+        public Sale FinishDateOfSale(string name)
         {
             var sale = _unitOfWork.SaleRepo.GetAllAsync().Result.FirstOrDefault(s => s.Name == name);
-            if (sale != null)
-            {
-                return sale.FinishDate;
-            }
-            return DateTime.Now;
+            return sale;
         }
-
-        public void Discount()
+        public Sale DateOfSale(string name)
         {
-            foreach (var item in _unitOfWork.SaleRepo.GetAllAsync().Result)
-            {
-                DateTime startTime = item.StartDate;
-                DateTime endTime = item.FinishDate;
+            var sale = _unitOfWork.SaleRepo.GetAllAsync().Result.FirstOrDefault(s => s.Name == name);
+            return sale;
+        }
+        public void Discount(string? saleName = null)
+        {
+            var sales = _unitOfWork.SaleRepo.GetSaleWithIncludes();
 
-                if (item.Products.Count != 0)
+            foreach (var sale in sales)
+            {
+                if (saleName != null && sale.Name != saleName)
+                    continue;
+
+                DateTime startTime = sale.StartDate;
+                DateTime endTime = sale.FinishDate;
+                bool isInDiscountInterval = IsWithinDiscountInterval(startTime, endTime);
+                
+                foreach (var product in sale.Products)
                 {
-                    foreach (var product in item.Products)
+                    if (isInDiscountInterval)
                     {
-                        if (IsWithinDiscountInterval(startTime, endTime))
-                        {
-                            product.DiscountPrice = product.Price * (item.Percent / 100);
-                            product.InDiscount = true;
-                        }
-                        else
-                        {
-                            product.DiscountPrice = product.Price;
-                            product.InDiscount = false;
-                        }
+                        product.DiscountPrice = product.Price * ((100 - sale.Percent) / 100);
+                        product.InDiscount = true;
+                    }
+                    else
+                    {
+                        product.DiscountPrice = product.Price;
+                        product.InDiscount = false;
                     }
                 }
-                else
-                {
-                    foreach (var product in _unitOfWork.ProductRepo.GetProductWithIncludes().ToList())
-                    {
-                        if (IsWithinDiscountInterval(startTime, endTime))
-                        {
-                            product.DiscountPrice = product.Price * (item.Percent / 100);
-                            product.InDiscount = true;
-                        }
-                        else
-                        {
-                            product.DiscountPrice = product.Price;
-                            product.InDiscount = false;
-                        }
-                    }
-                }
+
                 _unitOfWork.Commit();
             }
         }
@@ -264,20 +241,21 @@ namespace SoundSystemShop.Services
             DateTime now = DateTime.Now;
             return now >= startTime && now <= endTime;
         }
-        //public bool CreateProductComment(int productId, string name, string email, string comment)
-        //{
-        //    var product = GetProductDetail(productId);
-        //    if (product == null) return false;
-        //    BlogComment blogComment = new()
-        //    {
-        //        UserName = name,
-        //        UserEmail = email,
-        //        Comment = comment
-        //    };
-        //    product.Comments.Add(blogComment);
-        //    _unitOfWork.Commit();
-        //    return true;
-        //}
+
+        public bool CreateProductComment(int productId, string? name, string? email, string comment)
+        {
+            var product = GetProductDetail(productId);
+            if (product == null) return false;
+            ProductComment productComment = new()
+            {
+                UserName = name,
+                UserEmail = email,
+                Comment = comment
+            };
+            product.ProductComments.Add(productComment);
+            _unitOfWork.Commit();
+            return true;
+        }
     }
 
 }

@@ -18,7 +18,7 @@ namespace SoundSystemShop.Areas.AdminArea.Controllers
 
         public IActionResult Index()
         {
-            return View(_saleService.GetAll().Result);
+            return View(_saleService.GetAll());
         }
         public IActionResult Create()
         {
@@ -45,6 +45,7 @@ namespace SoundSystemShop.Areas.AdminArea.Controllers
         }
         public IActionResult Update(int id)
         {
+            ViewBag.Products = _productService.GetProductSelectList();
             var saleVM = _saleService.MapSale(id);
             if (saleVM == null) return NotFound();
             return View(saleVM);
@@ -52,9 +53,16 @@ namespace SoundSystemShop.Areas.AdminArea.Controllers
         [HttpPost]
         public IActionResult Update(int id, SaleVM saleVM)
         {
-            if(_saleService.Update(id, saleVM).Result) return RedirectToAction("Index");
+            ViewBag.Products = _productService.GetProductSelectList();
+            if (_saleService.Update(id, saleVM)) return RedirectToAction("Index");
             return View(saleVM);
         }
-        
+        public IActionResult ABCD()
+        {
+            _saleService.SendSaleEmail();
+            return Json("Sended");
+        }
+
+
     }
 }

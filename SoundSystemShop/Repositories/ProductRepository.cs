@@ -15,7 +15,7 @@ namespace SoundSystemShop.Services
 
         public List<Product> GetProductWithIncludes()
         {
-            return _dbContext.Products.Include(p => p.Images).Include(p => p.Category).ToList();
+            return _dbContext.Products.Include(p => p.Images).Include(p => p.Category).Include(p => p.ProductComments).Include(p => p.ProductSpecifications).ToList();
         }
 
         public IQueryable<Product> Queryable()

@@ -182,53 +182,77 @@
 
 
     //////COUNTDOWN/////////////
-
-    function startCountdown() {
-        var saleName = "Dayly"; // Provide the sale name here
-
+    function Countdown(saleName, number) {
         $.ajax({
-            url: "/shop/FinishDateOfSale?name=" + saleName, // Use the correct URL for your action
+            url: "/shop/FinishDateOfSale?name=" + saleName, // Remove the query string here
             method: "GET",
             data: { name: saleName },
             success: function (response) {
-                console.log("success")
-                var finishDate = new Date(response).getTime();
-                Counter(finishDate);
+                var startDate = new Date(response.startDate).getTime();
+                var finishDate = new Date(response.finishDate).getTime();
+                var now = new Date().getTime();
+                console.log(startDate)
+                console.log(finishDate)
+                console.log(now)
+                if (startDate <= now && finishDate >= now) {
+                    console.log("Salam")
+                    Counter(finishDate, number); // Start countdown for the first sale in the first container
+                }
+                else {
+                    console.log("HIIII")
+                }
             },
             error: function () {
                 console.error("Failed to fetch finish date");
             }
         });
+
     }
 
-    function Counter(countDownDate) {
-        clearInterval(myInterval);
 
-        var myInterval = setInterval(function () {
+    function Counter(countDownDate, containerIndex) {
+        var myInterval;
+        function updateCountdown() {
+            
             var now = new Date().getTime();
             var distance = countDownDate - now;
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            if (minutes < 10) {
-                minutes = "0" + minutes;
-            }
-            if (hours < 10) {
-                hours = "0" + hours;
-            }
-            if (seconds < 10) {
-                seconds = "0" + seconds;
-            }
+            if (countDownDate < now) {
+                clearInterval(myInterval);
 
-            document.getElementById("hourArea").innerHTML = hours;
-            document.getElementById("minuteArea").innerHTML = minutes;
-            document.getElementById("secondArea").innerHTML = seconds;
+            } else {
+                if(containerIndex == 0) $("#bargainSection").removeClass("d-none")
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        }, 1000);
+                if (minutes < 10) {
+                    minutes = "0" + minutes;
+                }
+                if (hours < 10) {
+                    hours = "0" + hours;
+                }
+                if (seconds < 10) {
+                    seconds = "0" + seconds;
+                } 
+
+                document.getElementsByClassName("hourArea")[containerIndex].innerHTML = hours;
+                document.getElementsByClassName("minuteArea")[containerIndex].innerHTML = minutes;
+                document.getElementsByClassName("secondArea")[containerIndex].innerHTML = seconds;
+                if (hours == minutes && minutes == seconds && minutes == "00") { 
+                    location.reload();
+                    console.log("hi")
+                }
+            }
+        }
+
+        updateCountdown();
+        myInterval = setInterval(updateCountdown, 1000);
     }
 
-    startCountdown();
+    Countdown("Daiyly", 1);
+    Countdown("NightBargain", 0);
+
 
     ///////////////////////////
 

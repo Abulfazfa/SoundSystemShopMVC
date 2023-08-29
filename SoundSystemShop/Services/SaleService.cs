@@ -9,33 +9,37 @@ namespace SoundSystemShop.Services
 {
     public interface ISaleService
     {
-        Task<List<Sale>> GetAll();
-        Task<Sale> Get(int id);
+        List<Sale> GetAll();
+        Sale Get(int id);
         Task Create(SaleVM saleVM);
         Task<bool> Delete(int id);
-        Task<bool> Update(int id, SaleVM saleVM);
+        bool Update(int id, SaleVM saleVM);
         SaleVM MapSale(int id);
-
+        void SendSaleEmail();
     }
     public class SaleService : ISaleService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IMapper _mapper;
+        private readonly IFileService _fileService;
+        private readonly IEmailService _emailService;
 
-        public SaleService(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment, IMapper mapper)
+        public SaleService(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment, IMapper mapper, IFileService fileService, IEmailService emailService)
         {
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
             _mapper = mapper;
+            _fileService = fileService;
+            _emailService = emailService;
         }
-        public async Task<List<Sale>> GetAll()
+        public List<Sale> GetAll()
         {
-            return await _unitOfWork.SaleRepo.GetAllAsync();
+            return _unitOfWork.SaleRepo.GetSaleWithIncludes().ToList();
         }
-        public async Task<Sale> Get(int id)
+        public Sale Get(int id)
         {
-            return await _unitOfWork.SaleRepo.GetByIdAsync(id);
+            return _unitOfWork.SaleRepo.GetSaleWithIncludes().FirstOrDefault(s => s.Id == id);
         }
         public async Task Create(SaleVM saleVM)
         {
@@ -45,9 +49,19 @@ namespace SoundSystemShop.Services
             }
 
             Sale sale = _mapper.Map<Sale>(saleVM);
-            foreach (var item in saleVM.ProductIds)
+            if(saleVM.ProductIds != null)
             {
-                sale.Products.Add(_unitOfWork.ProductRepo.GetByIdAsync(item).Result);
+                foreach (var item in saleVM.ProductIds)
+                {
+                    sale.Products.Add(_unitOfWork.ProductRepo.GetByIdAsync(item).Result);
+                }
+            }
+            else
+            {
+                foreach (var item in _unitOfWork.ProductRepo.GetAllAsync().Result)
+                {
+                    sale.Products.Add(item);
+                }
             }
             sale.ImgUrl = saleVM.Photo.SaveImage(_webHostEnvironment, "assets/img/sale");
             await _unitOfWork.SaleRepo.AddAsync(sale);
@@ -70,11 +84,13 @@ namespace SoundSystemShop.Services
                 return false;
             }
         }
-        public async Task<bool> Update(int id, SaleVM saleVM)
+        public bool Update(int id, SaleVM saleVM)
         {
-            var sale = await _unitOfWork.SaleRepo.GetByIdAsync(id);
+            
+            var sale = _unitOfWork.SaleRepo.GetSaleWithIncludes().FirstOrDefault(s => s.Id == id);
             if (sale == null) return false;
             _mapper.Map<SaleVM, Sale>(saleVM, sale);
+            sale.Products = new List<Product>();
             if (saleVM.Photo != null)
             {
                 bool exist = _unitOfWork.SaleRepo.ExistsWithImgUrl(saleVM.Photo.FileName, id);
@@ -85,18 +101,75 @@ namespace SoundSystemShop.Services
                     sale.ImgUrl = saleVM.Photo.SaveImage(_webHostEnvironment, "assets/img/sale");
                 }
             }
-            
+            if (saleVM.ProductIds != null)
+            {
+                
+                foreach (var item in saleVM.ProductIds)
+                {
+                    sale.Products.Add(_unitOfWork.ProductRepo.GetByIdAsync(item).Result);
+                }
+            }
+            else
+            {
+                sale.Products = new List<Product>();
+                foreach (var item in _unitOfWork.ProductRepo.GetAllAsync().Result)
+                {
+                    sale.Products.Add(item);
+                }
+            }
+
             _unitOfWork.Commit();
             return true;
         }
         public SaleVM MapSale(int id)
         {
-            var sale = Get(id).Result;
+            var sale = Get(id);
             if (sale == null) return null;
             SaleVM saleVM = _mapper.Map<SaleVM>(sale);
             saleVM.ImgUrl = sale.ImgUrl;
             return saleVM;
         }
-        
+        public void SendSaleEmail()
+        {
+            var sale = _unitOfWork.SaleRepo.GetSaleWithIncludes().FirstOrDefault(s => s.Name == "NightBargain");
+            if (sale == null) return;
+
+            DateTime startTime = sale.StartDate;
+            DateTime endTime = sale.FinishDate;
+            var users = _unitOfWork.AppUserRepo.GetAllAsync().Result;
+
+            TimeSpan timeRemaining = startTime - DateTime.Now;
+
+            if (timeRemaining <= TimeSpan.FromMinutes(3) && timeRemaining > TimeSpan.FromMinutes(2))
+            {
+                foreach (var item in users.Where(u => u.UserName != "Admin"))
+                {
+                    SendSaleEmail(item, sale);
+                }
+            }
+        }
+        public void SendSaleEmail(AppUser user, Sale sale)
+        {
+            string body = string.Empty;
+            string path = "wwwroot/template/SaleEmail.html";
+            string subject = "Information";
+            body = _fileService.ReadFile(path, body);
+            user.Location = user.Location.Replace(",", "/");
+
+            // Convert Sale's StartDate from Baku time to Ankara time
+            TimeZoneInfo bakuTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Asia/Baku"); // Replace with the correct time zone ID for Baku
+            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(user.Location); // Replace with the correct time zone ID for Ankara
+
+            DateTime bakuStartDate = TimeZoneInfo.ConvertTimeFromUtc(sale.StartDate, bakuTimeZone);
+            DateTime userStartDate = TimeZoneInfo.ConvertTime(bakuStartDate, userTimeZone);
+
+            body = body.Replace("{{Sale}}", sale.Percent.ToString());
+            body = body.Replace("{{SaleDesc}}", userStartDate.ToString("M"));
+            body = body.Replace("{{Time}}", userStartDate.ToString("t"));
+            body = body.Replace("{img}", "https://cdn1.vectorstock.com/i/1000x1000/57/80/night-sale-dark-banner-vector-18535780.jpg");
+            _emailService.Send(user.Email, subject, body);
+        }
+
+
     }
 }

@@ -5,7 +5,33 @@
 }
 
 <!-- Hero Section Begin -->
-    <section class="hero">
+<section id="bargainSection" class="d-none" style="background-color: bisque; width: 98.7vw; margin-top:113px">
+    <div class="row">
+
+        <div class="categories__deal__countdown" style="margin: auto;">
+            <span>Deal Of The Week</span>
+            <h2>Multi-pocket Chest Bag Black</h2>
+            <div class="categories__deal__countdown__timer" id="countdown">
+                <div class="cd-item">
+                    <span class="hourArea"></span>
+                    <p>Hours</p>
+                </div>
+                <div class="cd-item">
+                    <span class="minuteArea"></span>
+                    <p>Minutes</p>
+                </div>
+                <div class="cd-item">
+                    <span class="secondArea"></span>
+                    <p>Seconds</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+    <section class="hero m-0">
+        
         <div class="hero__slider owl-carousel">
             @foreach (var item in Model.Sliders)
         {
@@ -111,24 +137,24 @@
                         <div class="product-name">
                             <p class="text-center fw-bold text-dark mb-4 ">@product.Name</p>
                         </div>
-                        <div class="product-price d-flex justify-content-between">
+                        <div class="product-price d-flex justify-content-around align-items-center">
                             <div class="discount">
-                                @if (!product.InDiscount)
+                                @if (product.InDiscount)
                                 {
                                     <span style="text-decoration:line-through solid red;font-weight:normal"
                                   class="text-dark">
-                                        <small class="azn_span text-dark">$</small> 1999.99
+                                        <small class="azn_span text-dark">$</small> @product.Price.00
                                     </span>
                                     <br>
                                     <span class="nprice text-danger fw-bold" id="price-1060446">
-                                        <small class="azn_span fw-normal">$</small> 1849.99
+                                        <small class="azn_span fw-normal">$</small> @product.DiscountPrice.00
                                     </span>
                                 }
                                 else
                                 {
-                                                                        <span style="text-decoration:line-through solid red;font-weight:normal"
+                                                                        <span style="font-weight:normal"
                                   class="text-dark">
-                                       <small class="azn_span text-dark">$</small> 1999.99 
+                                       <small class="azn_span text-dark">$</small> @product.Price.00
                                     </span>
                                 }
                                 
@@ -156,40 +182,45 @@
             <div class="row product__filter">
                 @foreach (var product in Model.Products.Where(p => p.ProductRating > 3))
                 {
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="/assets/img/product/@product.Images.FirstOrDefault().ImgUrl">
-                            <span class="label">New</span>
-                            <ul class="product__hover">
-                                <li><a href="~/assets/#"><img src="~/assets/img/icon/heart.png" alt=""></a></li>
-                                <li><a href="~/assets/#"><img src="~/assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="~/assets/#"><img src="~/assets/img/icon/search.png" alt=""></a></li>
-                            </ul>
+                <div class="product col-3 swiper-slide">
+                    <a asp-controller="shop" asp-action="product" asp-route-id="@product.Id">
+                        <div class="product-img d-flex justify-content-center mt-5 mb-4">
+                            <img class="img-fluid w-100"
+                             src="~/assets/img/product/@product.Images.FirstOrDefault().ImgUrl"
+                             alt="" style="height:262.5px;">
                         </div>
-                        <div class="product__item__text">
-                            <h6>@product.Name</h6>
-                            <a href="~/assets/#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                @for (int i = 0; i < product.ProductRating; i++)
+                        <div class="product-name">
+                            <p class="text-center fw-bold text-dark mb-4 ">@product.Name</p>
+                        </div>
+                        <div class="product-price d-flex justify-content-around align-items-center">
+                            <div class="discount">
+                                @if (product.InDiscount)
                                 {
-                                    <i class="fa fa-star-o"></i>
+                                    <span style="text-decoration:line-through solid red;font-weight:normal"
+                                  class="text-dark">
+                                        <small class="azn_span text-dark">$</small> @product.Price.00
+                                    </span>
+                                    <br>
+                                    <span class="nprice text-danger fw-bold" id="price-1060446">
+                                        <small class="azn_span fw-normal">$</small> @product.DiscountPrice.00
+                                    </span>
                                 }
+                                else
+                                {
+                                    <span style="font-weight:normal"
+                                  class="text-dark">
+                                        <small class="azn_span text-dark">$</small> @product.Price.00
+                                    </span>
+                                }
+
                             </div>
-                            <h5>$@product.Price</h5>
-                            <div class="product__color__select">
-                                <label for="pc-1">
-                                    <input type="radio" id="pc-1">
-                                </label>
-                                <label class="active black" for="pc-2">
-                                    <input type="radio" id="pc-2">
-                                </label>
-                                <label class="grey" for="pc-3">
-                                    <input type="radio" id="pc-3">
-                                </label>
-                            </div>
+                            <a class="btn-add-to-cart mt-2 border-0 text-light minusIcon" data-id="@product.Id"
+                           style="background-color: black; font-size: 14px; font-weight: bold; padding: 5px 13px; border-radius: 3px; cursor:pointer;">
+                                Add Basket
+                            </a>
                         </div>
-                    </div>
-                    </div>
+                    </a>
+                </div>
                 }
             </div>
         </div>
@@ -200,14 +231,14 @@
     <section class="categories spad">
         <div class="container">
             <div class="row">
-                @if (Model.DayOfDiscount.InDiscount == true)
+                @if (Model.DayOfDiscount != null && Model.DayOfDiscount.InDiscount == true)
                 {
                     <div class="col-lg-4">
                     <div class="categories__hot__deal">
                         <a asp-controller="shop" asp-action="product"><img src="~/assets/img/product/@Model.DayOfDiscount.Images.FirstOrDefault().ImgUrl" alt=""></a>
                         <div class="hot__deal__sticker">
                             <span>Sale Of</span>
-                            <h5>$@(Model.DayOfDiscount.Price - Model.DayOfDiscount.DiscountPrice)</h5>
+                            <h5>$@Model.DayOfDiscount.DiscountPrice</h5>
                         </div>
                     </div>
                 </div>
@@ -218,19 +249,19 @@
                         
                         <div class="categories__deal__countdown__timer" >
                             <div class="cd-item">
-                                <span id="hourArea"></span>
+                                <span class="hourArea"></span>
                                 <p>Hours</p>
                             </div>
                             <div class="cd-item">
-                                <span id="minuteArea" cl></span>
+                                <span class="minuteArea" cl></span>
                                 <p>Minutes</p>
                             </div>
                             <div class="cd-item">
-                                <span id="secondArea"></span>
+                                <span class="secondArea"></span>
                                 <p>Seconds</p>
                             </div>
                         </div>
-                        <a href="#" class="primary-btn">Shop now</a>
+                        <a asp-controller="basket" asp-action="addbasket" class="primary-btn">Shop now</a>
                     </div>
                 </div>
                 }
@@ -282,7 +313,7 @@
                 @foreach (var item in Model.Blogs.Take(3)){
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="blog__item">
-                            <div class="blog__item__pic set-bg" data-setbg="/assets/img/blog/@item.ImgUrl"></div>
+                            <div class="blog__item__pic set-bg" data-setbg="/assets/img/blog/@item.ImgUrl" style="background-position: left;"></div>
                             <div class="blog__item__text">
                                 <span><img src="~/assets/img/icon/calendar.png" alt=""> @item.CreationDate</span>
                                 <h5>@item.Name</h5>

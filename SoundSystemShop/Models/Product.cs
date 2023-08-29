@@ -11,12 +11,14 @@ public class Product : BaseEntity
     public int? ProductRating { get; set; }
     public List<ProductImage> Images { get; set; }
     public List<ProductSpecification>? ProductSpecifications { get; set; }
+    public List<ProductComment>? ProductComments { get; set; }
     public Category Category { get; set; }
     public int CategoryId { get; set; }
     public bool InDiscount { get; set; }
     public Product()
     {
         Images = new List<ProductImage>();
+        ProductComments = new List<ProductComment>();
         ProductSpecifications = new List<ProductSpecification>();
         IsDeleted = false;
         InDiscount = false;
@@ -40,6 +42,18 @@ public class ProductSpecification : BaseEntity
     public string Desc { get; set; }
 
     public ProductSpecification()
+    {
+        IsDeleted = false;
+        CreationDate = DateTime.Now;
+    }
+}
+public class ProductComment : BaseEntity
+{
+    public string UserName { get; set; }
+    public string? UserEmail { get; set; }
+    public string Comment { get; set; }
+
+    public ProductComment()
     {
         IsDeleted = false;
         CreationDate = DateTime.Now;

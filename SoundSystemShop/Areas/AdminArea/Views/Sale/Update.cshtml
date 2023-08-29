@@ -43,7 +43,10 @@
                         <input class="form-control" asp-for="FinishDate" id="fileInput">
                         <span asp-validation-for="FinishDate"></span>
                     </div>
-
+                    <div class="form-group">
+                        <select asp-for="ProductIds" asp-items="@(ViewBag.Products)">
+                        </select>
+                    </div>
 
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <a class="btn btn-dark" asp-controller="sale" asp-action="index">Back</a>

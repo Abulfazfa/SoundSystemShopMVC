@@ -9,8 +9,10 @@ namespace SoundSystemShop.Services
 {
     public class PromoEmailSenderHostedService : IHostedService, IDisposable
     {
-        private Timer _timer;
+        private Timer _promoTimer;
+        private Timer _saleTimer;
         private readonly IServiceProvider _serviceProvider;
+
         public PromoEmailSenderHostedService(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
@@ -18,12 +20,13 @@ namespace SoundSystemShop.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromDays(14));
+            _promoTimer = new Timer(DoWorkPromo, null, TimeSpan.Zero, TimeSpan.FromDays(14));
+            _saleTimer = new Timer(DoWorkSale, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
 
             return Task.CompletedTask;
         }
 
-        private void DoWork(object state)
+        private async void DoWorkPromo(object state)
         {
             using (var scope = _serviceProvider.CreateScope())
             {
@@ -32,16 +35,29 @@ namespace SoundSystemShop.Services
             }
         }
 
+        private async void DoWorkSale(object state)
+        {
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var saleService = scope.ServiceProvider.GetRequiredService<ISaleService>();
+                saleService.SendSaleEmail();
+            }
+            
+        }
+
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            _timer?.Change(Timeout.Infinite, 0);
+            _promoTimer?.Change(Timeout.Infinite, 0);
+            _saleTimer?.Change(Timeout.Infinite, 0);
             return Task.CompletedTask;
         }
 
         public void Dispose()
         {
-            _timer?.Dispose();
+            _promoTimer?.Dispose();
+            _saleTimer?.Dispose();
         }
     }
+
 
 }
