@@ -68,7 +68,7 @@ namespace SoundSystemShop.Services
         }
         public List<Product> GetUserActivity(string? username)
         {
-            var activities = _appDbContext.UserActivities.ToList(); // USER NAME /////////////////////////////
+            var activities = _appDbContext.UserActivities.OrderByDescending(u => u.ActivityDate).ToList(); // USER NAME /////////////////////////////
             List<string> result = new List<string>();
             string pattern = @".*Product/\d+.*|Product/\d+.*";
             foreach (var item in activities)
@@ -97,8 +97,12 @@ namespace SoundSystemShop.Services
                 // Check if the numberPart has already been processed
                 if (!processedNumbers.Contains(numberPart))
                 {
-                    result.Add(_productService.GetProductDetail(numberPart));
-                    processedNumbers.Add(numberPart);
+                    var exist = _productService.GetProductDetail(numberPart);
+                    if(exist != null)
+                    {
+                        result.Add(exist);
+                        processedNumbers.Add(numberPart);
+                    }
                 }
             }
 

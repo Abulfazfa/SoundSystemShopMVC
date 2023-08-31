@@ -19,24 +19,7 @@ namespace SoundSystemShop.Controllers
 
         public IActionResult Index()
         {
-            string basket = Request.Cookies["basket"];
-            List<BasketVM> products;
-            if (basket == null)
-            {
-                products = new List<BasketVM>();
-            }
-            else
-            {
-                products = JsonConvert.DeserializeObject<List<BasketVM>>(Request.Cookies["basket"]);
-                foreach (var item in products)
-                {
-                    Product existproduct = _productService.GetProductDetail(item.Id);
-                    item.Name = existproduct.Name;
-                    item.Price = existproduct.Price;
-                    item.ImgUrl = existproduct.Images.FirstOrDefault().ImgUrl;
-                }
-            }            
-            return View(products);
+            return View(BasketProducts());
         }
         public IActionResult AddBasket(int id)
         {
@@ -168,7 +151,28 @@ namespace SoundSystemShop.Controllers
 
         public IActionResult CheckOut()
         {
-            return View();
+            return View(BasketProducts());
+        }
+        private List<BasketVM> BasketProducts()
+        {
+            string basket = Request.Cookies["basket"];
+            List<BasketVM> products;
+            if (basket == null)
+            {
+                products = new List<BasketVM>();
+            }
+            else
+            {
+                products = JsonConvert.DeserializeObject<List<BasketVM>>(Request.Cookies["basket"]);
+                foreach (var item in products)
+                {
+                    Product existproduct = _productService.GetProductDetail(item.Id);
+                    item.Name = existproduct.Name;
+                    item.Price = existproduct.Price;
+                    item.ImgUrl = existproduct.Images.FirstOrDefault().ImgUrl;
+                }
+            }
+            return products;
         }
     }
 }

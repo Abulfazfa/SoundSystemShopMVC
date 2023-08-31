@@ -1,15 +1,10 @@
-﻿<section class="checkout spad">
+﻿@model List<BasketVM>
+<section class="checkout spad mt-3">
     <div class="container">
         <div class="checkout__form">
             <form action="#">
                 <div class="row">
                     <div class="col-lg-8 col-md-6">
-                        <h6 class="coupon__code">
-                            <span class="icon_tag_alt"></span> Have a coupon? <a href="#">
-                                Click
-                                here
-                            </a> to enter your code
-                        </h6>
                         <h6 class="checkout__title">Billing Details</h6>
                         <div class="row">
                             <div class="col-lg-6">
@@ -54,19 +49,22 @@
                             <h4 class="order__title">Your order</h4>
                             <div class="checkout__order__products">Product <span>Total</span></div>
                             <ul class="checkout__total__products">
-                                <li>1. Vanilla salted caramel <span>$ 300.0</span></li>
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.Name (x @item.BasketCount)<span>$@(item.Price*item.BasketCount)</span></li>
+                                }
                                 
                             </ul>
                             <ul class="checkout__total__all">
-                                <li>Subtotal <span></span></li>
-                                <li>Discount <span></span></li>
-                                <li>Total <span class="text-danger"></span></li>
+                                <li>Subtotal <span class="pricespan totalPriceArea" id="subtotalArea"></span></li>
+                                <li>Discount <span class="discountArea" id="discountArea"></span></li>
+                                <li>Total <span class="text-danger checkoutTotal" id="total"></span></li>
                             </ul>
                             <div class="checkout__input">
                                 <p>Promo Code<span>*</span></p>
                                 <div class="d-flex">
-                                    <input type="text">
-                                    <button style="height:50px">Add</button>
+                                    <input type="text" id="promoInput">
+                                    <button style="height:50px" id="promoAddButton">Add</button>
                                 </div>
                             </div>
                             <div class="checkout__input__checkbox">

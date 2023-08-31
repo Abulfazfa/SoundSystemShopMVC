@@ -16,15 +16,18 @@ namespace SoundSystemShop.Controllers
     {
         private readonly IProductService _productService;
         private readonly GenerateQRCode _generateQRCode;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ShopController(IProductService productService, GenerateQRCode generateQRCode)
+        public ShopController(IProductService productService, GenerateQRCode generateQRCode, IUnitOfWork unitOfWork)
         {
             _productService = productService;
             _generateQRCode = generateQRCode;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index(int page = 1, int take = 10)
         {
+            ViewBag.ShopProductCategory = _unitOfWork.CategoryRepo.GetAllAsync().Result;
             var paginationVM = _productService.GetProducts(page, take);
             return View(paginationVM);
         }
@@ -38,6 +41,12 @@ namespace SoundSystemShop.Controllers
         public IActionResult GetCategoryProduct(string categoryName)
         {
             var exist = _productService.GetAll().Where(c => c.Category.Name == categoryName).ToList();
+            if (exist == null) return NotFound();
+            return Json(exist);
+        }
+        public IActionResult ShopOrderPrice(string str)
+        {
+            var exist = str == "lth" ? _productService.GetAll().OrderByDescending(p => p.Price).ToList() : _productService.GetAll().OrderBy(p => p.Price).ToList();
             if (exist == null) return NotFound();
             return Json(exist);
         }

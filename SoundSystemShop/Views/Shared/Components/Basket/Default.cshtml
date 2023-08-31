@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         <div class="button text-center" style="border: 2px solid rgb(0,0,0,.08); padding: 20px; margin-top: 20px;">
-                            <a asp-controller="shop" asp-action="checkOut" class="cash border-0 text-light fs-4" style="background-color: black; padding: 10px 60px; border-radius: 5px; cursor:pointer;">
+                        <a asp-controller="basket" asp-action="checkOut" asp-route-baskets="@Model" class="cash border-0 text-light fs-4" style="background-color: black; padding: 10px 60px; border-radius: 5px; cursor:pointer;">
                                 Check Out
                             </a>
                         </div>

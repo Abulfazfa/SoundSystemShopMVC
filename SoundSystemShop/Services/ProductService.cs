@@ -55,7 +55,7 @@ namespace SoundSystemShop.Services
         public List<Product> GetAll()
         {
             Discount();
-            return _unitOfWork.ProductRepo.GetProductWithIncludes().ToList();
+            return _unitOfWork.ProductRepo.GetProductWithIncludes().OrderByDescending(p => p.CreationDate).ToList();
         }
         public Product GetProductDetail(int id)
         {

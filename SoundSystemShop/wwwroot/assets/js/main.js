@@ -42,7 +42,18 @@
             }
         });
     })
-
+    $("#promoAddButton").addEventListener("click", function () {
+        $.ajax({
+            url: '/basket/GetBasketCount', // Use relative URL
+            type: 'GET',
+            success: function (data) {
+                basketCountElement.text(data);
+            },
+            error: function () {
+                console.log('Error retrieving basket count.');
+            }
+        });
+    })
     function searchForUserInModal(username) {
         const modalSearchResults = document.getElementById('modalSearchResults');
 
@@ -105,7 +116,29 @@
                 }
             });
         }
+        function CheckoutPromo() {
+            var discount = $(".discountArea");
 
+            $.ajax({
+                url: '/basket/GetTotalPrice',
+                type: 'GET',
+                success: function (data) {
+                    totalPriceArea.text(data);
+                },
+                error: function () {
+                    console.log('Error retrieving total price.');
+                }
+            });
+        }
+        function CheckoutTotal() {
+            var subtotal = $("#subtotalArea").text();
+            var discount = $("#discountArea").text();
+            console.log(subtotal)
+            console.log(discount)
+            var total = subtotal - discount;
+            $(".checkoutTotal").text(total)
+        }
+        CheckoutTotal();
         function removeItemFromBasket(itemId) {
             $.ajax({
                 url: `/basket/RemoveItem/${itemId}`,
@@ -123,7 +156,7 @@
             updateBasketCount();
             updateTotalPrice();
         }
-
+        
         $(".plusIcon").click(function () {
             var itemId = $(this).data("id");
 
@@ -191,15 +224,13 @@
                 var startDate = new Date(response.startDate).getTime();
                 var finishDate = new Date(response.finishDate).getTime();
                 var now = new Date().getTime();
-                console.log(startDate)
-                console.log(finishDate)
-                console.log(now)
+                
                 if (startDate <= now && finishDate >= now) {
-                    console.log("Salam")
+                    
                     Counter(finishDate, number); // Start countdown for the first sale in the first container
                 }
                 else {
-                    console.log("HIIII")
+                   
                 }
             },
             error: function () {
@@ -281,7 +312,8 @@
     //    })
     //})
 
-
+    ///Price Sort Product
+    
 
     /*------------------
         Preloader
@@ -310,7 +342,7 @@
         var bg = $(this).data('setbg');
         $(this).css('background-image', 'url(' + bg + ')');
     });
-
+    
     //Search Switch
     $('.search-switch').on('click', function () {
         $('.search-model').fadeIn(400);

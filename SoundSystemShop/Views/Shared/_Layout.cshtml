@@ -69,15 +69,19 @@
                             <li><a href="~/assets/#">Pages</a>
                                 <ul class="dropdown">
                                     <li><a asp-controller="about" asp-action="index">About Us</a></li>
-                                    <li><a asp-controller="shop" asp-action="index">Shop Details</a></li>
-                                    <li><a href="">Shopping Cart</a></li>
-                                    <li><a href="~/assets/./checkout.html">Check Out</a></li>
-                                    <li><a asp-controller="account" asp-action="register">Register</a></li>
-                                    <li><a asp-controller="account" asp-action="login">Login</a></li>
+                                    <li><a asp-controller="blog" asp-action="index">Blog</a></li>
+                                    <li><a asp-controller="contact" asp-action="index">Contacts</a></li>
                                 </ul>
                             </li>
-                            <li><a asp-controller="blog">Blog</a></li>
-                            <li><a asp-controller="contact">Contacts</a></li>
+                           
+                            @if (User.Identity.IsAuthenticated) {
+                                <li><a asp-controller="ownproduct" asp-action="index">My Product</a></li>
+                            }
+                            else{
+                                <li><a asp-controller="account" asp-action="register">Register</a></li>
+                                <li><a asp-controller="account" asp-action="login">Login</a></li>
+                            }
+                            
                         </ul>
                     </nav>
                 </div>
@@ -204,6 +208,8 @@
     <script src="~/assets/js/jquery.magnific-popup.min.js"></script>
     <script src="~/assets/js/jquery.countdown.min.js"></script>
     <script src="~/assets/js/jquery.slicknav.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    
     <script src="~/assets/js/mixitup.min.js"></script>
     <script src="~/assets/js/owl.carousel.min.js"></script>
     <script src="~/assets/js/main.js"></script>
