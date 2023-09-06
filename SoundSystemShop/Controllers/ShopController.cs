@@ -46,7 +46,7 @@ namespace SoundSystemShop.Controllers
         }
         public IActionResult ShopOrderPrice(string str)
         {
-            var exist = str == "lth" ? _productService.GetAll().OrderByDescending(p => p.Price).ToList() : _productService.GetAll().OrderBy(p => p.Price).ToList();
+            var exist = str == "htl" ? _productService.GetAll().OrderByDescending(p => p.Price).ToList() : _productService.GetAll().OrderBy(p => p.Price).ToList();
             if (exist == null) return NotFound();
             return Json(exist);
         }

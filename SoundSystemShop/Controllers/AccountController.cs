@@ -16,10 +16,14 @@ public class AccountController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IAccountService _accountService;
+    private readonly UserManager<AppUser> _userManager;
+    private readonly SignInManager<AppUser> _signInManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
 
-    public AccountController(IAccountService accountService)
+    public AccountController(IAccountService accountService, UserManager<AppUser> userManager)
     {
         _accountService = accountService;
+        _userManager = userManager;
     }
 
     public IActionResult Register()

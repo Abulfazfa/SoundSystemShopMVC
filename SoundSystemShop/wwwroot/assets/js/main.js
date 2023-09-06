@@ -42,18 +42,7 @@
             }
         });
     })
-    $("#promoAddButton").addEventListener("click", function () {
-        $.ajax({
-            url: '/basket/GetBasketCount', // Use relative URL
-            type: 'GET',
-            success: function (data) {
-                basketCountElement.text(data);
-            },
-            error: function () {
-                console.log('Error retrieving basket count.');
-            }
-        });
-    })
+    
     function searchForUserInModal(username) {
         const modalSearchResults = document.getElementById('modalSearchResults');
 
@@ -133,12 +122,12 @@
         function CheckoutTotal() {
             var subtotal = $("#subtotalArea").text();
             var discount = $("#discountArea").text();
-            console.log(subtotal)
-            console.log(discount)
+            console.log("Subtotal:", subtotal);
+            console.log("Discount:", discount);
             var total = subtotal - discount;
             $(".checkoutTotal").text(total)
         }
-        CheckoutTotal();
+        
         function removeItemFromBasket(itemId) {
             $.ajax({
                 url: `/basket/RemoveItem/${itemId}`,
@@ -156,7 +145,29 @@
             updateBasketCount();
             updateTotalPrice();
         }
-        
+        CheckoutTotal();
+        $("#promoAddButton").click(function () {
+            var promo = $("#promoInput").val()
+            console.log(promo)
+            $.ajax({
+                url: '/basket/GetPromo?promo=' + promo, // Use relative URL
+                type: 'GET',
+                success: function (data) {
+                    if (data == true) {
+                        var subtotal = $("#subtotalArea").text();
+                        var discount = subtotal * 30 / 100;
+                        $("#discountArea").text("-" + discount + ".00");
+
+                    }
+                    else {
+                        alert("")
+                    }
+                },
+                error: function () {
+                    console.log('Error retrieving basket count.');
+                }
+            });
+        });
         $(".plusIcon").click(function () {
             var itemId = $(this).data("id");
 
@@ -299,22 +310,67 @@
                 var newImageSrc = $(this).data("src"); // Get the new image source from the data-src attribute
         $("#mainImage").attr("src", "/assets/img/product/"+ newImageSrc); // Change the source of the main image
                 $("#mainImageLink").attr("href", newImageSrc); // Change the href of the main image link
-            });
-    //$(document).on("keyup", "#input-search", function () {
-    //    $("#searchList ul").remove();
-    //    var search = $("#input-search").val().trim();
-    //    $.ajax({
-    //        method: "get",
-    //        url: "/home/search?search=" + search,
-    //        success: function (res) {
-    //            $("#searchList").append(res);
-    //        }
-    //    })
-    //})
-
-    ///Price Sort Product
+    });
+    $(document).on("keyup", "#search-input", function () {
+        $("#searchList ul").remove();
+        var search = $("#search-input").val().trim();
+        $.ajax({
+            method: "get",
+            url: "/home/search?search=" + search,
+            success: function (res) {
+                $("#searchList").append(res);
+            }
+        })
+    })
     
 
+    ///Price Sort Product
+    $(document).on("change", "#sortOptions", function () {
+        var sort = $("#sortOptions").val();
+        $.ajax({
+            method: "get",
+            url: "/shop/ShopOrderPrice?str=" + sort,
+            success: function (res) {
+                console.log(res)
+            }
+        })
+    })
+
+    function sideBarPrice() {
+        $.ajax({
+            url: "/shop/ShopOrderPrice?str=htl",
+            type: 'GET',
+            success: function (data) {
+                var price = data[0].price;
+                var increment = price/5;
+                var start = 0;
+                var end = increment;
+                var listItems = [];
+
+                while (end <= price) {
+                    listItems.push("$" + start + " - " + "$" + end);
+                    start += increment;
+                    end += increment;
+                }
+
+                if (start < price) {
+                    listItems.push("$" + start + " - " + "$" + price + "+");
+                }
+
+                var sidebar = $("#sidebarPrice");
+
+                $.each(listItems, function (index, listItem) {
+                    var li = $('<li>').text(listItem);
+                    sidebar.append(li);
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
+    }
+
+    sideBarPrice()
     /*------------------
         Preloader
     --------------------*/

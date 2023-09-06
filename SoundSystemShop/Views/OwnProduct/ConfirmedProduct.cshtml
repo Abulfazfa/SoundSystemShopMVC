@@ -1,0 +1,47 @@
+﻿@model List<Product>
+
+@{
+    Layout = "_Layout";
+}
+<section class="latest spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="test123" style=" font-weight:bold; display:none;">Recently viewed</h2>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                
+                <div class="product col-3 swiper-slide">
+                    <a asp-controller="shop" asp-action="product" asp-route-id="@product.Id">
+                        <div class="product-img d-flex justify-content-center mt-5 mb-4">
+                            <img class="img-fluid w-100"
+                             src="~/assets/img/product/@product.Images.FirstOrDefault().ImgUrl"
+                             alt="" style="height:262.5px;">
+                        </div>
+                        <div class="product-name">
+                            <p class="text-center fw-bold text-dark mb-4 ">@product.Name</p>
+                        </div>
+                        <div class="product-price d-flex justify-content-around align-items-center">
+                            <div class="discount">
+                                
+                                    <span style="font-weight:normal"
+                                  class="text-dark">
+                                        <small class="azn_span text-dark">$</small> @product.Price.00
+                                    </span>
+
+                            </div>
+                            <a class="btn-add-to-cart mt-2 border-0 text-light minusIcon" data-id="@product.Id"
+                           style="background-color: black; font-size: 14px; font-weight: bold; padding: 5px 13px; border-radius: 3px; cursor:pointer;">
+                                Add Basket
+                            </a>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+

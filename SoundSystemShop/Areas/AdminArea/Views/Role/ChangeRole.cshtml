@@ -1,0 +1,49 @@
+﻿@model RoleChangeVM
+@{
+    ViewData["Title"] = "ChangeRole";
+    Layout = "~/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card mt-5">
+            <div class="card-body">
+                <h4 class="card-title">Update Role</h4>
+
+                <form method="post" class="forms-sample">
+                    <input name="id" value="@Model.User.Id" style="display: none;" />
+                    @foreach (var role in Model.Roles)
+                    {
+                        if (Model.UserRoles.Contains(role.Name))
+                        {
+                            <div class="form-group">
+                                <label>@role.Name</label>
+                                <input type="checkbox" class="form-control" value="@role.Name" name="newRoles" checked>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <label>@role.Name</label>
+                                <input type="checkbox" class="form-control" value="@role.Name" name="newRoles">
+
+                            </div>
+                        }
+
+                    }
+
+
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <a class="btn btn-dark" asp-controller="role" asp-action="index">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+            }
+
+

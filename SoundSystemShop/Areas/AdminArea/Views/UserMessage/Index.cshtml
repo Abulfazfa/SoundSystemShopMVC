@@ -1,0 +1,46 @@
+@model List<UserMessage>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-8 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">UserMessage Table</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Subject</th>
+                                <th>Message</th>
+
+                                <th>Settings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.UserName</td>
+                                    <td>@item.Subject</td>
+                                    <td>@item.Message</td>
+                                    <td>
+                                        <a class="btn btn-secondary" asp-controller="usermessage" asp-action="detail" asp-route-id="@item.Id">Detail</a>
+                                        <a class="btn btn-warning" asp-controller="usermessage" asp-action="seen" asp-route-id="@item.Id">Seen</a>
+                                        <a class="btn btn-danger" asp-controller="usermessage" asp-action="delete" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                    <a class="btn btn-primary" asp-controller="usermessage" asp-action="seenmessage">Go to seen messages</a>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>

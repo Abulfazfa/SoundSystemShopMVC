@@ -1,0 +1,62 @@
+﻿@model List<AppUser>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card mt-5">
+            <div class="card-body">
+                <h4 class="card-title">User Table</h4>
+
+                <div class="table-responsive">
+                    <form asp-action="index">
+                        <input name="name"></input>
+                        <button>search</button>
+                    </form>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>FullName</th>
+                                <th>Settings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.UserName</td>
+                                    <td>@item.Fullname</td>
+                                    <td>@item.</td>
+                                    <td>
+                                        <a class="btn btn-secondary" asp-controller="role" asp-action="changeRole" asp-route-id="@item.Id">ChangeRole</a>
+                                        <a class="btn btn-secondary" asp-controller="user" asp-action="detail" asp-route-id="@item.Id">Detail</a>
+                                        <a class="btn btn-primary" asp-controller="user" asp-action="update" asp-route-id="@item.Id">Update</a>
+                                        <a class="btn btn-danger" asp-controller="user" asp-action="delete" asp-route-id="@item.Id">Delete</a>
+                                        @if (User.Identity.Name != item.UserName)
+                                        {
+                                            @if (item.IsBlocked)
+                                            {
+                                                <a class="btn btn-warning" asp-controller="user" asp-action="blockoractive" asp-route-id="@item.Id">Active</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-warning" asp-controller="user" asp-action="blockoractive" asp-route-id="@item.Id">Block</a>
+                                            }
+                                        }
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

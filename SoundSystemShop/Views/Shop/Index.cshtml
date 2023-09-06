@@ -28,12 +28,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="shop__sidebar">
-                        <div class="shop__sidebar__search">
-                            <form action="#">
-                                <input type="text" placeholder="Search...">
-                                <button type="submit"><span class="icon_search"></span></button>
-                            </form>
-                        </div>
+                        
                         <div class="shop__sidebar__accordion">
                             <div class="accordion" id="accordionExample">
                                 <div class="card">
@@ -46,7 +41,7 @@
                                                 <ul class="nice-scroll">
                                                 @foreach (var item in ViewBag.ShopProductCategory)
                                                 {
-                                                    <li><a href="#">@item</a></li>
+                                                    <li><a href="#">@item.Name</a></li>
                                                 }
                                                 </ul>
                                             </div>
@@ -61,13 +56,9 @@
                                     <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__price">
-                                                <ul>
-                                                    <li><a href="#">$0.00 - $50.00</a></li>
-                                                    <li><a href="#">$50.00 - $100.00</a></li>
-                                                    <li><a href="#">$100.00 - $150.00</a></li>
-                                                    <li><a href="#">$150.00 - $200.00</a></li>
-                                                    <li><a href="#">$200.00 - $250.00</a></li>
-                                                    <li><a href="#">250.00+</a></li>
+                                                <ul id="sidebarPrice">
+                                                    
+                                                    
                                                 </ul>
                                             </div>
                                         </div>
@@ -112,7 +103,7 @@
                                                                     <div class="rating">
                                                                         @for (int i = 0; i < item.ProductRating; i++)
                                                                         {
-                                                                            <i class="fa fa-star-o"></i>
+                                                <i class="fa-solid fa-star text-warning"></i>
                                                                         }
                                                                     </div>
                                                                     @if (item.InDiscount)

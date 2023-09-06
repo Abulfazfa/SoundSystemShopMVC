@@ -7,6 +7,7 @@ using SoundSystemShop.DAL;
 using SoundSystemShop.Hubs;
 using SoundSystemShop.Models;
 using SoundSystemShop.Profiles;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -17,17 +18,17 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 {
     option.UseSqlServer(config.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//    options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
 
-}).AddCookie().AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
-{
-    options.ClientId = config["Authentication:Google:ClientId"];
-    options.ClientSecret = config["Authentication:Google:ClientSecret"];
-    options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
-});
+//}).AddCookie().AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+//{
+//    options.ClientId = config["Authentication:Google:ClientId"];
+//    options.ClientSecret = config["Authentication:Google:ClientSecret"];
+//    options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
+//});
 builder.Services.AddAutoMapper(option =>
 {
     option.AddProfile<MapProfile>();
@@ -48,8 +49,12 @@ app.UseCookiePolicy();
 
 
 app.UseRouting();
+
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllerRoute(
     name : "areas",
     pattern : "{area:exists}/{controller=Home}/{action=Index}/{id?}"

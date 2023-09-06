@@ -1,4 +1,4 @@
-@model CustomerProduct
+@model Product
 
 @{
     Layout = "_Layout";
@@ -29,9 +29,9 @@
                  <div class="form-group">
                      <h2>$@Model.Price</h2>
                  </div>
-                 <div class="form-group">
+                @* <div class="form-group">
                             <img src="@Model.QrCode" class="img-thumbnail" width="200"/>
-                 </div>
+                 </div>*@
                         <button class="btn btn-primary" data-toggle="modal" data-target="#searchModal">Share</button>
                  <a class="btn btn-dark" asp-controller="ownproduct" asp-action="index">Back</a>
 

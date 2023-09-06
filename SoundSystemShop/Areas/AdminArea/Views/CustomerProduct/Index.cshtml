@@ -1,0 +1,44 @@
+@model List<CustomerProduct>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-lg-8 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">UserMessage Table</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>UserName</th>
+                                <th>Description</th>
+                                <th>Settings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.AppUser.UserName</td>
+                                    <td>@item.Desc</td>
+                                    <td>
+                                        <a class="btn btn-secondary" asp-controller="CustomerProduct" asp-action="detail" asp-route-id="@item.Id">Detail</a>
+                                        <a class="btn btn-warning" asp-controller="CustomerProduct" asp-action="create" asp-route-id="@item.Id">Create</a>
+                                        <a class="btn btn-danger" asp-controller="usermessage" asp-action="reject" asp-route-id="@item.Id">Reject</a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                    <a class="btn btn-primary" asp-controller="usermessage" asp-action="seenmessage">Go to seen messages</a>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>

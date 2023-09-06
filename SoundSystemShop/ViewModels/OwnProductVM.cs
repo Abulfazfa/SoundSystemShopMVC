@@ -1,7 +1,10 @@
-﻿namespace SoundSystemShop.ViewModels
+﻿using SoundSystemShop.Models;
+
+namespace SoundSystemShop.ViewModels
 {
     public class CreateProductVM
     {
+        public string UserName { get; set; }
         public string Frame { get; set; }
         public string Horn { get; set; }
         public string Subwoofer { get; set; }

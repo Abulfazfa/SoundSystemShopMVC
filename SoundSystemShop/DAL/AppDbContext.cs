@@ -25,6 +25,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<BlogComment> BlogComments { get; set; }
     public DbSet<ProductComment> ProductComments { get; set; }
     public DbSet<UserActivity> UserActivities { get; set; }
+    public DbSet<UserMessage> UserMessages { get; set; }
     public DbSet<Sale> Sales { get; set; }
     public DbSet<PromoCode> PromoCodes { get; set; }
     public DbSet<AdminPromo> AdminPromos { get; set; }

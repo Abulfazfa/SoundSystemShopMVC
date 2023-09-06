@@ -1,0 +1,29 @@
+@model UserMessage
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="form-group">
+                    <h2>@Model.UserName</h2>
+                </div>
+                <div class="form-group">
+                    <p>@Model.Subject</p>
+                </div>
+                <div class="form-group">
+                    <p>@Model.Message</p>
+                </div>
+
+                <a class="btn btn-dark" asp-controller="usermessage" asp-action="index">Back</a>
+                <a class="btn btn-dark" asp-controller="product" asp-action="modify" asp-route-id="@Model.Message">Modify</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

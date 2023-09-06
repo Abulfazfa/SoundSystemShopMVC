@@ -6,28 +6,30 @@
             <form method="post">
                 <div class="inputGroup d-flex">
                     <label asp-for="Frame"></label>
-                    <input class="form-control" asp-for="Frame" id="frame" disabled>
+                    <input class="form-control" asp-for="Frame" id="frame" readonly>
                     <button class="clearButton">Clear</button>
                 </div>
 
                 <div class="inputGroup d-flex">
                     <label asp-for="Horn"></label>
-                    <input class="form-control" asp-for="Horn" id="horn" disabled>
+                    <input class="form-control" asp-for="Horn" id="horn" readonly>
                     <button class="clearButton">Clear</button>
                 </div>
 
                 <div class="inputGroup d-flex">
                     <label asp-for="Subwoofer"></label>
-                    <input class="form-control" asp-for="Subwoofer" id="subwoofer" disabled>
+                    <input class="form-control" asp-for="Subwoofer" id="subwoofer" readonly>
                     <button class="clearButton">Clear</button>
                 </div>
 
                 <div class="inputGroup d-flex">
                     <label asp-for="More"></label>
-                    <input class="form-control" asp-for="More" id="more" disabled>
+                    <input class="form-control" asp-for="More" id="more" readonly>
                     <button class="clearButton">Clear</button>
                 </div>
-                <button id="createButton" type="submit">Create</button>
+
+               <input asp-for="UserName" value="@User.Identity.Name" class="d-none">
+            <button id="createButton" type="submit">Create</button>
             </form>
             
         </div>
@@ -57,6 +59,22 @@
             area.empty();
             allButtons.removeClass("selected");
         }
+        $("form").submit(function (event) {
+            var inputs = $(".form-control");
+            var hasEmptyField = false;
+
+            inputs.each(function () {
+                if ($(this).val() === "") {
+                    hasEmptyField = true;
+                    return false; // Stop iterating through the inputs
+                }
+            });
+
+            if (hasEmptyField) {
+                event.preventDefault(); // Prevent form submission
+                alert("Please fill in all fields.");
+            }
+        });
 
         allButtons.click(function () {
             var button = $(this);
@@ -117,54 +135,12 @@
                 }
             });
         });
-        $(".clearButton").click(function () {
+        $(".clearButton").click(function (event) {
+            event.preventDefault();
             var inputField = $(this).prev(".form-control");
-            inputField.val(""); // Clear the input value
+            inputField.val(""); 
         });
-        //$("#createButton").click(function () {
-        //    var inputs = $(".ctgry input.form-control");  // Update selector here
-        //    var isAnyInputEmpty = false;
 
-        //    inputs.each(function () {
-        //        var inputValue = $(this).val().trim();
-        //        if (inputValue.length === 0) {
-        //            isAnyInputEmpty = true;
-        //            return false;
-        //        }
-        //    });
-
-        //    if (isAnyInputEmpty) {
-        //        alert("Please fill in all categories before creating.");
-        //    } 
-        //    else {
-        //        var products = {
-        //            Frame: $("#Frame").val(),
-        //            Horn: $("#Horn").val(),
-        //            Subwoofer: $("#Subwoofer").val(),
-        //            More: $("#More").val()
-        //        };
-
-        //        $.ajax({
-        //            url: "/YourController/CreateProduct", // Update with the correct URL
-        //            type: "POST",
-        //            data: { products: products },
-        //            success: function (response) {
-        //                if (response.success) {
-        //                    alert("Products created successfully!");
-        //                    // Clear inputs and update UI as needed
-        //                    inputs.val("");  // Clear input values
-        //                } 
-        //                else 
-        //                {
-        //                    alert("An error occurred while creating products.");
-        //                }
-        //            },
-        //            error: function (xhr, status, error) {
-        //                console.error("AJAX request failed:", status, error);
-        //            }
-        //        });
-        //    }
-        //});
 
 
 

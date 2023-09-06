@@ -295,7 +295,7 @@ namespace SoundSystemShop.Migrations
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
                             Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "1358bfaa-d6ae-4e11-bddf-3c0026743561",
+                            ConcurrencyStamp = "85f67325-b0b2-4bd8-b5dc-972487f5ada5",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             Fullname = "Admin",
@@ -304,7 +304,7 @@ namespace SoundSystemShop.Migrations
                             LockoutEnabled = true,
                             OTP = "0000",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "85c7f234-a756-4cc7-8b80-b999d79f2d4d",
+                            SecurityStamp = "7752a0de-ece6-45ea-a4e2-2922f12bc8f1",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -450,6 +450,9 @@ namespace SoundSystemShop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
@@ -472,7 +475,31 @@ namespace SoundSystemShop.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppUserId");
+
                     b.ToTable("CustomerProducts");
+                });
+
+            modelBuilder.Entity("SoundSystemShop.Models.CustomerProductImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("CustomerProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImgUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerProductId");
+
+                    b.ToTable("CustomerProductImage");
                 });
 
             modelBuilder.Entity("SoundSystemShop.Models.Product", b =>
@@ -580,9 +607,6 @@ namespace SoundSystemShop.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CustomerProductId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ImgUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -597,8 +621,6 @@ namespace SoundSystemShop.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerProductId");
 
                     b.HasIndex("ProductId");
 
@@ -821,6 +843,40 @@ namespace SoundSystemShop.Migrations
                     b.ToTable("UserActivities");
                 });
 
+            modelBuilder.Entity("SoundSystemShop.Models.UserMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSeen")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserMessages");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -888,6 +944,22 @@ namespace SoundSystemShop.Migrations
                     b.Navigation("Parent");
                 });
 
+            modelBuilder.Entity("SoundSystemShop.Models.CustomerProduct", b =>
+                {
+                    b.HasOne("SoundSystemShop.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("SoundSystemShop.Models.CustomerProductImage", b =>
+                {
+                    b.HasOne("SoundSystemShop.Models.CustomerProduct", null)
+                        .WithMany("ProductImages")
+                        .HasForeignKey("CustomerProductId");
+                });
+
             modelBuilder.Entity("SoundSystemShop.Models.Product", b =>
                 {
                     b.HasOne("SoundSystemShop.Models.AppUser", null)
@@ -916,10 +988,6 @@ namespace SoundSystemShop.Migrations
 
             modelBuilder.Entity("SoundSystemShop.Models.ProductImage", b =>
                 {
-                    b.HasOne("SoundSystemShop.Models.CustomerProduct", null)
-                        .WithMany("Images")
-                        .HasForeignKey("CustomerProductId");
-
                     b.HasOne("SoundSystemShop.Models.Product", null)
                         .WithMany("Images")
                         .HasForeignKey("ProductId")
@@ -958,7 +1026,7 @@ namespace SoundSystemShop.Migrations
 
             modelBuilder.Entity("SoundSystemShop.Models.CustomerProduct", b =>
                 {
-                    b.Navigation("Images");
+                    b.Navigation("ProductImages");
                 });
 
             modelBuilder.Entity("SoundSystemShop.Models.Product", b =>

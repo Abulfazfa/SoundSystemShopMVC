@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Modernize Free</title>
-  <link rel="shortcut icon" type="image/png" href="~/admin/images/logos/favicon.png" />
+  <title>Admin Panel</title>
+  <link rel="shortcut icon" type="image/png" href="~/assets/img/logo-2.png" />
   <link rel="stylesheet" href="~/admin/css/styles.min.css" />
 </head>
        
@@ -19,7 +19,7 @@
     <div>
       <div class="brand-logo d-flex align-items-center justify-content-between">
         <a href="./index.html" class="text-nowrap logo-img">
-          <img src="~/admin/images/logos/dark-logo.svg" width="180" alt="" />
+          <img src="~/assets/img/logo.png" width="180" alt="" />
         </a>
         <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
           <i class="ti ti-x fs-8"></i>
@@ -28,10 +28,6 @@
       <!-- Sidebar navigation-->
       <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
         <ul id="sidebarnav">
-          @* <li class="nav-small-cap"> *@
-          @*   <i class="ti ti-dots nav-small-cap-icon fs-4"></i> *@
-          @*   <span class="hide-menu">Home</span> *@
-          @* </li> *@
           <li class="sidebar-item">
             <a class="sidebar-link" asp-area="adminarea" asp-controller="dashboard" asp-action="index" aria-expanded="false">
               <span>
@@ -56,10 +52,34 @@
               <span class="hide-menu">Products</span>
             </a>
           </li>
-          @* <li class="nav-small-cap"> *@
-          @*   <i class="ti ti-dots nav-small-cap-icon fs-4"></i> *@
-          @*   <span class="hide-menu">UI COMPONENTS</span> *@
-          @* </li> *@
+          <li class="sidebar-item">
+            <a class="sidebar-link" asp-area="adminarea" asp-controller="product" asp-action="index" aria-expanded="false">
+              <span>
+                <i class="ti ti-layout-dashboard"></i>
+              </span>
+              <span class="hide-menu">Products</span>
+            </a>
+          </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-area="adminarea" asp-controller="user" asp-action="index" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-layout-dashboard"></i>
+                                </span>
+                                <span class="hide-menu">Users</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-area="adminarea" asp-controller="role" asp-action="index" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-layout-dashboard"></i>
+                                </span>
+                                <span class="hide-menu">Roles</span>
+                            </a>
+                        </li>
+          @* <li class="nav-small-cap"> 
+             <i class="ti ti-dots nav-small-cap-icon fs-4"></i> 
+             <span class="hide-menu">UI COMPONENTS</span> 
+           </li> *@
           @* <li class="sidebar-item"> *@
           @*   <a class="sidebar-link" asp-action="" aria-expanded="false"> *@
           @*     <span> *@

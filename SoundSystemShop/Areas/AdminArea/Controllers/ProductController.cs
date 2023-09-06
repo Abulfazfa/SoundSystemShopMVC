@@ -29,19 +29,16 @@ public class ProductController : Controller
             return RedirectToAction("Create");
         }
     }
-
     public IActionResult Detail(int id)
     {
         var product = _productService.GetProductDetail(id);
         return View(product);
     }
-
     public IActionResult Create()
     {
         ViewBag.Categories = _categoryService.GetCategorySelectList();
         return View();
     }
-
     [HttpPost]
     public IActionResult Create(ProductVM productVM)
     {
@@ -54,14 +51,12 @@ public class ProductController : Controller
         else
             return View();
     }
-
     public IActionResult Delete(int id)
     {
         if (_productService.DeleteProduct(id).Result)
             return RedirectToAction(nameof(Index));
         return BadRequest();
     }
-
     public IActionResult Update(int id)
     {
         ViewBag.Id = id;
@@ -74,7 +69,6 @@ public class ProductController : Controller
         ViewBag.Categories = _categoryService.GetCategorySelectList();
         return View(productVM);
     }
-
     [HttpPost]
     public IActionResult Update(int id, ProductVM productVM)
     {
@@ -86,12 +80,17 @@ public class ProductController : Controller
         else
             return NotFound();
     }
-
     public IActionResult DeleteImage(string imgUrl, int id)
     {
         if (_productService.DeleteProductImage(imgUrl, id))
             return RedirectToAction(nameof(Update), new { Id = id });
         else
             return NotFound();
+    }
+    public IActionResult Modify(string id)
+    {
+        var productId = int.Parse(id);
+        return RedirectToAction(nameof(Update), new { id = productId });
+        //RedirectToAction(nameof(Index), nameof(UserMessage));
     }
 }

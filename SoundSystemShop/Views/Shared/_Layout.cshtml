@@ -3,18 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Male_Fashion Template">
-    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="description" content="ElectroShop">
+    <meta name="keywords" content="ElectroShop, sound, music">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <meta property="og:title" content="Your Page Title" />
-    <meta property="og:description" content="Your Page Description" />
-    <meta property="og:url" content="Your Page URL" />
-    <meta property="og:image" content="URL to the image to be shown when shared" />
 
-
-    <title>Male-Fashion | Template</title>
+    <title>ElectroShop</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
@@ -64,9 +59,9 @@
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a asp-controller="home">Home</a></li>
-                            <li><a asp-controller="shop">Shop</a></li>
-                            <li><a href="~/assets/#">Pages</a>
+                            <li><a asp-controller="home" asp-action="index">Home</a></li>
+                            <li><a asp-controller="shop" asp-action="index">Shop</a></li>
+                            <li><a>Pages</a>
                                 <ul class="dropdown">
                                     <li><a asp-controller="about" asp-action="index">About Us</a></li>
                                     <li><a asp-controller="blog" asp-action="index">Blog</a></li>
@@ -74,7 +69,8 @@
                                 </ul>
                             </li>
                            
-                            @if (User.Identity.IsAuthenticated) {
+                            @if (User.Identity.IsAuthenticated)
+                            {
                                 <li><a asp-controller="ownproduct" asp-action="index">My Product</a></li>
                             }
                             else{
@@ -87,7 +83,7 @@
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option" style="display: flex;justify-content: flex-end;">
-                        <a href="~/assets/#" class="search-switch" style="margin-right: 15px"><img src="~/assets/img/icon/search.png" alt=""></a>
+                        <a class="search-switch" style="margin-right: 15px"><img src="~/assets/img/icon/search.png" alt=""></a>
                         <a asp-controller="basket" asp-action="index">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="24" height="24" fill="white"></rect>
@@ -111,13 +107,22 @@
                         <div class="price totalPriceArea"></div>
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <input id="firstName" type="text" value="@User.Identity.Name" style="display: none">
-                        <a href="about.html" id="profileImage" style="color: #FFFFFF; background-color: #0f6674; margin-left: 20px; border: 1px solid #0f6674; padding: 5px 8px; border-radius: 50%"></a>
+
+                            <ul style="list-style: none;">
+                                <li style="text-decoration: none; ">
+                                    <input id="firstName" type="text" value="@User.Identity.Name" style="display: none">
+                                    <a  id="profileImage" style="color: #FFFFFF; background-color: #0f6674; margin-left: 20px; border: 1px solid #0f6674; padding: 5px 8px; border-radius: 50%"></a>
+                                    <ul class="dropdown" style="top: 70px;left: 200px;width: 100px;">
+                                        <li><a asp-controller="account" asp-action="ChangePassword">Change Password</a></li>
+                                        <li><a asp-controller="account" asp-action="logout">Log Out</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
 
                         }
                         else
                         {
-        <a href="~/assets/#"><i class="fa-user fa-solid" style="color: #0b0b0b; margin-left: 10px; border: 1px solid #0b0b0b; padding: 7px; border-radius: 50%"></i></a>
+        <a ><i class="fa-user fa-solid" style="color: #0b0b0b; margin-left: 10px; border: 1px solid #0b0b0b; padding: 7px; border-radius: 50%"></i></a>
                         }
                         
                     </div>
@@ -193,9 +198,14 @@
     <div class="search-model">
         <div class="h-100 d-flex align-items-center justify-content-center">
             <div class="search-close-switch">+</div>
-            <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
-            </form>
+            <div>
+                <div>
+                    <form class="search-model-form">
+                        <input type="text" id="search-input" placeholder="Search here.....">
+                    </form>
+                </div>
+                <div id="searchList"></div>
+            </div>
         </div>
     </div>
     <!-- Search End -->

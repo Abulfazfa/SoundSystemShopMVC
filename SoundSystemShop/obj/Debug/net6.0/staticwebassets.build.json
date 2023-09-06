@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "cE1JdnlWYcIZt1b7ZvE1inL/ixxaUnyywYLLLjsldzo=",
+  "Hash": "2M415pKIOr9OhXQeucbsBmun6A9yBgIwV2etuOxQLso=",
   "Source": "SoundSystemShop",
   "BasePath": "_content/SoundSystemShop",
   "Mode": "Default",
@@ -11934,12 +11934,12 @@
       "OriginalItemSpec": "wwwroot\\assets\\img\\footer-logo.png"
     },
     {
-      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\hero\\4e74ad16-6aec-464f-9dd9-58f8adbee7f4hero-3.jpg",
+      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\hero\\4a4e6298-6577-41ee-84db-4f8235326d67hero-3.jpg",
       "SourceId": "SoundSystemShop",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\",
       "BasePath": "_content/SoundSystemShop",
-      "RelativePath": "assets/img/hero/4e74ad16-6aec-464f-9dd9-58f8adbee7f4hero-3.jpg",
+      "RelativePath": "assets/img/hero/4a4e6298-6577-41ee-84db-4f8235326d67hero-3.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -11948,15 +11948,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\img\\hero\\4e74ad16-6aec-464f-9dd9-58f8adbee7f4hero-3.jpg"
+      "OriginalItemSpec": "wwwroot\\assets\\img\\hero\\4a4e6298-6577-41ee-84db-4f8235326d67hero-3.jpg"
     },
     {
-      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\hero\\bb251f0b-cf17-4688-9840-e214709c3a1chero-3.jpg",
+      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\hero\\a18f12dc-9f8f-48d0-81a2-60b36033cf88hero-4.jpg",
       "SourceId": "SoundSystemShop",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\",
       "BasePath": "_content/SoundSystemShop",
-      "RelativePath": "assets/img/hero/bb251f0b-cf17-4688-9840-e214709c3a1chero-3.jpg",
+      "RelativePath": "assets/img/hero/a18f12dc-9f8f-48d0-81a2-60b36033cf88hero-4.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -11965,7 +11965,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\img\\hero\\bb251f0b-cf17-4688-9840-e214709c3a1chero-3.jpg"
+      "OriginalItemSpec": "wwwroot\\assets\\img\\hero\\a18f12dc-9f8f-48d0-81a2-60b36033cf88hero-4.jpg"
     },
     {
       "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\hero\\hero-1.jpg",
@@ -12000,6 +12000,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\img\\hero\\hero-2.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\hero\\hero-4.jpg",
+      "SourceId": "SoundSystemShop",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\",
+      "BasePath": "_content/SoundSystemShop",
+      "RelativePath": "assets/img/hero/hero-4.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\hero\\hero-4.jpg"
     },
     {
       "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\icon\\calendar.png",
@@ -12206,6 +12223,23 @@
       "OriginalItemSpec": "wwwroot\\assets\\img\\logo.png"
     },
     {
+      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\logo-2.png",
+      "SourceId": "SoundSystemShop",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\",
+      "BasePath": "_content/SoundSystemShop",
+      "RelativePath": "assets/img/logo-2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\logo-2.png"
+    },
+    {
       "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\payment.png",
       "SourceId": "SoundSystemShop",
       "SourceType": "Discovered",
@@ -12325,6 +12359,23 @@
       "OriginalItemSpec": "wwwroot\\assets\\img\\product\\108e316b-a6b6-425c-818c-cae9a3ad5c60zx5-3.jpg"
     },
     {
+      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\product\\134943e3-1840-4dc4-ac9e-c1980d959cf9basavik-2.jpg",
+      "SourceId": "SoundSystemShop",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\",
+      "BasePath": "_content/SoundSystemShop",
+      "RelativePath": "assets/img/product/134943e3-1840-4dc4-ac9e-c1980d959cf9basavik-2.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\product\\134943e3-1840-4dc4-ac9e-c1980d959cf9basavik-2.jpg"
+    },
+    {
       "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\product\\1525110a-f5a3-4fcf-a918-7ecdebad9c08frame-3.jpg",
       "SourceId": "SoundSystemShop",
       "SourceType": "Discovered",
@@ -12340,6 +12391,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\img\\product\\1525110a-f5a3-4fcf-a918-7ecdebad9c08frame-3.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\product\\2790d9ad-b925-4046-96ce-1ab319d4bbd8pisalka-1.jpg",
+      "SourceId": "SoundSystemShop",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\",
+      "BasePath": "_content/SoundSystemShop",
+      "RelativePath": "assets/img/product/2790d9ad-b925-4046-96ce-1ab319d4bbd8pisalka-1.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\product\\2790d9ad-b925-4046-96ce-1ab319d4bbd8pisalka-1.jpg"
     },
     {
       "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\product\\36c267c4-e12b-4254-9f7a-94cc226f11d9basavik-2.jpg",
@@ -12391,6 +12459,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\img\\product\\4815788c-c5eb-4cf7-a278-09f554b410c4yamaha-s115v.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\product\\4e297e76-6186-4ad6-aead-69fec371794abasavik-1.jpg",
+      "SourceId": "SoundSystemShop",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\",
+      "BasePath": "_content/SoundSystemShop",
+      "RelativePath": "assets/img/product/4e297e76-6186-4ad6-aead-69fec371794abasavik-1.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\product\\4e297e76-6186-4ad6-aead-69fec371794abasavik-1.jpg"
     },
     {
       "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\product\\5a4d816f-a396-4dd3-8ad4-54cd027eac89dynacord-3.jpeg",
@@ -12512,6 +12597,23 @@
       "OriginalItemSpec": "wwwroot\\assets\\img\\product\\8131e520-1934-4982-924b-02c2997a69e3156351.970.jpg"
     },
     {
+      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\product\\81d8259a-8ad1-4dec-a09a-d59eb9c41608horn-1.jpeg",
+      "SourceId": "SoundSystemShop",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\",
+      "BasePath": "_content/SoundSystemShop",
+      "RelativePath": "assets/img/product/81d8259a-8ad1-4dec-a09a-d59eb9c41608horn-1.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\product\\81d8259a-8ad1-4dec-a09a-d59eb9c41608horn-1.jpeg"
+    },
+    {
       "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\product\\8341d78c-9284-450e-b565-1b649f6d15bb156351.970.jpg",
       "SourceId": "SoundSystemShop",
       "SourceType": "Discovered",
@@ -12578,6 +12680,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\img\\product\\8e42e135-95b2-490f-9df8-ee76370e217csm58-1.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\product\\903929ec-a087-489f-9cad-d1983723ef9bcables.jpg",
+      "SourceId": "SoundSystemShop",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\",
+      "BasePath": "_content/SoundSystemShop",
+      "RelativePath": "assets/img/product/903929ec-a087-489f-9cad-d1983723ef9bcables.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\product\\903929ec-a087-489f-9cad-d1983723ef9bcables.jpg"
     },
     {
       "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\product\\920fef15-a2d8-4bfd-a213-bc070e76c761basavik-1.jpg",
@@ -12731,6 +12850,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\img\\product\\a1332c8d-7fea-47a0-8071-a1ede8014159EV-1.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\product\\a38d42f5-9b6c-445a-81df-650e74f3ae84frame-3.jpg",
+      "SourceId": "SoundSystemShop",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\",
+      "BasePath": "_content/SoundSystemShop",
+      "RelativePath": "assets/img/product/a38d42f5-9b6c-445a-81df-650e74f3ae84frame-3.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\product\\a38d42f5-9b6c-445a-81df-650e74f3ae84frame-3.jpg"
     },
     {
       "Identity": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\wwwroot\\assets\\img\\product\\ac3d1cd9-88f8-4ab6-8667-1b96198f89b3basavik-1.jpg",

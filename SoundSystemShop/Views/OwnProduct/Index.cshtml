@@ -1,4 +1,4 @@
-@model List<CustomerProduct>
+@model List<Product>
 
 @{
     Layout = "_Layout";
@@ -17,6 +17,7 @@
             <div class="card">
                 <div class="card-body">
                     <a class="btn btn-success" asp-controller="ownProduct" asp-action="create">Create Own Product</a>
+                        <a class="btn btn-warning" asp-controller="ownProduct" asp-action="ConfirmedProduct">Orders</a>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -39,7 +40,8 @@
                                     <td>@product.Desc</td>
                                     <td>
                                         <a class="btn btn-secondary" asp-controller="OwnProduct" asp-action="detail" asp-route-id="@product.Id">Detail</a>
-                                     
+                                        <a class="btn btn-secondary" asp-controller="OwnProduct" asp-action="delete" asp-route-id="@product.Id">Delete</a>
+                                        <a class="btn btn-secondary" asp-controller="OwnProduct" asp-action="Order" asp-route-id="@product.Id">Order</a>
                                     </td>
                                 </tr>
                             }

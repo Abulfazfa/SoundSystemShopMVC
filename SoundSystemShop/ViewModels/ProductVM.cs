@@ -8,7 +8,7 @@ namespace SoundSystemShop.ViewModels
         public double? DiscountPrice { get; set; }
         public double Price { get; set; }
         public string Desc { get; set; }
-        public string Brand { get; set; }
+        public string? Brand { get; set; }
         public string? Quality { get; set; }
         public int ProductCount { get; set; }
         public int CategoryId { get; set; }

@@ -47,6 +47,7 @@ namespace SoundSystemShop.Services
                 .Include(p => p.Category)
                 .Skip(take * (page - 1))
                 .Take(take)
+                .Where(p => p.IsDeleted == false)
                 .ToList();
             var productCount = query.Count();
             Discount();
@@ -55,7 +56,7 @@ namespace SoundSystemShop.Services
         public List<Product> GetAll()
         {
             Discount();
-            return _unitOfWork.ProductRepo.GetProductWithIncludes().OrderByDescending(p => p.CreationDate).ToList();
+            return _unitOfWork.ProductRepo.GetProductWithIncludes().Where(p => p.IsDeleted == false).OrderByDescending(p => p.CreationDate).ToList();
         }
         public Product GetProductDetail(int id)
         {

@@ -24,34 +24,40 @@ namespace SoundSystemShop.Services
             _userManager = userManeger;
             _appDbContext = appDbContext;
         }
-
+        public bool GetPromo(string promo)
+        {
+            if(string.IsNullOrEmpty(promo)) return false;
+            var existPromo = _appDbContext.PromoCodes.FirstOrDefault(p => p.Name == promo);
+            if (existPromo == null) return false;
+            return true;
+        }
         public void GenerateLuckyPeopleAsync()
         {
                 var count = _appDbContext.AdminPromos.FirstOrDefault(p => p.Name == "WeeklyPromo").UserCount;
                 var users = _userManager.Users.ToList(); 
 
                 List<PromoVM> luckyUsers = new List<PromoVM>();
-                Random random = new Random();
-                HashSet<int> selectedIndices = new HashSet<int>();
+                //Random random = new Random();
+                //HashSet<int> selectedIndices = new HashSet<int>();
 
-                while (luckyUsers.Count < count && selectedIndices.Count < users.Count)
-                {
-                    int userNumber = random.Next(0, users.Count);
-                    PromoVM promoVM = new PromoVM();
-                    if (!selectedIndices.Contains(userNumber))
-                    {
-                        string promoCode = GeneratePromoCode();
-                        selectedIndices.Add(userNumber);
+                //while (luckyUsers.Count < count && selectedIndices.Count < users.Count)
+                //{
+                //    int userNumber = random.Next(0, users.Count);
+                //    PromoVM promoVM = new PromoVM();
+                //    if (!selectedIndices.Contains(userNumber))
+                //    {
+                //        string promoCode = GeneratePromoCode();
+                //        selectedIndices.Add(userNumber);
 
-                        promoVM.User = users[userNumber];
-                        promoVM.PromoCode = promoCode;
-                        luckyUsers.Add(promoVM);                        
-                    }
-                }
+                //        promoVM.User = users[userNumber];
+                //        promoVM.PromoCode = promoCode;
+                //        luckyUsers.Add(promoVM);                        
+                //    }
+                //}
 
                 foreach (var luckyUser in luckyUsers)
                 {
-                    SendMailToLuckyPerson(luckyUser);
+                    //SendMailToLuckyPerson(luckyUser);
                 }
             
         }

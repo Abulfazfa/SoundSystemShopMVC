@@ -59,6 +59,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5BcmVhXFZpZXdzXENhdGVnb3J5XFVwZGF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Areas/AdminArea/Views/CustomerProduct/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5BcmVhXFZpZXdzXEN1c3RvbWVyUHJvZHVjdFxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Areas/AdminArea/Views/CustomerProduct/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5BcmVhXFZpZXdzXEN1c3RvbWVyUHJvZHVjdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Areas/AdminArea/Views/Dashboard/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5BcmVhXFZpZXdzXERhc2hib2FyZFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -77,6 +85,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Areas/AdminArea/Views/Product/Update.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5BcmVhXFZpZXdzXFByb2R1Y3RcVXBkYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Areas/AdminArea/Views/Role/ChangeRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5BcmVhXFZpZXdzXFJvbGVcQ2hhbmdlUm9sZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Areas/AdminArea/Views/Role/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5BcmVhXFZpZXdzXFJvbGVcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Areas/AdminArea/Views/Role/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5BcmVhXFZpZXdzXFJvbGVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Areas/AdminArea/Views/Sale/Create.cshtml]
@@ -109,6 +129,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Areas/AdminArea/Views/Slider/Update.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5BcmVhXFZpZXdzXFNsaWRlclxVcGRhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Areas/AdminArea/Views/UserMessage/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5BcmVhXFZpZXdzXFVzZXJNZXNzYWdlXERldGFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Areas/AdminArea/Views/UserMessage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5BcmVhXFZpZXdzXFVzZXJNZXNzYWdlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Areas/AdminArea/Views/UserMessage/SeenMessage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5BcmVhXFZpZXdzXFVzZXJNZXNzYWdlXFNlZW5NZXNzYWdlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Areas/AdminArea/Views/User/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5BcmVhXFZpZXdzXFVzZXJcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Areas/AdminArea/Views/_ViewImports.cshtml]
@@ -151,8 +187,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFza2V0XENoZWNrT3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Views/Basket/Fail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFza2V0XEZhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Views/Basket/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFza2V0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Views/Basket/Success.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFza2V0XFN1Y2Nlc3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Views/Blog/Detail.cshtml]
@@ -173,6 +217,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Views/Home/New.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxOZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Views/OwnProduct/ConfirmedProduct.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3duUHJvZHVjdFxDb25maXJtZWRQcm9kdWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HP/RiderProjects/SoundSystemShop/SoundSystemShop/Views/OwnProduct/Create.cshtml]

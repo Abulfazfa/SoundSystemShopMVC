@@ -1,7 +1,7 @@
 ﻿@model CustomerProduct
 
 @{
-    Layout = null;
+    Layout = "_Layout";
 }
 
 <!DOCTYPE html>
@@ -18,7 +18,7 @@
                     <div class="card-body">
 
                         <div class="form-group">
-                            @foreach (var image in Model.Images)
+                            @foreach (var image in Model.ProductImages)
                             {
                                 <img src="~/assets/img/product/@image.ImgUrl" width="200" height="150" alt="" />
                             }

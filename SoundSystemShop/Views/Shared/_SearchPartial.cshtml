@@ -1,13 +1,16 @@
-﻿@*
+﻿@model List<Product>
 
-<ul data-group="products" style="display: block;">
+<ul data-group="products" style="    display: flex;
+    list-style: none;
+    justify-content: space-between;
+    margin-top: 60px;">
 
 
     @foreach (var item in Model)
     {
         <a target="_self" asp-controller="product" asp-action="detail" asp-route-id="@item.Id">
-        <li>
-            <div class="sgm-search-product-image"> <img src="~/images/@(item.Images.FirstOrDefault().ImgUrl)" width="100" height="50" /> </div>
+        <li class="mr-3">
+            <div class="sgm-search-product-image"> <img src="~/assets/img/product/@(item.Images.FirstOrDefault().ImgUrl)" width="100" height="50" /> </div>
             <div class="sgm-search-product-info">
                 <div class="sgm-search-product-info-name">@item.Name</div>
                 <span class="sgm-search-product-info-price">@item.Price</span>
@@ -17,4 +20,4 @@
     }
 
 </ul>
-*@
+

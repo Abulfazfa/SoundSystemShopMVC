@@ -37,24 +37,14 @@ public class HomeController : Controller
         homeVW.DayOfDiscount = _productService.SaleOfDay();
         return View(homeVW);
     }
-    public IActionResult New()
-    {
-        return View(new Employee());
-    }
-    [HttpPost]
-    public IActionResult New(Employee employee)
-    {
-        return RedirectToAction(nameof(Index));
-    }
 
     public IActionResult Search(string search)
     {
-        //var products = _appDbContext.Products.Include(p => p.Images).Include(p => p.Category)
-        //    .Where(p => p.Name.ToLower().Contains(search.ToLower()))
-        //    .Take(3)
-        //    .OrderByDescending(p => p.Id)
-        //    .ToList();
-        //return PartialView("_SearchPartial", products);
-        return View();
+        var products = _productService.GetAll()
+            .Where(p => p.Name.ToLower().Contains(search.ToLower()))
+            .Take(3)
+            .OrderByDescending(p => p.Id)
+            .ToList();
+        return PartialView("_SearchPartial", products);
     }
 }

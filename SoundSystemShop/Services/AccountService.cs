@@ -197,6 +197,7 @@ namespace SoundSystemShop.Services
             {
                 return LoginResult.InvalidCredentials;
             }
+            await _signInManager.SignInAsync(appUser, loginVM.RememberMe);
             return LoginResult.Success;
         }
         public async Task Logout()

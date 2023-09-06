@@ -5,16 +5,19 @@ using SoundSystemShop.Models;
 using SoundSystemShop.Services;
 using SoundSystemShop.Services.Interfaces;
 using SoundSystemShop.ViewModels;
+using Stripe.Checkout;
 
 namespace SoundSystemShop.Controllers
 {
     public class BasketController : Controller
     {
         private readonly IProductService _productService;
+        private readonly PromoService _promoService;
 
-        public BasketController(IProductService productService)
+        public BasketController(IProductService productService, PromoService promoService)
         {
             _productService = productService;
+            _promoService = promoService;
         }
 
         public IActionResult Index()
@@ -151,7 +154,63 @@ namespace SoundSystemShop.Controllers
 
         public IActionResult CheckOut()
         {
-            return View(BasketProducts());
+            var domain = "https://localhost:44392/";
+            var options = new SessionCreateOptions
+            {
+                SuccessUrl = domain + $"Basket/Success",
+                CancelUrl = domain + "Basket/Index",
+                LineItems = new List<SessionLineItemOptions>(),
+                Mode = "payment",
+                Locale = "en"
+            };
+            foreach (var item in BasketProducts())
+            {
+                var sessionListItem = new SessionLineItemOptions
+                {
+                    PriceData = new SessionLineItemPriceDataOptions
+                    {
+                        UnitAmount = (long)(item.Price * item.BasketCount*100),
+                        Currency = "usd",
+                        ProductData = new SessionLineItemPriceDataProductDataOptions
+                        {
+                            Name = item.Name
+                        }
+                       
+                    },
+                    Quantity = item.BasketCount
+                };
+                options.LineItems.Add(sessionListItem);
+            }
+            var service = new SessionService();
+            Session session = service.Create(options);
+
+            TempData["Session"] = session.Id;
+            Response.Headers.Add("Location", session.Url);
+            return new StatusCodeResult(303);
+
+        }
+        public IActionResult OrderConfirmation()
+        {
+            var service = new SessionService();
+            Session session = service.Get(TempData["Session"].ToString());
+            if (session.PaymentStatus == "Paid")
+            {
+                return View("Success");
+            }
+            return View("Fail");
+        }
+        public IActionResult Success()
+        {
+            return View();
+        }
+        public IActionResult Fail()
+        {
+            return View();
+        }
+        public IActionResult GetPromo(string promo)
+        {
+            return Json(_promoService.GetPromo(promo));
+
         }
         private List<BasketVM> BasketProducts()
         {
