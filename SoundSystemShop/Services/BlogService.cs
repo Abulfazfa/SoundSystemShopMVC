@@ -17,7 +17,7 @@ namespace SoundSystemShop.Services
         Blog GetBlogById(int id);
         BlogVM MapBlogVMAndBlog(int id);
         Task<bool> UpdateBlog(int id, BlogVM blogVM);
-        bool CreateBlogComment(int blogId, string name, string email, string comment);
+        bool CreateBlogComment(int blogId, string name, string comment);
         bool DeleteComment(int id, int commentId);
     }
     public class BlogService : IBlogService
@@ -111,14 +111,14 @@ namespace SoundSystemShop.Services
             _unitOfWork.Commit();
             return true;
         }
-        public bool CreateBlogComment(int blogId, string name, string email, string comment)
+        public bool CreateBlogComment(int blogId, string name, string comment)
         {
             var blog = GetBlogById(blogId);
             if (blog == null) return false;
             BlogComment blogComment = new()
             {
                 UserName = name,
-                UserEmail = email,
+                UserEmail = "",
                 Comment = comment
             };
             blog.Comments.Add(blogComment);

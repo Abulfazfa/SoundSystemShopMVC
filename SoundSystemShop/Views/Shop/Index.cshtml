@@ -84,56 +84,58 @@
                         </div>
                     </div>
                     <div class="row">
-                        @foreach (var item in Model.Items)
+                        @foreach (var product in Model.Items)
                         {
-                            <a asp-action="Product" asp-route-id="@item.Id" style="cursor: pointer">
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                                            <div class="product__item">
-                                                                <div class="product__item__pic set-bg" data-setbg="assets/img/product/@item.Images.FirstOrDefault(i => i.IsMain == true).ImgUrl">
-                                                                    <ul class="product__hover">
-                                                                        <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                                                        <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                                                        </li>
-                                                                        <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="product__item__text">
-                                                                    <h6>@item.Name</h6>
-                                                                    <a href="#" class="add-cart">+ Add To Cart</a>
-                                                                    <div class="rating">
-                                                                        @for (int i = 0; i < item.ProductRating; i++)
-                                                                        {
-                                                <i class="fa-solid fa-star text-warning"></i>
-                                                                        }
-                                                                    </div>
-                                                                    @if (item.InDiscount)
-                                                                    {
-                                                                        <h5>$<del>@item.Price</del></h5>
-                                                                        <h5 class="text-danger">$@item.DiscountPrice</h5>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <h5 >@item.Price</h5>
-                                                                    }
-                                                                    <div class="product__color__select">
-                                                                        <label for="pc-4">
-                                                                            <input type="radio" id="pc-4">
-                                                                        </label>
-                                                                        <label class="active black" for="pc-5">
-                                                                            <input type="radio" id="pc-5">
-                                                                        </label>
-                                                                        <label class="grey" for="pc-6">
-                                                                            <input type="radio" id="pc-6">
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                        <div class="product col-lg-4 col-md-6 swiper-slide">
+                            <a asp-controller="shop" asp-action="product" asp-route-id="@product.Id">
+                                <div class="product-img d-flex justify-content-center mt-5 mb-4">
+                                    <img class="img-fluid w-100"
+                                     src="~/assets/img/product/@product.Images.FirstOrDefault().ImgUrl"
+                                     alt="" style="height:262.5px;">
+                                </div>
+                                <div class="product-name">
+                                    <p class="text-center fw-bold text-dark mb-4 ">@product.Name</p>
+                                </div>
+                                <div class="rating" style="    width: fit-content;
+    margin: auto;">
+                                    @for (int i = 0; i < product.ProductRating; i++)
+                                    {
+                                        <i class="fa-solid fa-star text-warning"></i>
+                                    }
+                                </div>
+                                <div class="product-price d-flex justify-content-around align-items-center">
+                                    <div class="discount">
+                                        @if (product.InDiscount)
+                                        {
+                                            <span style="text-decoration:line-through solid red;font-weight:normal"
+                                          class="text-dark">
+                                                <small class="azn_span text-dark">$</small> @product.Price.00
+                                            </span>
+                                            <br>
+                                            <span class="nprice text-danger fw-bold" id="price-1060446">
+                                                <small class="azn_span fw-normal">$</small> @product.DiscountPrice.00
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span style="font-weight:normal"
+                                          class="text-dark">
+                                                <small class="azn_span text-dark">$</small> @product.Price.00
+                                            </span>
+                                        }
+
+                                    </div>
+                                    <a class="btn-add-to-cart mt-2 border-0 text-light minusIcon" data-id="@product.Id"
+                                   style="background-color: black; font-size: 14px; font-weight: bold; padding: 5px 13px; border-radius: 3px; cursor:pointer;">
+                                        Add Basket
+                                    </a>
+                                </div>
                             </a>
+                        </div>
                         }
                     </div>
                 <div class="row">
-                    <nav aria-label="...">
+                    <nav aria-label="..." style="margin:auto;">
                         <ul class="pagination pagination-lg">
                             @for (int i = 1; i <= Model.PageCount; i++)
                             {

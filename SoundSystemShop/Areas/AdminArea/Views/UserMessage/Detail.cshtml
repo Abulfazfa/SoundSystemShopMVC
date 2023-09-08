@@ -20,7 +20,8 @@
                 </div>
 
                 <a class="btn btn-dark" asp-controller="usermessage" asp-action="index">Back</a>
-                <a class="btn btn-dark" asp-controller="product" asp-action="modify" asp-route-id="@Model.Message">Modify</a>
+                <a class="btn btn-dark" asp-controller="product" asp-action="modify" asp-route-id="@Model.Message" asp-route-email="@Model.Email">Modify</a>
+                <a class="btn btn-dark" asp-controller="product" asp-action="reject" asp-route-id="@Model.Message" asp-route-id="@Model.Email">Reject</a>
             </div>
         </div>
     </div>

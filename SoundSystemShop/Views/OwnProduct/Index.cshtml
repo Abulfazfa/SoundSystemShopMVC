@@ -17,7 +17,7 @@
             <div class="card">
                 <div class="card-body">
                     <a class="btn btn-success" asp-controller="ownProduct" asp-action="create">Create Own Product</a>
-                        <a class="btn btn-warning" asp-controller="ownProduct" asp-action="ConfirmedProduct">Orders</a>
+                        <a class="btn btn-primary text-light" asp-controller="ownProduct" asp-action="ConfirmedProduct">Orders</a>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -41,7 +41,7 @@
                                     <td>
                                         <a class="btn btn-secondary" asp-controller="OwnProduct" asp-action="detail" asp-route-id="@product.Id">Detail</a>
                                         <a class="btn btn-secondary" asp-controller="OwnProduct" asp-action="delete" asp-route-id="@product.Id">Delete</a>
-                                        <a class="btn btn-secondary" asp-controller="OwnProduct" asp-action="Order" asp-route-id="@product.Id">Order</a>
+                                        <a class="btn btn-secondary" id="order-button" asp-controller="OwnProduct" asp-action="Order" asp-route-id="@product.Id">Order</a>
                                     </td>
                                 </tr>
                             }
@@ -56,4 +56,29 @@
 </div>
 
 </body>
+
+<script>
+    // Select the "Order" button by its ID
+    var orderButton = document.getElementById('order-button');
+
+    // Check if the button has already been clicked
+    if (localStorage.getItem('orderButtonClicked')) {
+        orderButton.classList.add("d-none");
+    }
+
+    // Add a click event listener to the "Order" button
+    orderButton.addEventListener('click', function () {
+        // Hide the button by adding the "d-none" class
+        orderButton.classList.add("d-none");
+
+        // Set a flag in localStorage to indicate that the button has been clicked
+        localStorage.setItem('orderButtonClicked', 'true');
+
+        // Log a message to the console
+        console.log("salam");
+    });
+</script>
+
+
+
 </html>

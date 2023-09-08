@@ -22,7 +22,8 @@ namespace SoundSystemShop.Services
         List<Product> GetAll();
         Product SaleOfDay();
         Sale FinishDateOfSale(string name);
-        bool CreateProductComment(int productId, string? name, string? email, string comment);
+        bool CreateProductComment(int productId, string name, string comment);
+        bool DeleteComment(int id, int commentId);
 
     }
     public class ProductService : IProductService
@@ -243,17 +244,27 @@ namespace SoundSystemShop.Services
             return now >= startTime && now <= endTime;
         }
 
-        public bool CreateProductComment(int productId, string? name, string? email, string comment)
+        public bool CreateProductComment(int productId, string name, string comment)
         {
             var product = GetProductDetail(productId);
             if (product == null) return false;
             ProductComment productComment = new()
             {
                 UserName = name,
-                UserEmail = email,
+                UserEmail = "",
                 Comment = comment
             };
             product.ProductComments.Add(productComment);
+            _unitOfWork.Commit();
+            return true;
+        }
+        public bool DeleteComment(int id, int commentId)
+        {
+            if (commentId == null) return false;
+            var result = GetProductDetail(id);
+            if (result == null) return false;
+            var clickedComment = result.ProductComments.FirstOrDefault(c => c.Id == commentId);
+            result.ProductComments.Remove(clickedComment);
             _unitOfWork.Commit();
             return true;
         }

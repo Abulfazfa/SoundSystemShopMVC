@@ -19,16 +19,12 @@ namespace SoundSystemShop.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly GenerateQRCode _generateQRCode;
         private readonly AppDbContext _appDbContext;
-        private readonly IFileService _fileService;
-        private readonly IEmailService _emailService;
-        public OwnProductController(IProductService productService, IUnitOfWork unitOfWork, GenerateQRCode generateQRCode, AppDbContext appDbContext, IFileService fileService, IEmailService emailService)
+        public OwnProductController(IProductService productService, IUnitOfWork unitOfWork, GenerateQRCode generateQRCode, AppDbContext appDbContext)
         {
             _productService = productService;
             _unitOfWork = unitOfWork;
             _generateQRCode = generateQRCode;
             _appDbContext = appDbContext;
-            _fileService = fileService;
-            _emailService = emailService;
         }
 
         public IActionResult Index()
@@ -111,27 +107,16 @@ namespace SoundSystemShop.Controllers
             if(cproduct == null) return NotFound();
             return View(cproduct);
         }
-        public IActionResult ShareProduct(string email)
-        {
-            
-            string body = string.Empty;
-            string path = "wwwroot/template/verify.html";
-            string subject = "Get Promo code";
-            body = _fileService.ReadFile(path, body);
-            body = body.Replace("{{Confirm Account}}", "Go to");
-            body = body.Replace("{{Welcome!}}", User.Identity.Name);
-            body = body.Replace("{{link!}}", User.Identity.Name);
-            _emailService.Send(email, subject, body);
-            return NoContent();
-        }
         public IActionResult Order(int id)
         {
+            var user = _unitOfWork.AppUserRepo.GetAllAsync().Result.FirstOrDefault(u => u.UserName == User.Identity.Name);
             if (id <= 0) return NotFound();
             UserMessage userMessage = new()
             {
-                UserName = User.Identity.Name,
+                UserName = user.UserName,
                 Subject = "Create New Product",
                 Message = $"{id}",
+                Email =  user.Email
             };
             _appDbContext.UserMessages.Add(userMessage);
             _appDbContext.SaveChanges();

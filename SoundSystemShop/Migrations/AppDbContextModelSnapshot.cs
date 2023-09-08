@@ -295,7 +295,7 @@ namespace SoundSystemShop.Migrations
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
                             Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "85f67325-b0b2-4bd8-b5dc-972487f5ada5",
+                            ConcurrencyStamp = "0f3c9448-3bbf-4dc5-806d-d394f6ad6787",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             Fullname = "Admin",
@@ -304,7 +304,7 @@ namespace SoundSystemShop.Migrations
                             LockoutEnabled = true,
                             OTP = "0000",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7752a0de-ece6-45ea-a4e2-2922f12bc8f1",
+                            SecurityStamp = "f1d79d08-5e77-4d3e-8fae-0b0f62b90a87",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -853,6 +853,10 @@ namespace SoundSystemShop.Migrations
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");

@@ -87,41 +87,8 @@
         <div class="row">
             @foreach (var product in Model.UserActivities.Take(4))
             {
-                @*<div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-            <div class="product__item">
-            <div class="product__item__pic set-bg" data-setbg="/assets/img/product/@product.Images.FirstOrDefault().ImgUrl">
-            <span class="label">New</span>
-            <ul class="product__hover">
-            <li><a href="~/assets/#"><img src="~/assets/img/icon/heart.png" alt=""></a></li>
-            <li><a href="~/assets/#"><img src="~/assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-            <li><a href="~/assets/#"><img src="~/assets/img/icon/search.png" alt=""></a></li>
-            </ul>
-            </div>
-            <div class="product__item__text">
-            <h6>@product.Name</h6>
-            <a href="~/assets/#" class="add-cart">+ Add To Cart</a>
-            <div class="rating">
-            @for (int i = 0; i < product.ProductRating; i++)
-            {
-            <i class="fa fa-star-o"></i>
-            }
-            </div>
-            <h5>$@product.Price</h5>
-            <div class="product__color__select">
-            <label for="pc-1">
-            <input type="radio" id="pc-1">
-            </label>
-            <label class="active black" for="pc-2">
-            <input type="radio" id="pc-2">
-            </label>
-            <label class="grey" for="pc-3">
-            <input type="radio" id="pc-3">
-            </label>
-            </div>
-            </div>
-            </div>
-            </div>*@
-                <div class="product col-3 swiper-slide">
+                
+                <div class="product col-lg-3 col-md-4 swiper-slide">
                     <a asp-controller="shop" asp-action="product" asp-route-id="@product.Id">
                         <div class="product-img d-flex justify-content-center mt-5 mb-4">
                             <img class="img-fluid w-100"
@@ -176,7 +143,7 @@
             <div class="row product__filter">
                 @foreach (var product in Model.Products.Where(p => p.ProductRating > 3))
                 {
-                <div class="product col-3 swiper-slide">
+                <div class="product col-lg-3 col-md-4 swiper-slide">
                     <a asp-controller="shop" asp-action="product" asp-route-id="@product.Id">
                         <div class="product-img d-flex justify-content-center mt-5 mb-4">
                             <img class="img-fluid w-100"

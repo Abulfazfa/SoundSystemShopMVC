@@ -1,23 +1,35 @@
 ﻿@model List<Product>
 
-<ul data-group="products" style="    display: flex;
-    list-style: none;
-    justify-content: space-between;
-    margin-top: 60px;">
-
-
+<ul data-group="products" style="display: flex; list-style: none; margin-top: 60px;" class="col-12">
     @foreach (var item in Model)
     {
-        <a target="_self" asp-controller="product" asp-action="detail" asp-route-id="@item.Id">
-        <li class="mr-3">
-            <div class="sgm-search-product-image"> <img src="~/assets/img/product/@(item.Images.FirstOrDefault().ImgUrl)" width="100" height="50" /> </div>
-            <div class="sgm-search-product-info">
-                <div class="sgm-search-product-info-name">@item.Name</div>
-                <span class="sgm-search-product-info-price">@item.Price</span>
-            </div>
+        <li class="col-lg-2 col-md-6">
+            <a asp-action="Product" asp-controller="shop" asp-route-id="@item.Id" style="cursor: pointer">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg d-flex">
+                        <img src="assets/img/product/@item.Images.FirstOrDefault(i => i.IsMain == true)?.ImgUrl" />
+                    </div>
+                    <div class="product__item__text">
+                        <h6 class="text-light">@item.Name</h6>
+
+                        <div class="rating">
+                            @for (int i = 0; i < item.ProductRating; i++)
+                            {
+                                <i class="fa-solid fa-star text-warning"></i>
+                            }
+                        </div>
+                        @if (item.InDiscount)
+                        {
+                            <h5 class="text-light"><del>$@item.Price</del></h5>
+                            <h5 class="text-danger">$@item.DiscountPrice</h5>
+                        }
+                        else
+                        {
+                            <h5 class="text-light">$@item.Price</h5>
+                        }
+                    </div>
+                </div>
+            </a>
         </li>
-        </a>
     }
-
 </ul>
-

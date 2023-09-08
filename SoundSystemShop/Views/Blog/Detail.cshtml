@@ -60,14 +60,7 @@
                         <form action="@Url.Action("CreateBlogComment", "Blog")" method="post">
                             <div class="row">
                                 <input type="text" placeholder="Name" name="blogId" style="display:none" value="@Model.Id">
-                                <div class="col-lg-4 col-md-4">
-                                    <input type="text" placeholder="Name" name="name">
-                                </div>
-                                @if(!User.Identity.IsAuthenticated){
-                                    <div class="col-lg-4 col-md-4">
-                                        <input type="text" placeholder="Email" name="email">
-                                    </div>
-                                }
+                               
                                 <div class="col-lg-12 text-center">
                                     <textarea placeholder="Comment" name="comment"></textarea>
                                     <button type="submit" class="site-btn">Post Comment</button>
@@ -76,15 +69,20 @@
                         </form>
 
                     </div>
-                    <div class="blog__details__btns">
+                    <div class="blog__details__btns mt-3">
                         <div class="row">
                             @foreach (var item in Model.Comments)
                             {
                                 <div class="col-lg-12 col-md-6 col-sm-6">
-                                    <a href="" class="blog__details__btns__item" style="padding: 20px; margin-bottom: 20px;">
+                                    <div class="blog__details__btns__item" style="padding: 20px; margin-bottom: 20px;">
                                         <h6>@item.UserName</h6>
                                         <p style="line-break: anywhere;">@item.Comment</p>
-                                    </a>
+                                        
+                                        @if (User.Identity.Name == item.UserName)
+                                        {
+                                            <a class="btn btn-danger btn-sm" asp-controller="blog" asp-action="DeleteBlogComment" asp-route-blogId="@Model.Id" asp-route-commentId="@item.Id">Delete</a>
+                                        }
+                                    </div>
                                 </div>
                             }
                         </div>

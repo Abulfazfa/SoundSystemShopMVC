@@ -3,6 +3,7 @@ using QRCoder;
 using SoundSystemShop.Models;
 using SoundSystemShop.Services;
 using SoundSystemShop.Services.Interfaces;
+using SoundSystemShop.ViewModels;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -25,7 +26,7 @@ namespace SoundSystemShop.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index(int page = 1, int take = 10)
+        public IActionResult Index(int page = 1, int take = 12)
         {
             ViewBag.ShopProductCategory = _unitOfWork.CategoryRepo.GetAllAsync().Result;
             var paginationVM = _productService.GetProducts(page, take);
@@ -50,11 +51,29 @@ namespace SoundSystemShop.Controllers
             if (exist == null) return NotFound();
             return Json(exist);
         }
-        public IActionResult CreateProductComment(int productId, string name, string? email, string comment)
+        public IActionResult CreateProductComment(int productId, string comment)
         {
-            if (name == null || email == null || comment == null) return RedirectToAction(nameof(Product), new { id = productId});
-            _productService.CreateProductComment(productId, name, email, comment);
-            return RedirectToAction(nameof(Product), new { id = productId });
+            if (User.Identity.IsAuthenticated)
+            {
+                var userName = User.Identity.Name;
+                if (comment == null)
+                {
+                    return RedirectToAction(nameof(Product), new { id = productId });
+                }
+                _productService.CreateProductComment(productId, userName, comment);
+                return RedirectToAction(nameof(Product), new { id = productId });
+            }
+            else
+            {
+                string returnUrl = Url.Action("CreateProductComment", "Shop", new { productId = productId, comment = comment });
+
+                return RedirectToAction("Login", "Account", new { ReturnUrl = returnUrl });
+            }
+        }
+        public IActionResult DeleteProductComment(int blogId, int commentId)
+        {
+            _productService.DeleteComment(blogId, commentId);
+            return RedirectToAction(nameof(Product), new { id = blogId });
         }
         [HttpGet]
         public ActionResult GenerateQRCode()

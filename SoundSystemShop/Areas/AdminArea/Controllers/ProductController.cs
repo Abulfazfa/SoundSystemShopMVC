@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SoundSystemShop.Models;
 using SoundSystemShop.Services;
+using SoundSystemShop.Services.Interfaces;
 using SoundSystemShop.ViewModels;
+using static QRCoder.PayloadGenerator;
 
 namespace SoundSystemShop.Areas.AdminArea.Controllers;
 [Area("AdminArea")]
@@ -10,11 +12,15 @@ public class ProductController : Controller
 {
     private readonly IProductService _productService;
     private readonly ICategoryService _categoryService;
+    private readonly IFileService _fileService;
+    private readonly IEmailService _emailService;
 
-    public ProductController(IProductService productService, ICategoryService categoryService)
+    public ProductController(IProductService productService, ICategoryService categoryService, IFileService fileService, IEmailService emailService)
     {
         _productService = productService;
         _categoryService = categoryService;
+        _fileService = fileService;
+        _emailService = emailService;
     }
 
     public IActionResult Index(int page = 1, int take = 5)
@@ -87,10 +93,22 @@ public class ProductController : Controller
         else
             return NotFound();
     }
-    public IActionResult Modify(string id)
+    public IActionResult Modify(string id, string email)
     {
+        SendEmailToUser(email, "Your product successfully modified");
         var productId = int.Parse(id);
         return RedirectToAction(nameof(Update), new { id = productId });
-        //RedirectToAction(nameof(Index), nameof(UserMessage));
+        return NoContent();
+    }
+    private void SendEmailToUser(string email, string message)
+    {
+        string body = string.Empty;
+        string path = "wwwroot/template/verify.html";
+        string subject = "Modified New Product";
+        body = _fileService.ReadFile(path, body);
+        body = body.Replace("{{Welcome}}", message);
+        body = body.Replace("{{Confirm Account}}", "");
+        body = body.Replace("{SaleDesc}", "Please check it");
+        _emailService.Send(email, subject, body);
     }
 }

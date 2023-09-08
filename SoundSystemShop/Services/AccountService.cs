@@ -84,7 +84,8 @@ namespace SoundSystemShop.Services
             string subject = "Verify Email";
             body = _fileService.ReadFile(path, body);
             body = body.Replace("{{Confirm Account}}", appUser.OTP);
-            body = body.Replace("{{Welcome!}}", appUser.Fullname);
+            body = body.Replace("{{Welcome}}", appUser.Fullname);
+            body = body.Replace("{SaleDesc}", "");
 
             _emailService.Send(appUser.Email, subject, body);
         }
@@ -158,6 +159,7 @@ namespace SoundSystemShop.Services
             body = _fileService.ReadFile(path, body);
             body = body.Replace("{{link}}", link);
             body = body.Replace("{{Welcome!}}", existUser.Fullname);
+            body = body.Replace("{SaleDesc}", "");
 
             _emailService.Send(existUser.Email, subject, body);
             return true;

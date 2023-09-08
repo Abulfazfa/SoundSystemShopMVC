@@ -81,7 +81,7 @@
                         </ul>
                     </nav>
                 </div>
-                <div class="col-lg-3 col-md-3">
+                <div class="col-lg-3 col-md-3 col-ms-12">
                     <div class="header__nav__option" style="display: flex;justify-content: flex-end;">
                         <a class="search-switch" style="margin-right: 15px"><img src="~/assets/img/icon/search.png" alt=""></a>
                         <a asp-controller="basket" asp-action="index">
@@ -143,23 +143,19 @@
                 </div>
                 <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
                     <div class="footer__widget">
-                        <h6>Shopping</h6>
+                        <h6>Contact</h6>
                         <ul>
-                            <li><a href="~/assets/#">Clothing Store</a></li>
-                            <li><a href="~/assets/#">Trending Shoes</a></li>
-                            <li><a href="~/assets/#">Accessories</a></li>
-                            <li><a href="~/assets/#">Sale</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-3 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>Shopping</h6>
-                        <ul>
-                            <li><a href="~/assets/#">Contact Us</a></li>
-                            <li><a href="~/assets/#">Payment Methods</a></li>
-                            <li><a href="~/assets/#">Delivary</a></li>
-                            <li><a href="~/assets/#">Return & Exchanges</a></li>
+                            <li><a>(+994)-12-345-67-89</a></li>
+                            <li><a asp-controller="contact" asp-action="index">Get Our Location</a></li>
+                            <li><a asp-controller="blog" asp-action="index">Look Our Blog</a></li>
+                            <li class="d-flex justify-content-between">
+
+                                <a><i class="fa-brands fa-instagram fs-3"></i></a> 
+                                <a><i class="fa-brands fa-facebook fs-3"></i></a> 
+                                <a><i class="fa-brands fa-twitter fs-3"></i></a>
+                                <a><i class="fa-brands fa-linkedin fs-3"></i></a>
+
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -198,13 +194,13 @@
     <div class="search-model">
         <div class="h-100 d-flex align-items-center justify-content-center">
             <div class="search-close-switch">+</div>
-            <div>
-                <div>
+            <div class="col-lg-12">
+                <div >
                     <form class="search-model-form">
                         <input type="text" id="search-input" placeholder="Search here.....">
                     </form>
                 </div>
-                <div id="searchList"></div>
+                <div id="searchList" ></div>
             </div>
         </div>
     </div>
