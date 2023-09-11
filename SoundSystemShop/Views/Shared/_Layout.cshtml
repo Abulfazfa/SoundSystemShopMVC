@@ -25,6 +25,14 @@
     <link rel="stylesheet" href="~/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+<!-- Start of LiveChat (www.livechat.com) code -->
+<script>
+    window.__lc = window.__lc || {};
+    window.__lc.license = 16093803;
+    ; (function (n, t, c) { function i(n) { return e._h ? e._h.apply(null, n) : e._q.push(n) } var e = { _q: [], _h: null, _v: "2.0", on: function () { i(["on", c.call(arguments)]) }, once: function () { i(["once", c.call(arguments)]) }, off: function () { i(["off", c.call(arguments)]) }, get: function () { if (!e._h) throw new Error("[LiveChatWidget] You can't use getters before load."); return i(["get", c.call(arguments)]) }, call: function () { i(["call", c.call(arguments)]) }, init: function () { var n = t.createElement("script"); n.async = !0, n.type = "text/javascript", n.src = "https://cdn.livechatinc.com/tracking.js", t.head.appendChild(n) } }; !n.__lc.asyncInit && e.init(), n.LiveChatWidget = n.LiveChatWidget || e }(window, document, [].slice))
+</script>
+<noscript><a href="https://www.livechat.com/chat-with/16093803/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>
+<!-- End of LiveChat code -->
 
 <body>
     <!-- Page Preloder -->
@@ -36,14 +44,12 @@
     <div class="offcanvas-menu-overlay"></div>
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__nav__option">
-            <a href="~/assets/#" class="search-switch"><img src="~/assets/img/icon/search.png" alt=""></a>
-            <a href="~/assets/#"><img src="~/assets/img/icon/cart.png" alt=""> <span>0</span></a>
+            <a class="search-switch"><img src="~/assets/img/icon/search.png" alt=""></a>
+            <a asp-controller="basket" asp-action="index"><img src="~/assets/img/icon/cart.png" alt=""> <span>0</span></a>
             <div class="price">$0.00</div>
         </div>
         <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__text">
-            <p>Free shipping, 30-day return or refund guarantee.</p>
-        </div>
+       
     </div>
     <!-- Offcanvas Menu End -->
 
@@ -84,6 +90,7 @@
                 <div class="col-lg-3 col-md-3 col-ms-12">
                     <div class="header__nav__option" style="display: flex;justify-content: flex-end;">
                         <a class="search-switch" style="margin-right: 15px"><img src="~/assets/img/icon/search.png" alt=""></a>
+                        <a asp-action="index" asp-controller="wishlist" class="whishlist mr-2 text-dark"><i class="fa-regular fa-heart"></i></a>
                         <a asp-controller="basket" asp-action="index">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="24" height="24" fill="white"></rect>
@@ -105,13 +112,14 @@
                             </svg> <span id="basketCount" style="left:10px; top:-5px;">0</span>
                         </a>
                         <div class="price totalPriceArea"></div>
+                        
                         @if (User.Identity.IsAuthenticated)
                         {
 
                             <ul style="list-style: none;">
                                 <li style="text-decoration: none; ">
                                     <input id="firstName" type="text" value="@User.Identity.Name" style="display: none">
-                                    <a  id="profileImage" style="color: #FFFFFF; background-color: #0f6674; margin-left: 20px; border: 1px solid #0f6674; padding: 5px 8px; border-radius: 50%"></a>
+                                    <a  id="profileImage" style="color: #FFFFFF; background-color: #0f6674; margin-left: 15px; border: 1px solid #0f6674; padding: 5px 11px; border-radius: 50%"></a>
                                     <ul class="dropdown" style="top: 70px;left: 200px;width: 100px;">
                                         <li><a asp-controller="account" asp-action="ChangePassword">Change Password</a></li>
                                         <li><a asp-controller="account" asp-action="logout">Log Out</a></li>

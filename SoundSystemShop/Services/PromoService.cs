@@ -26,40 +26,40 @@ namespace SoundSystemShop.Services
         }
         public bool GetPromo(string promo)
         {
-            if(string.IsNullOrEmpty(promo)) return false;
+            if (string.IsNullOrEmpty(promo)) return false;
             var existPromo = _appDbContext.PromoCodes.FirstOrDefault(p => p.Name == promo);
             if (existPromo == null) return false;
             return true;
         }
         public void GenerateLuckyPeopleAsync()
         {
-                var count = _appDbContext.AdminPromos.FirstOrDefault(p => p.Name == "WeeklyPromo").UserCount;
-                var users = _userManager.Users.ToList(); 
+            var count = _appDbContext.AdminPromos.FirstOrDefault(p => p.Name == "WeeklyPromo").UserCount;
+            var users = _userManager.Users.ToList();
 
-                List<PromoVM> luckyUsers = new List<PromoVM>();
-                //Random random = new Random();
-                //HashSet<int> selectedIndices = new HashSet<int>();
+            List<PromoVM> luckyUsers = new List<PromoVM>();
+            Random random = new Random();
+            HashSet<int> selectedIndices = new HashSet<int>();
 
-                //while (luckyUsers.Count < count && selectedIndices.Count < users.Count)
-                //{
-                //    int userNumber = random.Next(0, users.Count);
-                //    PromoVM promoVM = new PromoVM();
-                //    if (!selectedIndices.Contains(userNumber))
-                //    {
-                //        string promoCode = GeneratePromoCode();
-                //        selectedIndices.Add(userNumber);
-
-                //        promoVM.User = users[userNumber];
-                //        promoVM.PromoCode = promoCode;
-                //        luckyUsers.Add(promoVM);                        
-                //    }
-                //}
-
-                foreach (var luckyUser in luckyUsers)
+            while (luckyUsers.Count < count && selectedIndices.Count < users.Count)
+            {
+                int userNumber = random.Next(0, users.Count);
+                PromoVM promoVM = new PromoVM();
+                if (!selectedIndices.Contains(userNumber))
                 {
-                    //SendMailToLuckyPerson(luckyUser);
+                    string promoCode = GeneratePromoCode();
+                    selectedIndices.Add(userNumber);
+
+                    promoVM.User = users[userNumber];
+                    promoVM.PromoCode = promoCode;
+                    luckyUsers.Add(promoVM);
                 }
-            
+            }
+
+            foreach (var luckyUser in luckyUsers)
+            {
+                SendMailToLuckyPerson(luckyUser);
+            }
+
         }
         public string GeneratePromoCode()
         {
@@ -74,18 +74,20 @@ namespace SoundSystemShop.Services
                 FinishDate = DateTime.Now.AddDays(finish),
             };
             _appDbContext.PromoCodes.Add(promoCode);
-            _appDbContext.SaveChanges();
+
+            
+            //_appDbContext.SaveChanges();
             return code;
         }
         public void SendMailToLuckyPerson(PromoVM promoVM)
         {
-                string body = string.Empty;
-                string path = "wwwroot/template/verify.html";
-                string subject = "Get Promo code";
-                body = _fileService.ReadFile(path, body);
-                body = body.Replace("{{Confirm Account}}", promoVM.PromoCode);
-                body = body.Replace("{{Welcome!}}", promoVM.User.Fullname);
-                //_emailService.Send(promoVM.User.Email, subject, body); 
+            string body = string.Empty;
+            string path = "wwwroot/template/verify.html";
+            string subject = "Get Promo code";
+            body = _fileService.ReadFile(path, body);
+            body = body.Replace("{{Confirm Account}}", promoVM.PromoCode);
+            body = body.Replace("{{Welcome!}}", promoVM.User.Fullname);
+            //_emailService.Send(promoVM.User.Email, subject, body); 
         }
 
     }

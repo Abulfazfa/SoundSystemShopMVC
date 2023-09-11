@@ -6,7 +6,7 @@
 
 <!-- Hero Section Begin -->
 <section id="bargainSection" class="d-none" style="background-color: rgb(4, 1, 37); width: 98.7vw; margin-top:113px">
-    <div class="row">
+    <div class="row" style="    width: 100%;">
 
         <div class="categories__deal__countdown" style="margin: auto;">
             <h2 class="text-light">Huge Sale</h2>
@@ -54,29 +54,6 @@
     </section>
     <!-- Hero Section End -->
 
-    <!-- Banner Section Begin -->
-    @*<section class="banner spad">
-        <div class="container">
-            <div class="row">
-                @foreach (var item in Model.Banners)
-            {
-                <div class="col-lg-7 offset-lg-4">
-                    <div class="banner__item">
-                        <div class="banner__item__pic">
-                            <img src="~/assets/img/banner/@item.ImgUrl" alt="">
-                        </div>
-                        <div class="banner__item__text">
-                            <h2>@item.Name</h2>
-                            <a asp-controller="shop">Shop now</a>
-                        </div>
-                    </div>
-                </div>
-            }
-            </div>
-        </div>
-    </section>*@
-    <!-- Banner Section End -->
-
 <section class="latest spad">
     <div class="container">
         <div class="row">
@@ -120,10 +97,14 @@
                                 }
 
                             </div>
+                            <a asp-controller="wishlist" asp-action="AddToWishlist" asp-route-productId="@product.Id"><i class="fa-regular fa-heart"></i></a>
+                            <span style="display:none;" id="productId">@product.Id</span>
+                           
                             <a class="btn-add-to-cart mt-2 border-0 text-light minusIcon" data-id="@product.Id"
                            style="background-color: black; font-size: 14px; font-weight: bold; padding: 5px 13px; border-radius: 3px; cursor:pointer;">
                                 Add Basket
                             </a>
+
                         </div>
                     </a>
                 </div>
@@ -150,6 +131,7 @@
                              src="~/assets/img/product/@product.Images.FirstOrDefault().ImgUrl"
                              alt="" style="height:262.5px;">
                         </div>
+                        <a asp-controller="wishlist" asp-action="AddToWishlist" asp-route-productId="@product.Id"><img src="~/assets/img/icon/heart.png" alt=""/></a>
                         <div class="product-name">
                             <p class="text-center fw-bold text-dark mb-4 ">@product.Name</p>
                         </div>
@@ -175,6 +157,7 @@
                                 }
 
                             </div>
+                            <a asp-controller="wishlist" asp-action="AddToWishlist" asp-route-productId="@product.Id"><i class="fa-regular fa-heart"></i></a>
                             <a class="btn-add-to-cart mt-2 border-0 text-light minusIcon" data-id="@product.Id"
                            style="background-color: black; font-size: 14px; font-weight: bold; padding: 5px 13px; border-radius: 3px; cursor:pointer;">
                                 Add Basket
@@ -231,34 +214,7 @@
     </section>
     <!-- Categories Section End -->
 
-    <!-- Instagram Section Begin -->
-@*    <section class="instagram spad">
-        <div class="container">
-           @foreach (var item in Model.SocialMedias)
-           {
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="instagram__pic">
-                        @foreach (var img in item.ImgUrls)
-                        {
-                            <div class="instagram__pic__item set-bg" data-setbg="/asstes/img/instagram/@img.ImgUrl"></div>
-                        }
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="instagram__text">
-                        <h2>@item.Name</h2>
-                        <p>
-                            @item.Desciption
-                        </p>
-                        <h3>#@item.Tag</h3>
-                    </div>
-                </div>
-            </div>
-        }
-        </div>
-    </section>
-*@    <!-- Instagram Section End -->
+   
 
     <!-- Latest Blog Section Begin -->
     <section class="latest spad">

@@ -27,7 +27,7 @@ namespace SoundSystemShop.Controllers
         public IActionResult AddBasket(int id)
         {
             if (id == null) return NotFound();
-            var product = _productService.GetProductDetail(id);//_appDbContext.Products.Include(p => p.Images).FirstOrDefault(p => p.Id == id);
+            var product = _productService.GetProductDetail(id);
             if (product == null) return NotFound();
 
             List<BasketVM> products;
@@ -79,8 +79,8 @@ namespace SoundSystemShop.Controllers
                 products = JsonConvert.DeserializeObject<List<BasketVM>>(Request.Cookies["basket"]);
             }
             var existproduct = products.Find(x => x.Id == id);
-            
-                existproduct.BasketCount--;
+
+            existproduct.BasketCount--;
 
 
 
@@ -134,7 +134,7 @@ namespace SoundSystemShop.Controllers
             var products = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
             var existproduct = products.FirstOrDefault(x => x.Id == id);
 
-           
+
             return Json(existproduct.BasketCount);
         }
 
@@ -152,7 +152,7 @@ namespace SoundSystemShop.Controllers
             return Json(formattedTotalPrice);
         }
 
-        public IActionResult CheckOut()
+        public IActionResult CheckOut(string promoCode)
         {
             var domain = "https://localhost:44392/";
             var options = new SessionCreateOptions
@@ -163,32 +163,43 @@ namespace SoundSystemShop.Controllers
                 Mode = "payment",
                 Locale = "en"
             };
+
+            var discountRate = 1.0; // Default discount rate (no promo code applied)
+
+            // Check if promo code is valid and set the discount rate accordingly
+            if (!string.IsNullOrEmpty(promoCode) && promoCode == "YOUR_PROMO_CODE")
+            {
+                discountRate = 0.7; // 30% discount with the valid promo code
+            }
+
             foreach (var item in BasketProducts())
             {
                 var sessionListItem = new SessionLineItemOptions
                 {
                     PriceData = new SessionLineItemPriceDataOptions
                     {
-                        UnitAmount = (long)(item.Price * item.BasketCount*100),
+                        UnitAmount = (long)(item.Price * item.BasketCount * 100 * discountRate),
                         Currency = "usd",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
                             Name = item.Name
                         }
-                       
                     },
-                    Quantity = item.BasketCount
+                    Quantity = item.BasketCount,
                 };
+
                 options.LineItems.Add(sessionListItem);
             }
+
             var service = new SessionService();
             Session session = service.Create(options);
 
             TempData["Session"] = session.Id;
             Response.Headers.Add("Location", session.Url);
             return new StatusCodeResult(303);
-
         }
+
+
         public IActionResult OrderConfirmation()
         {
             var service = new SessionService();

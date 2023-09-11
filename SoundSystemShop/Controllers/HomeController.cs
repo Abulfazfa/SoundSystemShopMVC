@@ -47,4 +47,5 @@ public class HomeController : Controller
             .ToList();
         return PartialView("_SearchPartial", products);
     }
+    
 }

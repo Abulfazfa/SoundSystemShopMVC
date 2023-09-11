@@ -11,7 +11,7 @@ namespace SoundSystemShop.Services
 {
     public interface IProductService
     {
-        PaginationVM<Product> GetProducts(int page = 1, int take = 2);
+        PaginationVM<Product> GetProducts(int page = 1, int take = 15);
         Product GetProductDetail(int id);
         Task<bool> CreateProduct(ProductVM productVM);
         bool UpdateProduct(int id, ProductVM productVM);
@@ -40,20 +40,27 @@ namespace SoundSystemShop.Services
             _paginationService = paginationService;
         }
 
-        public PaginationVM<Product> GetProducts(int page = 1, int take = 2)
+        public PaginationVM<Product> GetProducts(int page = 1, int take = 15)
         {
             var query = _unitOfWork.ProductRepo.Queryable();
+
+            query = query.Where(p => p.IsDeleted == false);
+            //query = query.Where(p => p.CategoryId == 2);
+           
+
             var products = query
                 .Include(p => p.Images)
                 .Include(p => p.Category)
                 .Skip(take * (page - 1))
                 .Take(take)
-                .Where(p => p.IsDeleted == false)
                 .ToList();
+
             var productCount = query.Count();
             Discount();
+
             return new PaginationVM<Product>(products, page, _paginationService.PageCount(productCount, take));
         }
+
         public List<Product> GetAll()
         {
             Discount();

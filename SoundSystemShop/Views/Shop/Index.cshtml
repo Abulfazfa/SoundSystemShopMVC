@@ -34,16 +34,21 @@
                                 <div class="card">
                                     <div class="card-heading">
                                         <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+
                                     </div>
                                     <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
-                                                <ul class="nice-scroll">
+                                            <ul class="nice-scroll">
                                                 @foreach (var item in ViewBag.ShopProductCategory)
                                                 {
-                                                    <li><a href="#">@item.Name</a></li>
+                                                    <li>
+                                                        <span style="cursor:pointer" class="category-link" data-category-id="@item.Id">@item.Name</span>
+                                                    </li>
                                                 }
-                                                </ul>
+                                            </ul>
+
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -57,7 +62,6 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__price">
                                                 <ul id="sidebarPrice">
-                                                    
                                                     
                                                 </ul>
                                             </div>
@@ -83,57 +87,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        @foreach (var product in Model.Items)
-                        {
-                        <div class="product col-lg-4 col-md-6 swiper-slide">
-                            <a asp-controller="shop" asp-action="product" asp-route-id="@product.Id">
-                                <div class="product-img d-flex justify-content-center mt-5 mb-4">
-                                    <img class="img-fluid w-100"
-                                     src="~/assets/img/product/@product.Images.FirstOrDefault().ImgUrl"
-                                     alt="" style="height:262.5px;">
-                                </div>
-                                <div class="product-name">
-                                    <p class="text-center fw-bold text-dark mb-4 ">@product.Name</p>
-                                </div>
-                                <div class="rating" style="    width: fit-content;
-    margin: auto;">
-                                    @for (int i = 0; i < product.ProductRating; i++)
-                                    {
-                                        <i class="fa-solid fa-star text-warning"></i>
-                                    }
-                                </div>
-                                <div class="product-price d-flex justify-content-around align-items-center">
-                                    <div class="discount">
-                                        @if (product.InDiscount)
-                                        {
-                                            <span style="text-decoration:line-through solid red;font-weight:normal"
-                                          class="text-dark">
-                                                <small class="azn_span text-dark">$</small> @product.Price.00
-                                            </span>
-                                            <br>
-                                            <span class="nprice text-danger fw-bold" id="price-1060446">
-                                                <small class="azn_span fw-normal">$</small> @product.DiscountPrice.00
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span style="font-weight:normal"
-                                          class="text-dark">
-                                                <small class="azn_span text-dark">$</small> @product.Price.00
-                                            </span>
-                                        }
-
-                                    </div>
-                                    <a class="btn-add-to-cart mt-2 border-0 text-light minusIcon" data-id="@product.Id"
-                                   style="background-color: black; font-size: 14px; font-weight: bold; padding: 5px 13px; border-radius: 3px; cursor:pointer;">
-                                        Add Basket
-                                    </a>
-                                </div>
-                            </a>
+                <div class="row" id="product-list-partial">
+                        @Html.Partial("_ProductListPartial", Model.Items)
                         </div>
-                        }
-                    </div>
                 <div class="row">
                     <nav aria-label="..." style="margin:auto;">
                         <ul class="pagination pagination-lg">
@@ -149,8 +105,13 @@
                         </ul>
                     </nav>
                 </div>
+                
+                
                 </div>
             </div>
         </div>
     </section>
     <!-- Shop Section End -->
+    <script>
+
+    </script>
