@@ -84,7 +84,7 @@ namespace SoundSystemShop.Controllers
             // customerProduct.AppUser = _unitOfWork.AppUserRepo.GetAllAsync().Result.FirstOrDefault(u => u.UserName == createProduct.UserName);
             // await _unitOfWork.CustomerProductRepo.AddAsync(customerProduct);
             _unitOfWork.Commit();
-            return Json(product);
+            return RedirectToAction(nameof(Index));
         }
         public IActionResult Detail(int id)
         {
@@ -120,7 +120,7 @@ namespace SoundSystemShop.Controllers
             };
             _appDbContext.UserMessages.Add(userMessage);
             _appDbContext.SaveChanges();
-            return Content("Send successfully");
+            return NoContent();
         }
         public IActionResult ConfirmedProduct()
         {

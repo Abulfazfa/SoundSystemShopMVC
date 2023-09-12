@@ -16,6 +16,7 @@
                             <tr>
                                 <th>UserName</th>
                                 <th>Description</th>
+                                <th>Price</th>
                                 <th>Settings</th>
                             </tr>
                         </thead>
@@ -23,8 +24,9 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@item.AppUser.UserName</td>
+                                    <td>@item.AppUser.Fullname</td>
                                     <td>@item.Desc</td>
+                                    <td>@item.Price</td>
                                     <td>
                                         <a class="btn btn-secondary" asp-controller="CustomerProduct" asp-action="detail" asp-route-id="@item.Id">Detail</a>
                                         <a class="btn btn-warning" asp-controller="CustomerProduct" asp-action="create" asp-route-id="@item.Id">Create</a>

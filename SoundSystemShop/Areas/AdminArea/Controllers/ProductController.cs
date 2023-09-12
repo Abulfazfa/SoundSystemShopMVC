@@ -23,7 +23,7 @@ public class ProductController : Controller
         _emailService = emailService;
     }
 
-    public IActionResult Index(int page = 1, int take = 5)
+    public IActionResult Index(int page = 1, int take = 10)
     {
         var paginationVM = _productService.GetProducts(page, take);
         if (paginationVM.Items.Count > 0)
@@ -98,7 +98,6 @@ public class ProductController : Controller
         SendEmailToUser(email, "Your product successfully modified");
         var productId = int.Parse(id);
         return RedirectToAction(nameof(Update), new { id = productId });
-        return NoContent();
     }
     private void SendEmailToUser(string email, string message)
     {

@@ -29,24 +29,26 @@
                                 <th>Settings</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            @foreach (var product in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        <img src="~/assets/img/product/@product.Images.FirstOrDefault().ImgUrl" width="90" height="70" alt=""/>
-                                    </td>
-                                    <td>$@product.Price</td>
-                                    <td>@product.Desc</td>
-                                    <td>
-                                        <a class="btn btn-secondary" asp-controller="OwnProduct" asp-action="detail" asp-route-id="@product.Id">Detail</a>
-                                        <a class="btn btn-secondary" asp-controller="OwnProduct" asp-action="delete" asp-route-id="@product.Id">Delete</a>
-                                        <a class="btn btn-secondary" id="order-button" asp-controller="OwnProduct" asp-action="Order" asp-route-id="@product.Id">Order</a>
-                                    </td>
-                                </tr>
-                            }
-    
-                            </tbody>
+                                <tbody>
+                                    @foreach (var product in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <img src="~/assets/img/product/@product.Images.FirstOrDefault().ImgUrl" width="90" height="70" alt="" />
+                                            </td>
+                                            <td>$@product.Price</td>
+                                            <td>@product.Desc</td>
+                                            <td>
+                                                <a class="btn btn-secondary" asp-controller="OwnProduct" asp-action="detail" asp-route-id="@product.Id">Detail</a>
+                                                <a class="btn btn-secondary" asp-controller="OwnProduct" asp-action="delete" asp-route-id="@product.Id">Delete</a>
+                                                <a class="btn btn-secondary order-button" data-id="@product.Id" asp-controller="OwnProduct" asp-action="Order" asp-route-id="@product.Id">Order</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+
+
+
                         </table>
                     </div>
                 </div>
@@ -57,28 +59,17 @@
 
 </body>
 
-<script>
-    // Select the "Order" button by its ID
-    var orderButton = document.getElementById('order-button');
 
-    // Check if the button has already been clicked
-    if (localStorage.getItem('orderButtonClicked')) {
-        orderButton.classList.add("d-none");
-    }
-
-    // Add a click event listener to the "Order" button
-    orderButton.addEventListener('click', function () {
-        // Hide the button by adding the "d-none" class
-        orderButton.classList.add("d-none");
-
-        // Set a flag in localStorage to indicate that the button has been clicked
-        localStorage.setItem('orderButtonClicked', 'true');
-
-        // Log a message to the console
-        console.log("salam");
-    });
-</script>
 
 
 
 </html>
+<style>
+    .clicked {
+        background-color: #ccc; /* Change the background color to gray */
+        color: #888; /* Change the text color to a lighter shade */
+        cursor: not-allowed; /* Change the cursor to indicate it's disabled */
+    }
+</style>
+
+

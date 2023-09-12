@@ -18,7 +18,7 @@ namespace SoundSystemShop.Areas.AdminArea.Controllers
         }
         public IActionResult Index()
         {
-            return View(_appDbContext.UserMessages.Where(m => m.IsSeen == false).ToList());
+            return View(_appDbContext.UserMessages.Where(m => m.IsSeen == false).OrderByDescending(m => m.CreationDate).ToList());
         }
 
         public IActionResult SeenMessage()
@@ -40,7 +40,7 @@ namespace SoundSystemShop.Areas.AdminArea.Controllers
             if (id == null) return NotFound();
             var message = _appDbContext.UserMessages.FirstOrDefault(x => x.Id == id);
             if (message == null) return NotFound();
-
+            if (message.Subject == "Create New Product") return RedirectToAction("Detail", "CustomerProduct", new { id = message.Message, email = message.Email});
             return View(message);
         }
 

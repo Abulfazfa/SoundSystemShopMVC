@@ -67,6 +67,16 @@ namespace SoundSystemShop.Controllers
 
             return NoContent();
         }
+        public IActionResult GetWishlistCount()
+        {
+            var wishlist = Request.Cookies["Wishlist"];
+            List<WishlistVM> products = string.IsNullOrEmpty(wishlist)
+                ? new List<WishlistVM>()
+                : JsonConvert.DeserializeObject<List<WishlistVM>>(wishlist);
+
+            int totalCount = products.Count;
+            return Json(totalCount);
+        }
 
         private List<Product> WishlistVMToProduct(List<WishlistVM> wishlistVMs)
         {

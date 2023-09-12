@@ -90,7 +90,7 @@
                 <div class="col-lg-3 col-md-3 col-ms-12">
                     <div class="header__nav__option" style="display: flex;justify-content: flex-end;">
                         <a class="search-switch" style="margin-right: 15px"><img src="~/assets/img/icon/search.png" alt=""></a>
-                        <a asp-action="index" asp-controller="wishlist" class="whishlist mr-2 text-dark"><i class="fa-regular fa-heart"></i></a>
+                        <a asp-action="index" asp-controller="wishlist" class="whishlist mr-2 text-dark"><i class="fa-regular fa-heart"></i><sup id="wishlistCount">0</sup></a>
                         <a asp-controller="basket" asp-action="index">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="24" height="24" fill="white"></rect>
@@ -146,7 +146,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <p>The customer is at the heart of our unique business model, which includes design.</p>
-                        <a href="~/assets/#"><img src="~/assets/img/payment.png" alt=""></a>
+                        <a ><img src="~/assets/img/payment.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
@@ -185,9 +185,7 @@
                     <div class="footer__copyright__text">
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         <p>Copyright ©
-                            <script>
-                                document.write(new Date().getFullYear());
-                            </script>2020
+                           
                             All rights reserved
                         </p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->

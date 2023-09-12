@@ -73,7 +73,21 @@
                 }
             });
         }
+        function updateWishlistCount() {
+            var basketCountElement = $("#wishlistCount");
 
+            $.ajax({
+                url: '/wishlist/GetWishlistCount', // Use relative URL
+                type: 'GET',
+                success: function (data) {
+                    basketCountElement.text(data);
+                },
+                error: function () {
+                    console.log('Error retrieving basket count.');
+                }
+            });
+        }
+        updateWishlistCount();
         function updateProductCount(itemId) {
             var productCount = $("#productCount");
             $.ajax({
@@ -452,7 +466,48 @@
 
 
 
-   
+
+
+
+
+
+
+    // Function to handle the click event
+    $(".order-button").on("click", function () {
+        var button = $(this);
+        var productId = button.data("id");
+        var storageKey = "orderClicked_" + productId;
+
+        // Check if the button has already been clicked using local storage
+        if (localStorage.getItem(storageKey) === "true") {
+            alert("This product has already been ordered.");
+            return;
+        }
+
+        // Disable the button
+        button.prop("disabled", true);
+
+        // Store a flag in local storage to indicate that the button has been clicked
+        localStorage.setItem(storageKey, "true");
+
+        // Perform any other actions you need here, e.g., making an AJAX request to handle the order.
+    });
+
+    // On page load, disable buttons that were previously clicked
+    $(document).ready(function () {
+        $(".order-button").each(function () {
+            var button = $(this);
+            var productId = button.data("id");
+            var storageKey = "orderClicked_" + productId;
+
+            if (localStorage.getItem(storageKey) === "true") {
+                button.prop("disabled", true);
+            }
+        });
+    });
+
+
+
 
 
     /*------------------

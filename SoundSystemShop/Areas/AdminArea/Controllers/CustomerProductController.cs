@@ -6,37 +6,55 @@ using SoundSystemShop.Services.Interfaces;
 using SoundSystemShop.ViewModels;
 
 namespace SoundSystemShop.Areas.AdminArea.Controllers;
-
+[Area("AdminArea")]
 public class CustomerProductController : Controller
 {
     private readonly IProductService _productService;
     private readonly IUnitOfWork _unitOfWork;
     private readonly AppDbContext _appDbContext;
-    public CustomerProductController(IProductService productService, IUnitOfWork unitOfWork, AppDbContext appDbContext)
+    private readonly IFileService _fileService;
+    private readonly IEmailService _emailService;
+    public CustomerProductController(IProductService productService, IUnitOfWork unitOfWork, AppDbContext appDbContext, IFileService fileService, IEmailService emailService)
     {
         _productService = productService;
         _unitOfWork = unitOfWork;
         _appDbContext = appDbContext;
+        _fileService = fileService;
+        _emailService = emailService;
     }
 
     // GET
-    public IActionResult Index()
+    public IActionResult Detail(int id, string email)
     {
-        var cproducts = _appDbContext.CustomerProducts
-            .Include(cp => cp.ProductImages).Where(cp => cp.IsDeleted == true).ToList();
-        return View();
+        ViewBag.UserEmail = email;
+        var cproducts = _appDbContext.Products
+            .Include(cp => cp.Images).FirstOrDefault(p => p.Id == id);
+        return View(cproducts);
     }
     public IActionResult Create(int id)
     {
         var cproduct = _appDbContext.CustomerProducts
             .Include(cp => cp.ProductImages).FirstOrDefault(cp => cp.Id == id);
-        return View();
+        return Content("Created");
     }
-    public IActionResult Reject(int id)
+    public IActionResult Reject(int id, string email)
     {
-        var cproduct = _appDbContext.CustomerProducts.FirstOrDefault(cp => cp.Id == id);
+        var cproduct = _appDbContext.Products.FirstOrDefault(cp => cp.Id == id);
         cproduct.IsDeleted = false;
         _appDbContext.SaveChanges();
-        return NoContent();
+        SendEmailToUser(email, "Your Item Has Been Rejected\n" +
+            "Please edit and resubmit");
+        return RedirectToAction("Index", "Usermessage", new {area = "AdminArea"});
+    }
+    private void SendEmailToUser(string email, string message)
+    {
+        string body = string.Empty;
+        string path = "wwwroot/template/verify.html";
+        string subject = "Modified New Product";
+        body = _fileService.ReadFile(path, body);
+        body = body.Replace("{{Welcome}}", message);
+        body = body.Replace("{{Confirm Account}}", "");
+        body = body.Replace("{SaleDesc}", "Please check it");
+        _emailService.Send(email, subject, body);
     }
 }
