@@ -9,6 +9,7 @@ using SoundSystemShop.Services.Interfaces;
 using SoundSystemShop.ViewModels;
 using System.Data;
 using System.Linq;
+using static QRCoder.PayloadGenerator;
 
 namespace SoundSystemShop.Controllers
 {
@@ -19,12 +20,16 @@ namespace SoundSystemShop.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly GenerateQRCode _generateQRCode;
         private readonly AppDbContext _appDbContext;
-        public OwnProductController(IProductService productService, IUnitOfWork unitOfWork, GenerateQRCode generateQRCode, AppDbContext appDbContext)
+        private readonly IFileService _fileService;
+        private readonly IEmailService _emailService;
+        public OwnProductController(IProductService productService, IUnitOfWork unitOfWork, GenerateQRCode generateQRCode, AppDbContext appDbContext, IFileService fileService, IEmailService emailService)
         {
             _productService = productService;
             _unitOfWork = unitOfWork;
             _generateQRCode = generateQRCode;
             _appDbContext = appDbContext;
+            _fileService = fileService;
+            _emailService = emailService;
         }
 
         public IActionResult Index()
@@ -134,6 +139,18 @@ namespace SoundSystemShop.Controllers
                 }
             }
             return View(userProducts);
+        }
+        public IActionResult SendNewProductEmail(string email, string message)
+        {
+            string body = string.Empty;
+            string path = "wwwroot/template/verify.html";
+            string subject = "Modified New Product";
+            body = _fileService.ReadFile(path, body);
+            body = body.Replace("{{Welcome}}", "Let's take a look at my new product");
+            body = body.Replace("{{Confirm Account}}", "");
+            body = body.Replace("{SaleDesc}", message);
+            _emailService.Send(email, subject, body);
+            return NoContent();
         }
     }
 }

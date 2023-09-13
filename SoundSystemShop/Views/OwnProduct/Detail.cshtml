@@ -32,31 +32,11 @@
                 @* <div class="form-group">
                             <img src="@Model.QrCode" class="img-thumbnail" width="200"/>
                  </div>*@
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#searchModal">Share</button>
+                        
                  <a class="btn btn-dark" asp-controller="ownproduct" asp-action="index">Back</a>
 
 
-                        <div class="modal fade" id="searchModal">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Search Users</h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- Input Field and Search Button -->
-                                        <input type="text" id="usernameInput" placeholder="Enter username">
-                                        <button class="btn btn-primary" id="modalSearchButton">Search</button>
-
-                                        <!-- Display Search Results with Scroll -->
-                                        <div id="modalSearchResults" style="max-height: 300px; overflow-y: auto;"></div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
              </div>
          </div>
      </div>

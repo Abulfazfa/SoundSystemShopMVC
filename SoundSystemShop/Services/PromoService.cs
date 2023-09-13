@@ -27,7 +27,7 @@ namespace SoundSystemShop.Services
         public bool GetPromo(string promo)
         {
             if (string.IsNullOrEmpty(promo)) return false;
-            var existPromo = _appDbContext.PromoCodes.FirstOrDefault(p => p.Name == promo);
+            var existPromo = _appDbContext.PromoCodes.FirstOrDefault(p => p.Name == promo && p.FinishDate > DateTime.Now);
             if (existPromo == null) return false;
             return true;
         }

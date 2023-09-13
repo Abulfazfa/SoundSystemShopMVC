@@ -151,8 +151,11 @@ namespace SoundSystemShop.Controllers
             string formattedTotalPrice = totalPrice.ToString("0.00");
             return Json(formattedTotalPrice);
         }
-
-        public IActionResult CheckOut(string promoCode)
+        public IActionResult FirstCheckOut()
+        {
+            return View(BasketProducts());
+        }
+        public IActionResult CheckOut(int price)
         {
             var domain = "https://localhost:44392/";
             var options = new SessionCreateOptions
@@ -164,32 +167,23 @@ namespace SoundSystemShop.Controllers
                 Locale = "en"
             };
 
-            var discountRate = 1.0; // Default discount rate (no promo code applied)
-
-            // Check if promo code is valid and set the discount rate accordingly
-            if (!string.IsNullOrEmpty(promoCode) && promoCode == "YOUR_PROMO_CODE")
-            {
-                discountRate = 0.7; // 30% discount with the valid promo code
-            }
-
-            foreach (var item in BasketProducts())
-            {
+            
                 var sessionListItem = new SessionLineItemOptions
                 {
                     PriceData = new SessionLineItemPriceDataOptions
                     {
-                        UnitAmount = (long)(item.Price * item.BasketCount * 100 * discountRate),
+                        UnitAmount = (long)(price * 100),
                         Currency = "usd",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
-                            Name = item.Name
+                            Name = "Pay"
                         }
                     },
-                    Quantity = item.BasketCount,
+                    Quantity = 1,
                 };
 
                 options.LineItems.Add(sessionListItem);
-            }
+            
 
             var service = new SessionService();
             Session session = service.Create(options);
@@ -198,8 +192,6 @@ namespace SoundSystemShop.Controllers
             Response.Headers.Add("Location", session.Url);
             return new StatusCodeResult(303);
         }
-
-
         public IActionResult OrderConfirmation()
         {
             var service = new SessionService();

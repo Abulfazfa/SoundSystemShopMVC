@@ -53,10 +53,30 @@
 
     }
 
+    // Add a click event listener to the "Share" buttons
+    var sharedProductId; // Variable to store the shared product ID
+
+    // Add a click event listener to the "Share" buttons
+    $(document).on("click", ".share-button", function () {
+        sharedProductId = $(this).data("productid"); // Capture and store the product ID
+    });
+
     function handleUserSelection(userId) {
-        // Replace this with your actual logic to handle the selected user
-        console.log(`User selected with ID: ${userId}`);
+        if (sharedProductId !== undefined) {
+            console.log(`Product ID selected for sharing: ${sharedProductId}`);
+            console.log(`User ID selected for sending: ${userId}`);
+
+            // Construct your message with both userId and sharedProductId
+            var message = `https://localhost:44392/shop/product/${sharedProductId}`;
+
+            // Redirect with the constructed message
+            window.location.href = `/OwnProduct/SendNewProductEmail?email=${userId}&message=${message}`;
+        } else {
+            console.log("Product ID is not defined.");
+        }
     }
+
+
 
     $(document).ready(function () {
         function updateBasketCount() {
@@ -113,35 +133,41 @@
                 type: 'GET',
                 success: function (data) {
                     totalPriceArea.text(data);
+                    CheckoutTotal(); // Calculate the total price after receiving the subtotal
                 },
                 error: function () {
                     console.log('Error retrieving total price.');
                 }
             });
         }
+
         function CheckoutPromo() {
             var discount = $(".discountArea");
 
             $.ajax({
-                url: '/basket/GetTotalPrice',
+                url: '/basket/GetDiscount',
                 type: 'GET',
                 success: function (data) {
-                    totalPriceArea.text(data);
+                    discount.text(data);
+                    CheckoutTotal();
                 },
                 error: function () {
-                    console.log('Error retrieving total price.');
+                    console.log('Error retrieving discount.');
                 }
             });
         }
+
         function CheckoutTotal() {
-            var subtotal = $("#subtotalArea").text();
-            var discount = $("#discountArea").text();
+            var subtotal = parseInt($(".totalPriceArea").text());
+            var discount = parseInt($(".discountArea").text());
             console.log("Subtotal:", subtotal);
             console.log("Discount:", discount);
-            var total = subtotal - discount;
+
+            var total = subtotal + discount;
+            console.log("total:", total);
             $("#total").text(total.toFixed(2)); // Display total with 2 decimal places
         }
-        
+
         function removeItemFromBasket(itemId) {
             $.ajax({
                 url: `/basket/RemoveItem/${itemId}`,
@@ -159,6 +185,23 @@
             updateBasketCount();
             updateTotalPrice();
         }
+
+        updateBasketInteractions();
+
+
+
+        $("#placeOrder").click(function (e) {
+            e.preventDefault();
+            var totalText = $("#total").text();
+            var total = parseInt(totalText);
+            window.location.href = "/basket/checkout?price=" + total;
+            if (!isNaN(total)) {
+                console.log(total);
+            } else {
+                console.log("Total is not a valid integer.");
+            }
+        });
+
         
         $("#promoAddButton").click(function () {
             var promo = $("#promoInput").val()
@@ -171,7 +214,7 @@
                         var subtotal = $("#subtotalArea").text();
                         var discount = subtotal * 30 / 100;
                         $("#discountArea").text("-" + discount + ".00");
-
+                        CheckoutTotal();
                     }
                     else {
                         alert("")
@@ -235,8 +278,7 @@
             removeItemFromBasket(itemId);
         });
 
-        updateBasketInteractions();
-        CheckoutTotal();
+        
     });
 
 
