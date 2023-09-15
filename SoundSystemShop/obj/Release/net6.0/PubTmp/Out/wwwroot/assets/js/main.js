@@ -10,20 +10,547 @@
 'use strict';
 
 (function ($) {
+    $(document).on("keyup", "#usernameInput", function () {
+        var search = $("#usernameInput").val().trim();
+        $.ajax({
+            url: '/Account/GetUser?userName=' + search,  // Replace with your server endpoint URL
+            type: 'GET',
+            success: function (data) {
+                modalSearchResults.innerHTML = '';
+
+                data.forEach(result => {
+                    const userDiv = document.createElement('div');
+                    userDiv.innerHTML = `
+                                                                            <p>${result.userName}</p>
+                                                                            <button class="btn btn-success select-button" data-userid="${result.email}">Send</button>
+                                                                        `;
+                    modalSearchResults.appendChild(userDiv);
+                });
+
+                // Attach click event to Select buttons
+                const selectButtons = document.querySelectorAll('.select-button');
+                selectButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const userId = button.getAttribute('data-userid');
+                        // Call a function to handle the user selection
+                        handleUserSelection(userId);
+                    });
+                });
+            },
+            error: function () {
+                modalSearchResults.innerHTML = 'Error occurred while searching.';
+            }
+        });
+    })
+    
+    function searchForUserInModal(username) {
+        const modalSearchResults = document.getElementById('modalSearchResults');
+
+        // Clear previous results
+        modalSearchResults.innerHTML = 'Searching...';
+
+        // Perform AJAX request to fetch user data
+
+    }
+
+    // Add a click event listener to the "Share" buttons
+    var sharedProductId; // Variable to store the shared product ID
+
+    // Add a click event listener to the "Share" buttons
+    $(document).on("click", ".share-button", function () {
+        sharedProductId = $(this).data("productid"); // Capture and store the product ID
+    });
+
+    function handleUserSelection(userId) {
+        if (sharedProductId !== undefined) {
+            console.log(`Product ID selected for sharing: ${sharedProductId}`);
+            console.log(`User ID selected for sending: ${userId}`);
+
+            // Construct your message with both userId and sharedProductId
+            var message = `https://localhost:44392/shop/product/${sharedProductId}`;
+
+            // Redirect with the constructed message
+            window.location.href = `/OwnProduct/SendNewProductEmail?email=${userId}&message=${message}`;
+        } else {
+            console.log("Product ID is not defined.");
+        }
+    }
 
 
 
-    //$(document).on("keyup", "#input-search", function () {
-    //    $("#searchList ul").remove();
-    //    var search = $("#input-search").val().trim();
-    //    $.ajax({
-    //        method: "get",
-    //        url: "/home/search?search=" + search,
-    //        success: function (res) {
-    //            $("#searchList").append(res);
-    //        }
-    //    })
-    //})
+    $(document).ready(function () {
+        function updateBasketCount() {
+            var basketCountElement = $("#basketCount");
+
+            $.ajax({
+                url: '/basket/GetBasketCount', // Use relative URL
+                type: 'GET',
+                success: function (data) {
+                    basketCountElement.text(data);
+                },
+                error: function () {
+                    console.log('Error retrieving basket count.');
+                }
+            });
+        }
+        function updateWishlistCount() {
+            var basketCountElement = $("#wishlistCount");
+
+            $.ajax({
+                url: '/wishlist/GetWishlistCount', // Use relative URL
+                type: 'GET',
+                success: function (data) {
+                    basketCountElement.text(data);
+                },
+                error: function () {
+                    console.log('Error retrieving basket count.');
+                }
+            });
+        }
+        updateWishlistCount();
+        
+           
+        function updateProductCount(itemId) {
+            var productCount = $("#productCount");
+            $.ajax({
+                url: `/basket/GetProductCount/${itemId}`,
+                type: 'GET',
+                success: function (data) {
+                    productCount.text(data);
+                    if (data == 0) {
+                        removeItemFromBasket(itemId);
+                    }
+                },
+                error: function () {
+                    console.log('Error retrieving product count.');
+                }
+            });
+        }
+
+        function updateTotalPrice() {
+            var totalPriceArea = $(".totalPriceArea");
+
+            $.ajax({
+                url: '/basket/GetTotalPrice',
+                type: 'GET',
+                success: function (data) {
+                    totalPriceArea.text(data);
+                    CheckoutTotal(); // Calculate the total price after receiving the subtotal
+                },
+                error: function () {
+                    console.log('Error retrieving total price.');
+                }
+            });
+        }
+
+        function CheckoutPromo() {
+            var discount = $(".discountArea");
+
+            $.ajax({
+                url: '/basket/GetDiscount',
+                type: 'GET',
+                success: function (data) {
+                    discount.text(data);
+                    CheckoutTotal();
+                },
+                error: function () {
+                    console.log('Error retrieving discount.');
+                }
+            });
+        }
+
+        function CheckoutTotal() {
+            var subtotal = parseInt($(".totalPriceArea").text());
+            var discount = parseInt($(".discountArea").text());
+            console.log("Subtotal:", subtotal);
+            console.log("Discount:", discount);
+
+            var total = subtotal + discount;
+            console.log("total:", total);
+            $("#total").text(total.toFixed(2)); // Display total with 2 decimal places
+        }
+
+        function removeItemFromBasket(itemId) {
+            $.ajax({
+                url: `/basket/RemoveItem/${itemId}`,
+                type: 'POST',
+                success: function () {
+                    location.reload();
+                },
+                error: function () {
+                    console.log('Error removing item from basket.');
+                }
+            });
+        }
+
+        function updateBasketInteractions(itemId) {
+            updateBasketCount();
+            updateTotalPrice();
+        }
+
+        updateBasketInteractions();
+
+
+
+        $("#placeOrder").click(function (e) {
+            e.preventDefault();
+            var totalText = $("#total").text();
+            var total = parseInt(totalText);
+            window.location.href = "/basket/checkout?price=" + total;
+            if (!isNaN(total)) {
+                console.log(total);
+            } else {
+                console.log("Total is not a valid integer.");
+            }
+        });
+
+        
+        $("#promoAddButton").click(function () {
+            var promo = $("#promoInput").val()
+            console.log(promo)
+            $.ajax({
+                url: '/basket/GetPromo?promo=' + promo, // Use relative URL
+                type: 'GET',
+                success: function (data) {
+                    if (data == true) {
+                        var subtotal = $("#subtotalArea").text();
+                        var discount = subtotal * 30 / 100;
+                        $("#discountArea").text("-" + discount + ".00");
+                        CheckoutTotal();
+                    }
+                    else {
+                        alert("")
+                    }
+                },
+                error: function () {
+                    console.log('Error retrieving basket count.');
+                }
+            });
+        });
+        $(".plusIcon").click(function () {
+            var itemId = $(this).data("id");
+
+            $.ajax({
+                url: `/basket/DecreaseBasket/${itemId}`,
+                method: "POST",
+                success: function () {
+                    console.log(itemId)
+                    updateBasketInteractions();
+                    updateProductCount(itemId);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error decreasing item: " + error);
+                }
+            });
+        });
+
+        $(".minusIcon").click(function () {
+            var itemId = $(this).data("id");
+
+            $.ajax({
+                url: `/basket/AddBasket/${itemId}`,
+                method: "POST",
+                success: function () {
+                    console.log(itemId)
+                    updateBasketInteractions();
+                    updateProductCount(itemId);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error adding item: " + error);
+                }
+            });
+        });
+        
+        $("#removeAllButton").click(function () {
+            
+            $.ajax({
+                url: `/basket/RemoveAllItems`,
+                method: "POST",
+                success: function () {
+                    updateBasketInteractions();
+                    location.reload()
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error adding item: " + error);
+                }
+            });
+        });
+        $(".fa-trash").click(function () {
+            var itemId = $(this).data("id");
+            removeItemFromBasket(itemId);
+        });
+
+        
+    });
+
+
+    //////COUNTDOWN/////////////
+    function Countdown(saleName, number) {
+        $.ajax({
+            url: "/shop/FinishDateOfSale?name=" + saleName, // Remove the query string here
+            method: "GET",
+            data: { name: saleName },
+            success: function (response) {
+                var startDate = new Date(response.startDate).getTime();
+                var finishDate = new Date(response.finishDate).getTime();
+                var now = new Date().getTime();
+                
+                if (startDate <= now && finishDate >= now) {
+                    
+                    Counter(finishDate, number); // Start countdown for the first sale in the first container
+                }
+                else {
+                   
+                }
+            },
+            error: function () {
+                console.error("Failed to fetch finish date");
+            }
+        });
+
+    }
+
+
+    function Counter(countDownDate, containerIndex) {
+        var myInterval;
+        function updateCountdown() {
+            
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+
+            if (countDownDate < now) {
+                clearInterval(myInterval);
+
+            } else {
+                if(containerIndex == 0) $("#bargainSection").removeClass("d-none")
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                if (minutes < 10) {
+                    minutes = "0" + minutes;
+                }
+                if (hours < 10) {
+                    hours = "0" + hours;
+                }
+                if (seconds < 10) {
+                    seconds = "0" + seconds;
+                } 
+
+                document.getElementsByClassName("hourArea")[containerIndex].innerHTML = hours;
+                document.getElementsByClassName("minuteArea")[containerIndex].innerHTML = minutes;
+                document.getElementsByClassName("secondArea")[containerIndex].innerHTML = seconds;
+                if (hours == minutes && minutes == seconds && minutes == "00") { 
+                    location.reload();
+                    console.log("hi")
+                }
+            }
+        }
+
+        updateCountdown();
+        myInterval = setInterval(updateCountdown, 1000);
+    }
+
+    Countdown("Daiyly", 1);
+    Countdown("NightBargain", 0);
+
+    const wishlistButton = document.getElementById('wishlist-button');
+    const productId = $("#productId").text(); // Get the product ID dynamically
+
+   
+
+
+
+        
+
+
+
+
+
+    ///////////////////////////
+
+    $(document).ready(function () {
+        var firstName = $('#firstName').val();
+        if (firstName != null) {
+            var intials = $('#firstName').val().charAt(0);
+            var profileImage = $('#profileImage').text(intials);
+        }
+        
+    });
+    $(".thumbProductPhoto").click(function() {
+                var newImageSrc = $(this).data("src"); // Get the new image source from the data-src attribute
+        $("#mainImage").attr("src", "/assets/img/product/"+ newImageSrc); // Change the source of the main image
+                $("#mainImageLink").attr("href", newImageSrc); // Change the href of the main image link
+    });
+    $(document).on("keyup", "#search-input", function () {
+        $("#searchList ul").remove();
+        var search = $("#search-input").val().trim();
+        $.ajax({
+            method: "get",
+            url: "/home/search?search=" + search,
+            success: function (res) {
+                $("#searchList").append(res);
+            }
+        })
+    })
+    
+
+    ///Price Sort Product
+    $(document).on("change", "#sortOptions", function () {
+        var sort = $("#sortOptions").val();
+        $.ajax({
+            method: "get",
+            url: "/shop/ShopOrderPrice?str=" + sort,
+            success: function (res) {
+                console.log(res)
+            }
+        })
+    })
+
+    function sideBarPrice() {
+        $.ajax({
+            url: "/shop/ShopOrderPrice?str=htl",
+            type: 'GET',
+            success: function (data) {
+                var price = data[0].price;
+                var increment = price/5;
+                var start = 0;
+                var end = increment;
+                var listItems = [];
+
+                while (end <= price) {
+                    listItems.push("$" + start + " - " + "$" + end);
+                    start += increment;
+                    end += increment;
+                }
+
+                if (start < price) {
+                    listItems.push("$" + start + " - " + "$" + price + "+");
+                }
+
+                var sidebar = $("#sidebarPrice");
+
+                $.each(listItems, function (index, listItem) {
+                    var li = $('<li style="cursor:pointer;" class="minmaxPrice">').text(listItem);
+                    sidebar.append(li);
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
+    }
+
+    sideBarPrice()
+
+    $(".category-link").click(function (e) {
+        e.preventDefault();
+        var categoryId = $(this).data("category-id");
+        $.ajax({
+            url: "/shop/FilterCategory?categoryId=" + categoryId,
+            type: "get",
+            success: function (data) {
+                $("#product-list-partial").html(data);
+            },
+            error: function () {
+                alert("An error occurred while fetching data.");
+            }
+        });
+    });
+    // Attach the click event handler to a parent element
+    $("#sidebarPrice").on("click", ".minmaxPrice", function (e) {
+        e.preventDefault();
+        var categoryId = $(this).text();
+        console.log(categoryId);
+
+        // Split the categoryId into minimum and maximum parts
+        var parts = categoryId.split(" - ");
+
+        if (parts.length === 2) {
+            // Remove the "$" sign and parse to integers
+            var min = parseInt(parts[0].replace("$", ""), 10);
+            var max = parseInt(parts[1].replace("$", ""), 10);
+
+            // Now you have min and max as integers
+            console.log("Minimum: " + min);
+            console.log("Maximum: " + max);
+
+            // Perform your AJAX request or other operations here
+            $.ajax({
+                url: "/shop/FilterPrice?min=" + min + "&max=" + max,
+                type: "get",
+                success: function (data) {
+                    $("#product-list-partial").html(data);
+                },
+                error: function () {
+                    alert("An error occurred while fetching data.");
+                }
+            });
+        } else {
+            console.log("Invalid categoryId format");
+        }
+    });
+
+    $("#sortOptions").change(function (e) {
+        e.preventDefault();
+        var str = $(this).val(); // Use .val() to get the selected value
+        console.log(str); // Log the selected value for debugging
+        $.ajax({
+            url: "/shop/OrderProductForPrice?str=" + str,
+            type: "get",
+            success: function (data) {
+                $("#product-list-partial").html(data);
+            },
+            error: function () {
+                alert("An error occurred while fetching data.");
+            }
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+    // Function to handle the click event
+    $(".order-button").on("click", function () {
+        var button = $(this);
+        var productId = button.data("id");
+        var storageKey = "orderClicked_" + productId;
+
+        // Check if the button has already been clicked using local storage
+        if (localStorage.getItem(storageKey) === "true") {
+            alert("This product has already been ordered.");
+            return;
+        }
+
+        // Disable the button
+        button.prop("disabled", true);
+
+        // Store a flag in local storage to indicate that the button has been clicked
+        localStorage.setItem(storageKey, "true");
+
+        // Perform any other actions you need here, e.g., making an AJAX request to handle the order.
+    });
+
+    // On page load, disable buttons that were previously clicked
+    $(document).ready(function () {
+        $(".order-button").each(function () {
+            var button = $(this);
+            var productId = button.data("id");
+            var storageKey = "orderClicked_" + productId;
+
+            if (localStorage.getItem(storageKey) === "true") {
+                button.prop("disabled", true);
+            }
+        });
+    });
+
+
 
 
 
@@ -54,7 +581,7 @@
         var bg = $(this).data('setbg');
         $(this).css('background-image', 'url(' + bg + ')');
     });
-
+    
     //Search Switch
     $('.search-switch').on('click', function () {
         $('.search-model').fadeIn(400);
@@ -162,9 +689,7 @@
 
     /* var timerdate = "2020/12/30" */
 
-    $("#countdown").countdown(timerdate, function (event) {
-        $(this).html(event.strftime("<div class='cd-item'><span>%D</span> <p>Days</p> </div>" + "<div class='cd-item'><span>%H</span> <p>Hours</p> </div>" + "<div class='cd-item'><span>%M</span> <p>Minutes</p> </div>" + "<div class='cd-item'><span>%S</span> <p>Seconds</p> </div>"));
-    });
+    
 
     /*------------------
 		Magnific

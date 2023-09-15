@@ -108,6 +108,8 @@
             });
         }
         updateWishlistCount();
+        
+           
         function updateProductCount(itemId) {
             var productCount = $("#productCount");
             $.ajax({

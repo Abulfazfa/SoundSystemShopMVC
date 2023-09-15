@@ -26,9 +26,54 @@
 10.  Footer Style
 -------------------------------------------------------------------*/
 
+
+
+
+
+
+.search-box-offcanvas form {
+	position: relative;
+}
+
+	.search-box-offcanvas form input {
+		color: #666;
+		font-size: 13px;
+		width: 100%;
+		height: 40px;
+		border: none;
+		padding: 0 40px 0 10px;
+		background-color: #f2f2f2;
+	}
+
+	.search-box-offcanvas form .search-btn {
+		top: 0;
+		right: 0;
+		width: 40px;
+		height: 40px;
+		line-height: 42px;
+		font-size: 20px;
+		color: #333333;
+		position: absolute;
+	}
+
+		.search-box-offcanvas form .search-btn:hover {
+			color: #e3a51e;
+		}
+
+
+
 /*----------------------------------------*/
 /* Template default CSS
 /*----------------------------------------*/
+.header{
+	position: fixed;
+	top: 0;
+	z-index: 15;
+	width: 100%;
+}
+.hero{
+	margin-top: 113px;
+}
 
 html,
 body {
@@ -435,7 +480,7 @@ ol {
 	transform: scale(1);
 }
 
-.header__menu ul li:hover .dropdown {
+ul li:hover .dropdown {
 	top: 32px;
 	opacity: 1;
 	visibility: visible;
@@ -445,7 +490,7 @@ ol {
 	margin-right: 0;
 }
 
-.header__menu ul li .dropdown {
+ul li .dropdown {
 	position: absolute;
 	left: 0;
 	top: 56px;
@@ -461,12 +506,11 @@ ol {
 	transition: all, 0.3s;
 }
 
-.header__menu ul li .dropdown li {
+ul li .dropdown li {
 	display: block;
 	margin-right: 0;
 }
-
-.header__menu ul li .dropdown li a {
+ul li .dropdown li a {
 	font-size: 14px;
 	color: #ffffff;
 	font-weight: 400;
@@ -474,7 +518,7 @@ ol {
 	text-transform: capitalize;
 }
 
-.header__menu ul li .dropdown li a:after {
+.dropdown li a:after {
 	display: none;
 }
 
@@ -833,7 +877,7 @@ ol {
 .categories__deal__countdown .categories__deal__countdown__timer {
 	margin-bottom: 20px;
 	overflow: hidden;
-	margin-left: -30px;
+	margin-left: -15px;
 }
 
 .categories__deal__countdown .categories__deal__countdown__timer .cd-item {
@@ -844,15 +888,15 @@ ol {
 	position: relative;
 }
 
-.categories__deal__countdown .categories__deal__countdown__timer .cd-item:after {
-	position: absolute;
-	right: 0;
-	top: 7px;
-	content: ":";
-	font-size: 24px;
-	font-weight: 700;
-	color: #3d3d3d;
-}
+	.categories__deal__countdown .categories__deal__countdown__timer .cd-item:after {
+		position: absolute;
+		right: -13px;
+		top: 10px;
+		content: ":";
+		font-size: 28px;
+		font-weight: 700;
+		color: #3d3d3d;
+	}
 
 .categories__deal__countdown .categories__deal__countdown__timer .cd-item:last-child:after {
 	display: none;
@@ -965,7 +1009,7 @@ ol {
 }
 
 .product__item:hover .product__item__text h6 {
-	opacity: 0;
+	opacity: 1;
 }
 
 .product__item:hover .product__item__text .product__color__select {
@@ -3848,4 +3892,6 @@ ol {
 	.categories__text:before {
 		height: 250px;
 	}
+
 }
+

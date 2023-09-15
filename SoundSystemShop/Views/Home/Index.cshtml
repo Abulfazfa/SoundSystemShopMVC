@@ -97,7 +97,7 @@
                                 }
 
                             </div>
-                            <a asp-controller="wishlist" asp-action="AddToWishlist" asp-route-productId="@product.Id"><i class="fa-regular fa-heart"></i></a>
+                            <a asp-controller="wishlist" asp-action="AddToWishlist" asp-route-productId="@product.Id" class="wishlistbutton text-dark"><i class="fa-regular fa-heart"></i></a>
                             <span style="display:none;" id="productId">@product.Id</span>
                            
                             <a class="btn-add-to-cart mt-2 border-0 text-light minusIcon" data-id="@product.Id"
@@ -131,7 +131,7 @@
                              src="~/assets/img/product/@product.Images.FirstOrDefault().ImgUrl"
                              alt="" style="height:262.5px;">
                         </div>
-                        <a asp-controller="wishlist" asp-action="AddToWishlist" asp-route-productId="@product.Id"><img src="~/assets/img/icon/heart.png" alt=""/></a>
+                       
                         <div class="product-name">
                             <p class="text-center fw-bold text-dark mb-4 ">@product.Name</p>
                         </div>
