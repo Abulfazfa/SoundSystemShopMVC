@@ -47,7 +47,7 @@ namespace SoundSystemShop.Controllers
                     Id = product.Id,
                     Name = product.Name,
                     BasketCount = 1,
-                    Price = product.Price,
+                    Price = product.DiscountPrice,
                     ImgUrl = product.Images.FirstOrDefault().ImgUrl,
 
                 };
@@ -57,7 +57,7 @@ namespace SoundSystemShop.Controllers
             {
                 existproduct.BasketCount++;
             }
-            Response.Cookies.Append("basket", JsonConvert.SerializeObject(products), new CookieOptions { MaxAge = TimeSpan.FromMinutes(15) });
+            Response.Cookies.Append("basket", JsonConvert.SerializeObject(products), new CookieOptions { MaxAge = TimeSpan.FromMinutes(20) });
 
             GetBasketCount();
             return NoContent();
@@ -230,7 +230,7 @@ namespace SoundSystemShop.Controllers
                 {
                     Product existproduct = _productService.GetProductDetail(item.Id);
                     item.Name = existproduct.Name;
-                    item.Price = existproduct.Price;
+                    item.Price = existproduct.DiscountPrice;
                     item.ImgUrl = existproduct.Images.FirstOrDefault().ImgUrl;
                 }
             }

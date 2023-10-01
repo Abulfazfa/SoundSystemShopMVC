@@ -157,7 +157,7 @@
                                 }
 
                             </div>
-                            <a asp-controller="wishlist" asp-action="AddToWishlist" asp-route-productId="@product.Id"><i class="fa-regular fa-heart"></i></a>
+                            <a asp-controller="wishlist" asp-action="AddToWishlist" asp-route-productId="@product.Id" class="wishlistbutton text-dark"><i class="fa-regular fa-heart"></i></a>
                             <a class="btn-add-to-cart mt-2 border-0 text-light minusIcon" data-id="@product.Id"
                            style="background-color: black; font-size: 14px; font-weight: bold; padding: 5px 13px; border-radius: 3px; cursor:pointer;">
                                 Add Basket
@@ -205,7 +205,7 @@
                                 <p>Seconds</p>
                             </div>
                         </div>
-                        <a asp-controller="basket" asp-action="addbasket" class="primary-btn">Shop now</a>
+                        <a asp-controller="shop" asp-route-id="@Model.DayOfDiscount.Id" asp-action="product" class="primary-btn">Shop now</a>
                     </div>
                 </div>
                 }

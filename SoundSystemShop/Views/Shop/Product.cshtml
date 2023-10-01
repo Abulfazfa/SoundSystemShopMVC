@@ -39,7 +39,15 @@
                     </div>
 
                     <div class="mb-3">
-                        <span class="h5">$@Model.Price</span>
+                        @if (Model.InDiscount == true)
+                        {
+                            <span class="h5"><del>$@Model.Price</del></span>
+                            <span class="h5 text-danger">$@Model.DiscountPrice</span>
+                        }
+                        else{
+                            <span class="h5">$@Model.Price</span>
+                        }
+                        
                         <span class="text-muted">/per box</span>
                     </div>
 
@@ -61,12 +69,8 @@
                     @*<hr />*@
 
                     
-                    <a class="btn btn-light shadow-0 text-success" style="
-    font-weight: bold;
-    font-size: 20px;
-"> Buy now </a>
-                    <a class="btn btn-light shadow-0 text-primary" data-id="1" id="minusIcon"> <i class="me-1 fa fa-shopping-basket text-primary"></i> Add to cart </a>
-                    <a class="btn btn-light py-2 icon-hover px-3 text-danger"> <i class="me-1 fa fa-heart fa-lg text-danger"></i> Save </a>
+                    <a class="btn btn-light shadow-0 text-primary minusIcon" data-id="@Model.Id"> <i class="me-1 fa fa-shopping-basket text-primary"></i> Add to cart </a>
+                    <a asp-controller="wishlist" asp-action="AddToWishlist" asp-route-productId="@Model.Id" class="btn btn-light py-2 icon-hover px-3 text-danger wishlistbutton"> <i class="me-1 fa fa-heart fa-lg text-danger"></i> Save </a>
                 </div>
             </main>
         </div>

@@ -231,7 +231,7 @@ namespace SoundSystemShop.Services
                 {
                     if (isInDiscountInterval)
                     {
-                        product.DiscountPrice = product.Price * ((100 - sale.Percent) / 100);
+                        product.DiscountPrice = Math.Round(product.Price * ((100 - sale.Percent) / 100));
                         product.InDiscount = true;
                     }
                     else

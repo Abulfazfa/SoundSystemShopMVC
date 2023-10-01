@@ -226,7 +226,7 @@ public class AccountController : Controller
             RedirectUri = Url.Action("GoogleResponse")
         });
     }
-
+    [Route("google-response")]
     public async Task<IActionResult> GoogleResponse()
     {
         var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -239,6 +239,13 @@ public class AccountController : Controller
                 claim.OriginalIssuer
             });
         return Json(claims);
+    }
+    [Route("google-login")]
+    public async Task<IActionResult> GoogleLogin()
+    {
+        var properties = new AuthenticationProperties { RedirectUri = Url.Action("GoogleResponse")};
+
+        return Challenge(properties, GoogleDefaults.AuthenticationScheme);
     }
 
     public async Task<IActionResult> Logout()

@@ -26,7 +26,7 @@ namespace SoundSystemShop.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index(int page = 1, int take = 15)
+        public IActionResult Index(int page = 1, int take = 18)
         {
             ViewBag.ShopProductCategory = _unitOfWork.CategoryRepo.GetAllAsync().Result;
             var paginationVM = _productService.GetProducts(page, take);

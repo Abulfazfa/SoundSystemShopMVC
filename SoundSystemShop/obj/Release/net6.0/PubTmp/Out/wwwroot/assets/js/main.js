@@ -9,6 +9,17 @@
 
 'use strict';
 
+function onSignIn(googleUser) {
+    // Get user information from googleUser object
+    var profile = googleUser.getBasicProfile();
+    var id_token = googleUser.getAuthResponse().id_token;
+
+    // Send the ID token to your server for verification and user registration.
+    // Implement server-side code to validate the ID token.
+    // You should also handle any error scenarios here.
+}
+
+
 (function ($) {
     $(document).on("keyup", "#usernameInput", function () {
         var search = $("#usernameInput").val().trim();
@@ -94,7 +105,7 @@
             });
         }
         function updateWishlistCount() {
-            var basketCountElement = $("#wishlistCount");
+            var basketCountElement = $(".wishlistCount");
 
             $.ajax({
                 url: '/wishlist/GetWishlistCount', // Use relative URL
@@ -108,7 +119,12 @@
             });
         }
         updateWishlistCount();
-        
+        const wishlistButton = $('.wishlistbutton');
+        wishlistButton.click(function () {
+           
+            updateWishlistCount();
+        });
+
            
         function updateProductCount(itemId) {
             var productCount = $("#productCount");
@@ -186,6 +202,7 @@
         function updateBasketInteractions(itemId) {
             updateBasketCount();
             updateTotalPrice();
+            updateWishlistCount();
         }
 
         updateBasketInteractions();
@@ -194,6 +211,33 @@
 
         $("#placeOrder").click(function (e) {
             e.preventDefault();
+
+
+            // Get all of the required input fields
+            var requiredInputs = $(':required');
+
+            // Check if any of the required input fields are empty
+            var hasEmptyInput = false;
+            requiredInputs.each(function () {
+                if ($(this).val() === '') {
+                    hasEmptyInput = true;
+
+                    // Add a red border to the empty input field
+                    $(this).addClass('border-danger');
+                }
+            });
+
+            // If there is an empty input field, prevent the form from submitting
+            if (hasEmptyInput) {
+                alert('Please fill in all required fields.');
+                return false;
+            }
+
+            // Otherwise, submit the form
+            else {
+                $('#checkout__form').submit();
+            }
+
             var totalText = $("#total").text();
             var total = parseInt(totalText);
             window.location.href = "/basket/checkout?price=" + total;
@@ -219,7 +263,7 @@
                         CheckoutTotal();
                     }
                     else {
-                        alert("")
+                        alert("Please enter correct promo code")
                     }
                 },
                 error: function () {
@@ -354,7 +398,7 @@
     Countdown("Daiyly", 1);
     Countdown("NightBargain", 0);
 
-    const wishlistButton = document.getElementById('wishlist-button');
+   
     const productId = $("#productId").text(); // Get the product ID dynamically
 
    
@@ -370,10 +414,10 @@
     ///////////////////////////
 
     $(document).ready(function () {
-        var firstName = $('#firstName').val();
+        var firstName = $('.firstName').val();
         if (firstName != null) {
-            var intials = $('#firstName').val().charAt(0);
-            var profileImage = $('#profileImage').text(intials);
+            var intials = $('.firstName').val().charAt(0);
+            var profileImage = $('.profileImage').text(intials);
         }
         
     });

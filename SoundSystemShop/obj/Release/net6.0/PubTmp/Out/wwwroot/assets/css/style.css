@@ -554,7 +554,7 @@ ul li .dropdown li a {
 
 .header__nav__option a {
 	display: inline-block;
-	margin-right: 26px;
+	margin-right: 5px;
 	position: relative;
 }
 
@@ -3414,6 +3414,7 @@ ul li .dropdown li a {
 	}
 }
 
+
 /* Medium Device = 1200px */
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
@@ -3505,6 +3506,12 @@ ul li .dropdown li a {
 /* Wide Mobile = 480px */
 
 @media only screen and (max-width: 767px) {
+	.removed-section{
+		display:none;
+	}
+	.header__logo img{
+		width:150px;
+	}
 	.canvas__open {
 		display: block;
 		font-size: 22px;
@@ -3836,6 +3843,7 @@ ul li .dropdown li a {
 	.hero__social {
 		margin-top: 180px;
 	}
+	
 }
 
 /* Small Device = 320px */

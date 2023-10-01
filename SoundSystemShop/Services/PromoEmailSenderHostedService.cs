@@ -20,8 +20,8 @@ namespace SoundSystemShop.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _promoTimer = new Timer(DoWorkPromo, null, TimeSpan.Zero, TimeSpan.FromDays(14));
-            _saleTimer = new Timer(DoWorkSale, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+            _promoTimer = new Timer(DoWorkPromo, null, TimeSpan.Zero, TimeSpan.FromDays(7));
+            _saleTimer = new Timer(DoWorkSale, null, TimeSpan.Zero, TimeSpan.FromSeconds(20));
 
             return Task.CompletedTask;
         }
@@ -31,7 +31,7 @@ namespace SoundSystemShop.Services
             using (var scope = _serviceProvider.CreateScope())
             {
                 var promoService = scope.ServiceProvider.GetRequiredService<PromoService>();
-                promoService.GenerateLuckyPeopleAsync();
+               // promoService.GenerateLuckyPeopleAsync();
             }
         }
 
@@ -40,7 +40,7 @@ namespace SoundSystemShop.Services
             using (var scope = _serviceProvider.CreateScope())
             {
                 var saleService = scope.ServiceProvider.GetRequiredService<ISaleService>();
-                saleService.SendSaleEmail();
+                //saleService.SendSaleEmail();
             }
             
         }

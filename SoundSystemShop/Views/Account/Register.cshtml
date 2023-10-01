@@ -56,6 +56,10 @@
                                         <span asp-validation-for="ConfirmPassword"></span>
                                     </div>
                                     <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign Up</button>
+                                    <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=1011503719641-9oidh8lqa5vb6eiv2spt9o77jsa835ir.apps.googleusercontent.com&redirect_uri=https://yaverusta-001-site1.itempurl.com/&response_type=code&scope=profile%20email">
+                                        <img src="https://1.bp.blogspot.com/-g-c6gch9F-w/XWZJTwcVFiI/AAAAAAAABaM/iAINc_5W2YsdLmQqAZml4QMJbxbPUfJXwCLcBGAs/s640/c74ljgt1t4o1ko28ycm8.png" alt="Continue with Google">
+                                    </a>
+
                                     <div class="d-flex align-items-center justify-content-center">
                                         <p class="fs-4 mb-0 fw-bold">Already have an Account?</p>
                                         <a asp-action="login" class="text-primary fw-bold ms-2">Sign In</a>
@@ -71,12 +75,23 @@
     </div>
     <script src="~/admin/libs/jquery/dist/jquery.min.js"></script>
     <script src="~/admin/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
     <!-- Add this script tag in your Razor View -->
     <script>
         const timezone = (Intl.DateTimeFormat().resolvedOptions().timeZone).split("/");
         const locationInput = document.getElementById("locationInput");
         locationInput.value = timezone;
         console.log(locationInput.value);
+
+    </script>
+    <script>
+        const button = document.createElement('a');
+        button.href = 'https://accounts.google.com/o/oauth2/v2/auth?client_id=1011503719641-9oidh8lqa5vb6eiv2spt9o77jsa835ir.apps.googleusercontent.com&redirect_uri=https://yaverusta-001-site1.itempurl.com/&response_type=code&scope=profile%20email';
+        button.innerHTML = '<img src="https://developers.google.com/identity/sign-in/web/images/signin_button.png" alt="Continue with Google">';
+
+        document.querySelector('#register-page').appendChild(button);
+
     </script>
 
 </body>

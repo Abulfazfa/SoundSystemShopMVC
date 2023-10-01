@@ -17,18 +17,20 @@ namespace SoundSystemShop.Services
         private readonly UserManager<AppUser> _userManager;
         private readonly AppDbContext _appDbContext;
 
-        public PromoService(IEmailService emailService, IFileService fileService, IServiceScopeFactory scopeFactory, UserManager<AppUser> userManeger, AppDbContext appDbContext)
+        public PromoService(IFileService fileService, IServiceScopeFactory scopeFactory, UserManager<AppUser> userManeger, AppDbContext appDbContext, IEmailService emailService)
         {
-            _emailService = emailService;
             _fileService = fileService;
             _userManager = userManeger;
             _appDbContext = appDbContext;
+            _emailService = emailService;
         }
         public bool GetPromo(string promo)
         {
             if (string.IsNullOrEmpty(promo)) return false;
             var existPromo = _appDbContext.PromoCodes.FirstOrDefault(p => p.Name == promo && p.FinishDate > DateTime.Now);
             if (existPromo == null) return false;
+            _appDbContext.PromoCodes.Remove(existPromo);
+            _appDbContext.SaveChanges();
             return true;
         }
         public void GenerateLuckyPeopleAsync()
@@ -86,8 +88,9 @@ namespace SoundSystemShop.Services
             string subject = "Get Promo code";
             body = _fileService.ReadFile(path, body);
             body = body.Replace("{{Confirm Account}}", promoVM.PromoCode);
-            body = body.Replace("{{Welcome!}}", promoVM.User.Fullname);
-            //_emailService.Send(promoVM.User.Email, subject, body); 
+            body = body.Replace("{{Welcome}}", promoVM.User.Fullname);
+            body = body.Replace("{SaleDesc}", "You were the lucky person in the weekly lottery and won a promo code.");
+            _emailService.Send(promoVM.User.Email, subject, body); 
         }
 
     }
