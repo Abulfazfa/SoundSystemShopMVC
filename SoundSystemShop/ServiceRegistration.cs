@@ -35,7 +35,8 @@ namespace SoundSystemShop
                 option.Lockout.MaxFailedAccessAttempts = 3;
                 option.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
 
-            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+            }).AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IProductRepository, ProductRepository>();

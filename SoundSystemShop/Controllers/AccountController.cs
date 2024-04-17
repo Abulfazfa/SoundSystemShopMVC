@@ -116,7 +116,6 @@ public class AccountController : Controller
             return View(changePasswordVM);
         }
     }
-
     public IActionResult ForgotPassword()
     {
         return View();

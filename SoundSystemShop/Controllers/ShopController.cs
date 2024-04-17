@@ -105,7 +105,6 @@ namespace SoundSystemShop.Controllers
             var filteredProducts = _productService.GetAll().Where(p => p.CategoryId == categoryId).ToList();
             return PartialView("_ProductListPartial", filteredProducts);
         }
-
         public IActionResult OrderProductForPrice(string str)
         {
             var exist = str == "htl" ? _productService.GetAll().OrderByDescending(p => p.Price).ToList() : _productService.GetAll().OrderBy(p => p.Price).ToList();

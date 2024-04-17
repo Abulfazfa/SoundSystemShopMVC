@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using SoundSystemShop.DAL;
 using SoundSystemShop.Migrations;
 using SoundSystemShop.Models;
+using SoundSystemShop.ViewModels;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -24,90 +25,82 @@ namespace SoundSystemShop.Services
 
         }
 
-        public void OnActionExecuting(ActionExecutingContext context)
+		public void OnActionExecuting(ActionExecutingContext context)
+		{
+			var controllerName = context.RouteData.Values["controller"];
+			var actionName = context.RouteData.Values["action"];
+			var id = context.RouteData.Values["id"];
+			var url = $"{controllerName}/{actionName}/{id}";
+
+			string data = context.HttpContext.Request.QueryString.HasValue ? context.HttpContext.Request.QueryString.Value : "";
+
+			var userData = context.ActionArguments.FirstOrDefault().Value;
+			if (userData != null)
+			{
+				data = JsonConvert.SerializeObject(userData);
+			}
+
+			var userName = context.HttpContext.User.Identity.Name;
+			var ipAddress = context.HttpContext.Connection.RemoteIpAddress?.ToString();
+			StoreUserActivity(context.HttpContext, data, url, userName, ipAddress);
+		}
+		public void StoreUserActivity(HttpContext httpContext, string data, string url, string? userName, string ipAddress)
+		{
+			string pattern = @".*Product/\d+.*|Product/\d+.*";
+			Match match = Regex.Match(url, pattern);
+			if (match.Success)
+			{
+				var userActivity = new UserActivity
+				{
+					UserName = userName,
+					IpAddress = ipAddress,
+					Data = data,
+					Url = url,
+				};
+
+                int productId = GetProductIdForUserActivity(userActivity.Url);
+                if (productId < 0) { } 
+                var activityJson = JsonConvert.SerializeObject(productId);
+				httpContext.Response.Cookies.Append("UserActivity", activityJson, new CookieOptions
+				{
+					Expires = DateTimeOffset.UtcNow.AddDays(30), // Set expiration as needed
+					HttpOnly = true, // Secure flag to prevent JS access (adjust as needed for your security requirements)
+				});
+
+                ChangeProductRating(productId);
+			}
+		}
+		public List<Product> GetUserActivity()
+		{
+			
+		}
+		
+
+
+
+		public int GetProductIdForUserActivity(string path)
         {
-            var data = "";
-            var controllerName = context.RouteData.Values["controller"];
-            var actionName = context.RouteData.Values["action"];
-            var id = context.RouteData.Values["id"];
+			int startIndex = path.LastIndexOf('/') + 1;
+			int numberPart = int.Parse(path.Substring(startIndex));
 
-            var url = $"{controllerName}/{actionName}/{id}";
+			var exist = _productService.GetProductDetail(numberPart);
+			if (exist != null)
+			{
+				return exist.Id;
+			}
 
-            if (string.IsNullOrEmpty(context.HttpContext.Request.QueryString.Value))
-            {
-                data = context.HttpContext.Request.QueryString.Value;
-            }
-            else
-            {
-                var userData = context.ActionArguments.FirstOrDefault();
-                var stringUserData = JsonConvert.SerializeObject(userData);
-                data = stringUserData;
-            }
+            return -1;
+		}
 
-            var userName = context.HttpContext.User.Identity.Name;
-            var ipAddress = context.HttpContext.Connection.RemoteIpAddress.ToString();
-            StoreUserActivity(data, url, userName, ipAddress);
-
-        }
-        public void StoreUserActivity(string data, string url, string? userName, string ipAddress)
+        public void ChangeProductRating(int productId)
         {
-            string pattern = @".*Product/\d+.*|Product/\d+.*";
-            Match match = Regex.Match(url, pattern);
-            if (match.Success)
-            {
-                var userActivity = new UserActivity
-                {
-                    UserName = userName,
-                    IpAddress = ipAddress,
-                    Data = data,
-                    Url = url,
-                };
-                _appDbContext.UserActivities.Add(userActivity);
-                _appDbContext.SaveChanges();
-            }
-        }
-        public List<Product> GetUserActivity(string? username)
-        {
-            var activities = _appDbContext.UserActivities.OrderByDescending(u => u.ActivityDate).ToList(); // USER NAME /////////////////////////////
-            List<string> result = new List<string>();
-            string pattern = @".*Product/\d+.*|Product/\d+.*";
-            foreach (var item in activities)
-            {
-                Match match = Regex.Match(item.Url, pattern);
-                if (match.Success)
-                {
-                    string matchedPart = match.Value;
-                    result.Add(matchedPart);
-                }
-                
-                
-            }
-            return GetProductsOfUserActivity(result);
-        }
-        public List<Product> GetProductsOfUserActivity(List<string> url)
-        {
-            List<Product> result = new List<Product>();
-            List<int> processedNumbers = new List<int>();
-
-            foreach (string path in url)
-            {
-                int startIndex = path.LastIndexOf('/') + 1;
-                int numberPart = int.Parse(path.Substring(startIndex));
-
-                // Check if the numberPart has already been processed
-                if (!processedNumbers.Contains(numberPart))
-                {
-                    var exist = _productService.GetProductDetail(numberPart);
-                    if(exist != null)
-                    {
-                        result.Add(exist);
-                        processedNumbers.Add(numberPart);
-                    }
-                }
-            }
-
-            return result;
-        }
+			var exist = _productService.GetProductDetail(productId);
+			if (exist != null)
+			{
+                exist.ProductRating++;
+                _appDbContext.Products.Update(exist);
+			}
+		}
 
     }
 }
