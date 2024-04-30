@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VC29a3wudZqt7LXCm29trXPmGz4Xu5pOm+Ym1hzvG7wXgofSwhAfOMBupp+IM9E0vrevxKYNhzUYFMr3Y1y9Yw==",
+  "dgSpecHash": "YkrfLGUTUhJTOlAUAIcY6/ebCi5ICkT8CRKTWmZWu41eQeyAWxVErr2gK7YxMvgsrjzrODZ02H/KfxJjBdzZww==",
   "success": true,
-  "projectFilePath": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\SoundSystemShop.csproj",
+  "projectFilePath": "C:\\Users\\HP\\Desktop\\SoundSystemShopMVC\\SoundSystemShop\\SoundSystemShop.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\HP\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

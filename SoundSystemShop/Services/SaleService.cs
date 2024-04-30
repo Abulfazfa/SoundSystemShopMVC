@@ -166,7 +166,6 @@ namespace SoundSystemShop.Services
             body = body.Replace("{{Sale}}", sale.Percent.ToString());
             body = body.Replace("{{SaleDesc}}", userStartDate.ToString("M"));
             body = body.Replace("{{Time}}", userStartDate.ToString("t"));
-            body = body.Replace("{img}", "https://cdn1.vectorstock.com/i/1000x1000/57/80/night-sale-dark-banner-vector-18535780.jpg");
             _emailService.Send(user.Email, subject, body);
         }
 

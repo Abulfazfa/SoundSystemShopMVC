@@ -1,18 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\",
+  "WorkspaceRootPath": "C:\\Users\\HP\\Desktop\\SoundSystemShopMVC\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|c:\\users\\hp\\riderprojects\\soundsystemshop\\soundsystemshop\\services\\useractivityfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|solutionrelative:soundsystemshop\\services\\useractivityfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|c:\\users\\hp\\desktop\\soundsystemshopmvc\\soundsystemshop\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|solutionrelative:soundsystemshop\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|c:\\users\\hp\\riderprojects\\soundsystemshop\\soundsystemshop\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|solutionrelative:soundsystemshop\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|c:\\users\\hp\\desktop\\soundsystemshopmvc\\soundsystemshop\\helper\\emailmember.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|solutionrelative:soundsystemshop\\helper\\emailmember.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|c:\\users\\hp\\riderprojects\\soundsystemshop\\soundsystemshop\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|solutionrelative:soundsystemshop\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|c:\\users\\hp\\desktop\\soundsystemshopmvc\\soundsystemshop\\areas\\adminarea\\controllers\\salecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|solutionrelative:soundsystemshop\\areas\\adminarea\\controllers\\salecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|c:\\users\\hp\\desktop\\soundsystemshopmvc\\soundsystemshop\\services\\saleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|solutionrelative:soundsystemshop\\services\\saleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|c:\\users\\hp\\desktop\\soundsystemshopmvc\\soundsystemshop\\helper\\messageconstants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|solutionrelative:soundsystemshop\\helper\\messageconstants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|c:\\users\\hp\\desktop\\soundsystemshopmvc\\soundsystemshop\\areas\\adminarea\\controllers\\usermessagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12D83432-64D3-4E1B-82C5-6EAAF9BDF3D3}|SoundSystemShop\\SoundSystemShop.csproj|solutionrelative:soundsystemshop\\areas\\adminarea\\controllers\\usermessagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 92,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,41 +50,80 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UserActivityFilter.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\Services\\UserActivityFilter.cs",
-              "RelativeDocumentMoniker": "SoundSystemShop\\Services\\UserActivityFilter.cs",
-              "ToolTip": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\Services\\UserActivityFilter.cs",
-              "RelativeToolTip": "SoundSystemShop\\Services\\UserActivityFilter.cs",
-              "ViewState": "AQIAADMAAAAAAAAAAAAIwGoAAAAAAAAA",
+              "DocumentIndex": 1,
+              "Title": "EmailMember.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\SoundSystemShopMVC\\SoundSystemShop\\Helper\\EmailMember.cs",
+              "RelativeDocumentMoniker": "SoundSystemShop\\Helper\\EmailMember.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\SoundSystemShopMVC\\SoundSystemShop\\Helper\\EmailMember.cs",
+              "RelativeToolTip": "SoundSystemShop\\Helper\\EmailMember.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-17T12:01:56.841Z",
+              "WhenOpened": "2024-04-30T06:37:01.639Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SaleService.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\SoundSystemShopMVC\\SoundSystemShop\\Services\\SaleService.cs",
+              "RelativeDocumentMoniker": "SoundSystemShop\\Services\\SaleService.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\SoundSystemShopMVC\\SoundSystemShop\\Services\\SaleService.cs",
+              "RelativeToolTip": "SoundSystemShop\\Services\\SaleService.cs",
+              "ViewState": "AQIAAI8AAAAAAAAAAAAAAKsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-30T06:14:20.238Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "SoundSystemShop\\Views\\Home\\Index.cshtml",
-              "ToolTip": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "SoundSystemShop\\Views\\Home\\Index.cshtml",
-              "ViewState": "AQIAADYAAAAAAAAAAAAAAEMAAAAuAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-17T12:00:48.677Z",
+              "Title": "SaleController.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\SoundSystemShopMVC\\SoundSystemShop\\Areas\\AdminArea\\Controllers\\SaleController.cs",
+              "RelativeDocumentMoniker": "SoundSystemShop\\Areas\\AdminArea\\Controllers\\SaleController.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\SoundSystemShopMVC\\SoundSystemShop\\Areas\\AdminArea\\Controllers\\SaleController.cs",
+              "RelativeToolTip": "SoundSystemShop\\Areas\\AdminArea\\Controllers\\SaleController.cs",
+              "ViewState": "AQIAACUAAAAAAAAAAAAkwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-30T06:14:00.027Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "SoundSystemShop\\Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\HP\\RiderProjects\\SoundSystemShop\\SoundSystemShop\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "SoundSystemShop\\Controllers\\HomeController.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAAwCMAAAAdAAAA",
+              "DocumentIndex": 4,
+              "Title": "MessageConstants.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\SoundSystemShopMVC\\SoundSystemShop\\Helper\\MessageConstants.cs",
+              "RelativeDocumentMoniker": "SoundSystemShop\\Helper\\MessageConstants.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\SoundSystemShopMVC\\SoundSystemShop\\Helper\\MessageConstants.cs",
+              "RelativeToolTip": "SoundSystemShop\\Helper\\MessageConstants.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-15T09:29:32.97Z",
+              "WhenOpened": "2024-04-30T05:36:49.23Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EmailService.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\SoundSystemShopMVC\\SoundSystemShop\\Services\\EmailService.cs",
+              "RelativeDocumentMoniker": "SoundSystemShop\\Services\\EmailService.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\SoundSystemShopMVC\\SoundSystemShop\\Services\\EmailService.cs",
+              "RelativeToolTip": "SoundSystemShop\\Services\\EmailService.cs",
+              "ViewState": "AQIAABMAAAAAAAAAAAAQwC8AAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-30T05:33:48.883Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UserMessageController.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\SoundSystemShopMVC\\SoundSystemShop\\Areas\\AdminArea\\Controllers\\UserMessageController.cs",
+              "RelativeDocumentMoniker": "SoundSystemShop\\Areas\\AdminArea\\Controllers\\UserMessageController.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\SoundSystemShopMVC\\SoundSystemShop\\Areas\\AdminArea\\Controllers\\UserMessageController.cs",
+              "RelativeToolTip": "SoundSystemShop\\Areas\\AdminArea\\Controllers\\UserMessageController.cs",
+              "ViewState": "AQIAACcAAAAAAAAAAAAowAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-30T05:33:37.106Z",
               "EditorCaption": ""
             }
           ]

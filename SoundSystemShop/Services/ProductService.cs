@@ -44,13 +44,12 @@ namespace SoundSystemShop.Services
         {
             var query = _unitOfWork.ProductRepo.Queryable();
 
-            query = query.Where(p => p.IsDeleted == false);
-            //query = query.Where(p => p.CategoryId == 2);
-           
+            query = query.Where(p => p.IsDeleted == false);           
 
             var products = query
                 .Include(p => p.Images)
                 .Include(p => p.Category)
+                .Where(p => p.Brand != "Customer")
                 .Skip(take * (page - 1))
                 .Take(take)
                 .ToList();

@@ -142,14 +142,7 @@ namespace SoundSystemShop.Controllers
         }
         public IActionResult SendNewProductEmail(string email, string message)
         {
-            string body = string.Empty;
-            string path = "wwwroot/template/verify.html";
-            string subject = "Modified New Product";
-            body = _fileService.ReadFile(path, body);
-            body = body.Replace("{{Welcome}}", "Let's take a look at my new product");
-            body = body.Replace("{{Confirm Account}}", "");
-            body = body.Replace("{SaleDesc}", message);
-            _emailService.Send(email, subject, body);
+           
             return NoContent();
         }
     }

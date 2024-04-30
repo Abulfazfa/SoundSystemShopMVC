@@ -70,10 +70,7 @@ namespace SoundSystemShop.Services
                 ChangeProductRating(productId);
 			}
 		}
-		public List<Product> GetUserActivity()
-		{
-			
-		}
+		
 		
 
 

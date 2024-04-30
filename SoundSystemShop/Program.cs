@@ -13,18 +13,6 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-
-}).AddCookie(options =>
-{
-    options.LoginPath = "/account/googleLogin";
-}).AddGoogle(options =>
-{
-    options.ClientId = "1011503719641-vl9pqim7omqjm5m7q5ivsj6n9id6vipo.apps.googleusercontent.com";
-    options.ClientSecret = "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";
-});
 builder.Services.ServiceRegister();
 builder.Services.AddDbContext<AppDbContext>(option =>
 {

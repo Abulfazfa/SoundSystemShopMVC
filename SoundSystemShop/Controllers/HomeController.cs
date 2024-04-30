@@ -33,7 +33,7 @@ public class HomeController : Controller
         //homeVW.SocialMedias = _unitOfWork.SocialMediaRepo.GetAll();
         homeVW.Products = _productService.GetAll();
         homeVW.Blogs = _blogService.GetAllBlogs().Result.ToList();
-        homeVW.UserActivities = _userActivityFilter.GetUserActivity("NULL");
+        //homeVW.UserActivities = _userActivityFilter.GetUserActivity();
         homeVW.DayOfDiscount = _productService.SaleOfDay();
         return View(homeVW);
     }
