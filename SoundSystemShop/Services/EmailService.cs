@@ -39,13 +39,39 @@ namespace SoundSystemShop.Services
         public void PrepareEmail(EmailMember emailMember) 
         {
             string body = string.Empty;
-            emailMember.path = "wwwroot/template/verify.html";
-            emailMember.subject = "Modified New Product";
-            body = _fileService.ReadFile(emailMember.path, body);
-            body = body.Replace("{{Welcome}}", "Let's take a look at my new product");
-            body = body.Replace("{{Confirm Account}}", "");
-            body = body.Replace("{SaleDesc}", emailMember.message);
-            Send(emailMember.email, emailMember.subject, body);
+            emailMember.path = "wwwroot/template/" + emailMember.path;
+
+            try
+            {
+                switch (emailMember.path)
+                {
+                    case ("SaleEmail.html"):
+                        body = body.Replace("{{Sale}}", emailMember.salePercent);
+                        body = body.Replace("{SaleDesc}", emailMember.saleDesc);
+                        body = body.Replace("{Time}", emailMember.time);
+                        break;
+
+                    case ("verify.html"):
+                        body = body.Replace("{{Welcome}}", emailMember.subject);
+                        body = body.Replace("{{Confirm Account}}", "");
+                        body = body.Replace("{SaleDesc}", emailMember.saleDesc);
+                        break;
+
+                    default:
+                        break;
+                }
+                body = _fileService.ReadFile(emailMember.path, body);
+           
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                Send(emailMember.email, emailMember.subject, body);
+            }
+           
         }
     }
 }

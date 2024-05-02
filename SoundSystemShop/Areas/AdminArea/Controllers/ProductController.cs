@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SoundSystemShop.Helper;
 using SoundSystemShop.Models;
 using SoundSystemShop.Services;
 using SoundSystemShop.Services.Interfaces;
@@ -102,12 +103,15 @@ public class ProductController : Controller
     private void SendEmailToUser(string email, string message)
     {
         string body = string.Empty;
-        string path = "wwwroot/template/verify.html";
+        string path = "verify.html";
         string subject = "Modified New Product";
-        body = _fileService.ReadFile(path, body);
-        body = body.Replace("{{Welcome}}", message);
-        body = body.Replace("{{Confirm Account}}", "");
-        body = body.Replace("{SaleDesc}", "Please check it");
-        _emailService.Send(email, subject, body);
+
+        EmailMember emailMember = new EmailMember();
+        emailMember.email = email;
+        emailMember.path = path;
+        emailMember.subject = subject;
+        emailMember.saleDesc = "Please check it";
+        emailMember.message = message;
+        _emailService.PrepareEmail(emailMember);
     }
 }

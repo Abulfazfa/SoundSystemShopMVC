@@ -92,24 +92,20 @@ namespace SoundSystemShop.Controllers
             var finishDate = _productService.FinishDateOfSale(name);
             return Json(finishDate);
         }
-        public IActionResult FilterPrice(int min, int max)
+
+        public IActionResult FilterProducts(string str = "htl", int categoryId = 0, int min = 0, int max = 0)
         {
-            var minPrice = double.Parse(min.ToString());
-            var maxPrice = double.Parse(max.ToString());
-            var filteredProducts = _productService.GetAll().Where(p => p.Price >= min && p.Price <= max).ToList();
-            return PartialView("_ProductListPartial", filteredProducts);
-            
-        }
-        public IActionResult FilterCategory(int categoryId)
-        {
-            var filteredProducts = _productService.GetAll().Where(p => p.CategoryId == categoryId).ToList();
-            return PartialView("_ProductListPartial", filteredProducts);
-        }
-        public IActionResult OrderProductForPrice(string str)
-        {
-            var exist = str == "htl" ? _productService.GetAll().OrderByDescending(p => p.Price).ToList() : _productService.GetAll().OrderBy(p => p.Price).ToList();
+            var products = _productService.GetAll().AsQueryable();
+            if (categoryId != 0) { products = products.Where(p => p.CategoryId == categoryId); }
+
+            if (min != 0 && max != 0) { products = products.Where(p => p.Price >= min && p.Price <= max); }
+
+            var exist = str == "htl" ? products.OrderByDescending(p => p.Price).ToList() : products.OrderBy(p => p.Price).ToList();
             return PartialView("_ProductListPartial", exist);
         }
+
+
+
 
 
     }

@@ -150,10 +150,6 @@ namespace SoundSystemShop.Services
         }
         public void SendSaleEmail(AppUser user, Sale sale)
         {
-            string body = string.Empty;
-            string path = "wwwroot/template/SaleEmail.html";
-            string subject = "Information";
-            body = _fileService.ReadFile(path, body);
             user.Location = user.Location.Replace(",", "/");
 
             // Convert Sale's StartDate from Baku time to Ankara time
@@ -163,10 +159,17 @@ namespace SoundSystemShop.Services
             DateTime bakuStartDate = TimeZoneInfo.ConvertTimeFromUtc(sale.StartDate, bakuTimeZone);
             DateTime userStartDate = TimeZoneInfo.ConvertTime(bakuStartDate, userTimeZone);
 
-            body = body.Replace("{{Sale}}", sale.Percent.ToString());
-            body = body.Replace("{{SaleDesc}}", userStartDate.ToString("M"));
-            body = body.Replace("{{Time}}", userStartDate.ToString("t"));
-            _emailService.Send(user.Email, subject, body);
+
+
+            EmailMember emailMember = new EmailMember();
+            emailMember.email = user.Email;
+            emailMember.subject = "Information";
+            emailMember.path = "SaleEmail.html";
+            emailMember.salePercent = sale.Percent.ToString();
+            emailMember.saleDesc = userStartDate.ToString("M");
+            emailMember.time = userStartDate.ToString("t");
+
+            _emailService.PrepareEmail(emailMember);
         }
 
 

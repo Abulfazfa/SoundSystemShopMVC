@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SoundSystemShop.Controllers;
 using SoundSystemShop.Helper;
 using SoundSystemShop.Models;
 using SoundSystemShop.Services;
@@ -47,7 +48,7 @@ public class AccountController : Controller
             case UserRegistrationResult.Success:
                 return RedirectToAction(nameof(VerifyEmail), new { Email = registerVM.Email });
             case UserRegistrationResult.Failed:
-                ModelState.AddModelError("", "User registration failed. Please try again later.");
+                ModelState.AddModelError("", MessageConstants.RegistrationFailed);
                 break;
             default:
                 break;
@@ -55,14 +56,12 @@ public class AccountController : Controller
 
         return View(registerVM);
     }
-
     public IActionResult VerifyEmail(string email)
     {
         ConfirmAccountVM confirmAccountVM = new ConfirmAccountVM();
         confirmAccountVM.Email = email;
         return View(confirmAccountVM);
     }
-
     public async Task<IActionResult> ConfirmEmail(ConfirmAccountVM confirmAccountVM)
     {
         bool success = await _accountService.ConfirmEmailAndSignIn(confirmAccountVM);
@@ -75,7 +74,6 @@ public class AccountController : Controller
             return RedirectToAction(nameof(VerifyEmail), new { Email = confirmAccountVM.Email });
         }
     }
-
     public async Task<IActionResult> RecendOTP(string email)
     {
         bool success = await _accountService.ResendOTP(email);
@@ -89,7 +87,6 @@ public class AccountController : Controller
         }
 
     }
-
     public IActionResult ChangePassword()
     {
         return View();
@@ -120,6 +117,7 @@ public class AccountController : Controller
     {
         return View();
     }
+
     [HttpPost]
     [AutoValidateAntiforgeryToken]
     public async Task<IActionResult> ForgotPassword(ForgetPasswordVM forgetPasswordVM)
@@ -151,6 +149,7 @@ public class AccountController : Controller
     {
         return View(new ResetPasswordVM { Token = token, UserId = userId });
     }
+
     [HttpPost]
     [AutoValidateAntiforgeryToken]
     public async Task<IActionResult> ResetPassword(ResetPasswordVM resetPasswordVM)
@@ -177,6 +176,7 @@ public class AccountController : Controller
     {
         return View();
     }
+    
     [HttpPost]
     [AutoValidateAntiforgeryToken]
     public async Task<IActionResult> Login(LoginVM loginVM, string? ReturnUrl)
@@ -198,21 +198,21 @@ public class AccountController : Controller
                 bool isAdmin = await _accountService.GetRoleList(loginVM.UsernameOrEmail);
                 if (isAdmin)
                 {
-                    return RedirectToAction("Index", "Dashboard", new { area = "adminarea" });
+                    return RedirectToAction(nameof(Index), nameof(DashboardController), new { area = "adminarea" });
                 }
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(Index), nameof(HomeController));
 
             case LoginResult.UserNotFound:
-                ModelState.AddModelError("", "Username or password is incorrect.");
+                ModelState.AddModelError("", MessageConstants.UserNameOrPasswordIncorrect);
                 break;
 
             case LoginResult.UserLockedOut:
-                ModelState.AddModelError("", "Your profile has been blocked.");
+                ModelState.AddModelError("", MessageConstants.AccountBlocked);
                 break;
 
             case LoginResult.InvalidCredentials:
-                ModelState.AddModelError("", "Username or password is incorrect.");
+                ModelState.AddModelError("", MessageConstants.UserNameOrPasswordIncorrect);
                 break;
         }
 

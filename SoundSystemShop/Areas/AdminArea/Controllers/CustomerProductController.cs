@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SoundSystemShop.DAL;
+using SoundSystemShop.Helper;
 using SoundSystemShop.Services;
 using SoundSystemShop.Services.Interfaces;
 using SoundSystemShop.ViewModels;
@@ -42,19 +43,23 @@ public class CustomerProductController : Controller
         var cproduct = _appDbContext.Products.FirstOrDefault(cp => cp.Id == id);
         cproduct.IsDeleted = false;
         _appDbContext.SaveChanges();
-        SendEmailToUser(email, "Your Item Has Been Rejected\n" +
-            "Please edit and resubmit");
+        SendEmailToUser(email, MessageConstants.Reject_UserProduct);
         return RedirectToAction("Index", "Usermessage", new {area = "AdminArea"});
     }
     private void SendEmailToUser(string email, string message)
     {
         string body = string.Empty;
-        string path = "wwwroot/template/verify.html";
+        string path = "verify.html";
         string subject = "Modified New Product";
-        body = _fileService.ReadFile(path, body);
-        body = body.Replace("{{Welcome}}", message);
-        body = body.Replace("{{Confirm Account}}", "");
-        body = body.Replace("{SaleDesc}", "Please check it");
-        _emailService.Send(email, subject, body);
+
+        EmailMember emailMember = new EmailMember()
+        {
+            email = email,
+            path = path,
+            subject = subject,
+            saleDesc = "Please check it",
+            message = message
+        };
+        _emailService.PrepareEmail(emailMember);
     }
 }

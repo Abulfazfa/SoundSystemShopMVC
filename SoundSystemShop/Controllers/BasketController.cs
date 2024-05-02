@@ -186,11 +186,20 @@ namespace SoundSystemShop.Controllers
             
 
             var service = new SessionService();
-            Session session = service.Create(options);
+            try
+            {
+                Session session = service.Create(options);
+                TempData["Session"] = session.Id;
+                Response.Headers.Add("Location", session.Url);
+                return new StatusCodeResult(303);
+            }
+            catch (Exception ex)
+            {
 
-            TempData["Session"] = session.Id;
-            Response.Headers.Add("Location", session.Url);
-            return new StatusCodeResult(303);
+                throw ex;
+            }
+
+           
         }
         public IActionResult OrderConfirmation()
         {

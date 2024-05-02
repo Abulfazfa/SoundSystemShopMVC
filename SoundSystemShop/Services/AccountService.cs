@@ -218,12 +218,10 @@ namespace SoundSystemShop.Services
             int otpNumber = random.Next(1000, 9999);
             return otpNumber.ToString();
         }
-
         public async Task<AppUser> GetUserByNameOrEmail(string userNameOrEmail)
         {
            return await _userManager.FindByNameAsync(userNameOrEmail) ?? await _userManager.FindByEmailAsync(userNameOrEmail);
         }
-
         public async Task<string> GeneratePasswordResetToken(AppUser existUser)
         {
             return await _userManager.GeneratePasswordResetTokenAsync(existUser);

@@ -453,7 +453,7 @@ function onSignIn(googleUser) {
 
     function sideBarPrice() {
         $.ajax({
-            url: "/shop/ShopOrderPrice?str=htl",
+            url: "/shop/FilterProducts?str=htl",
             type: 'GET',
             success: function (data) {
                 var price = data[0].price;
@@ -491,7 +491,7 @@ function onSignIn(googleUser) {
         e.preventDefault();
         var categoryId = $(this).data("category-id");
         $.ajax({
-            url: "/shop/FilterCategory?categoryId=" + categoryId,
+            url: "/shop/FilterProducts?categoryId=" + categoryId,
             type: "get",
             success: function (data) {
                 $("#product-list-partial").html(data);
@@ -521,7 +521,7 @@ function onSignIn(googleUser) {
 
             // Perform your AJAX request or other operations here
             $.ajax({
-                url: "/shop/FilterPrice?min=" + min + "&max=" + max,
+                url: "/shop/FilterProducts?min=" + min + "&max=" + max,
                 type: "get",
                 success: function (data) {
                     $("#product-list-partial").html(data);

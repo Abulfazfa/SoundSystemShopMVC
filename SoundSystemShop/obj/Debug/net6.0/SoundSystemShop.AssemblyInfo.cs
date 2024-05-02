@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SoundSystemShop")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c3fdd074311c23c59c425215e3fe59aa516583d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+73f07be195e77203c1f026fbf20a0a73e63a027c")]
 [assembly: System.Reflection.AssemblyProductAttribute("SoundSystemShop")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SoundSystemShop")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
