@@ -101,12 +101,8 @@ namespace SoundSystemShop.Controllers
             if (min != 0 && max != 0) { products = products.Where(p => p.Price >= min && p.Price <= max); }
 
             var exist = str == "htl" ? products.OrderByDescending(p => p.Price).ToList() : products.OrderBy(p => p.Price).ToList();
+            ViewBag.SelectedCategoryId = categoryId;
             return PartialView("_ProductListPartial", exist);
         }
-
-
-
-
-
     }
 }

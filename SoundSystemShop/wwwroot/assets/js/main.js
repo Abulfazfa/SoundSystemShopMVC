@@ -440,20 +440,57 @@ function onSignIn(googleUser) {
     
 
     ///Price Sort Product
-    $(document).on("change", "#sortOptions", function () {
-        var sort = $("#sortOptions").val();
+   
+    $('#sortOptions').change(function () {
+        var sortOption = $(this).val();
+        var categoryId = $('.selectedCategoryId').text();
+        var minPrice = $('.selectedMinPrice').text();
+        var maxPrice = $('.selectedMaxPrice').text();
+        console.log("Sort Option: " + sortOption);
+        console.log("Category ID: " + categoryId);
+        console.log("min: " + minPrice);
+        console.log("max: " + maxPrice);
+
         $.ajax({
-            method: "get",
-            url: "/shop/ShopOrderPrice?str=" + sort,
-            success: function (res) {
-                console.log(res)
+            url: "/shop/FilterProducts",
+            type: 'GET',
+            data: { str: sortOption, categoryId: categoryId, min: minPrice, max: maxPrice },
+            success: function (response) {
+                $('#product-list-partial').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
             }
-        })
-    })
+        });
+    });
+
+    $(".category-link").click(function (e) {
+        e.preventDefault();
+        var categoryId = $(this).data("category-id");
+        $('.selectedCategoryId').text(categoryId);
+        console.log("Category ID: " + categoryId);
+        var sortOption = $('#sortOptions').val();
+
+        var minPrice = $('.selectedMinPrice').text();
+        var maxPrice = $('.selectedMaxPrice').text();
+
+        $.ajax({
+            url: "/shop/FilterProducts",
+            type: "GET",
+            data: { str: sortOption, categoryId: categoryId, min: minPrice, max: maxPrice },
+            success: function (data) {
+                $("#product-list-partial").html(data)
+            },
+            error: function () {
+                alert("An error occurred while fetching data.");
+            }
+        });
+    });
+
 
     function sideBarPrice() {
         $.ajax({
-            url: "/shop/FilterProducts?str=htl",
+            url: "/shop/ShopOrderPrice?str=htl",
             type: 'GET',
             success: function (data) {
                 var price = data[0].price;
@@ -487,25 +524,13 @@ function onSignIn(googleUser) {
 
     sideBarPrice()
 
-    $(".category-link").click(function (e) {
-        e.preventDefault();
-        var categoryId = $(this).data("category-id");
-        $.ajax({
-            url: "/shop/FilterProducts?categoryId=" + categoryId,
-            type: "get",
-            success: function (data) {
-                $("#product-list-partial").html(data);
-            },
-            error: function () {
-                alert("An error occurred while fetching data.");
-            }
-        });
-    });
+
     // Attach the click event handler to a parent element
     $("#sidebarPrice").on("click", ".minmaxPrice", function (e) {
         e.preventDefault();
         var categoryId = $(this).text();
         console.log(categoryId);
+        var selectedCategoryId = $('.selectedCategoryId').text();
 
         // Split the categoryId into minimum and maximum parts
         var parts = categoryId.split(" - ");
@@ -518,10 +543,11 @@ function onSignIn(googleUser) {
             // Now you have min and max as integers
             console.log("Minimum: " + min);
             console.log("Maximum: " + max);
-
+            $(".selectedMinPrice").text(min);
+            $(".selectedMaxPrice").text(max);
             // Perform your AJAX request or other operations here
             $.ajax({
-                url: "/shop/FilterProducts?min=" + min + "&max=" + max,
+                url: "/shop/FilterProducts?categoryId=" + selectedCategoryId + "&min=" + min + "&max=" + max,
                 type: "get",
                 success: function (data) {
                     $("#product-list-partial").html(data);
@@ -535,21 +561,21 @@ function onSignIn(googleUser) {
         }
     });
 
-    $("#sortOptions").change(function (e) {
-        e.preventDefault();
-        var str = $(this).val(); // Use .val() to get the selected value
-        console.log(str); // Log the selected value for debugging
-        $.ajax({
-            url: "/shop/OrderProductForPrice?str=" + str,
-            type: "get",
-            success: function (data) {
-                $("#product-list-partial").html(data);
-            },
-            error: function () {
-                alert("An error occurred while fetching data.");
-            }
-        });
-    });
+    //$("#sortOptions").change(function (e) {
+    //    e.preventDefault();
+    //    var str = $(this).val(); // Use .val() to get the selected value
+    //    console.log(str); // Log the selected value for debugging
+    //    $.ajax({
+    //        url: "/shop/OrderProductForPrice?str=" + str,
+    //        type: "get",
+    //        success: function (data) {
+    //            $("#product-list-partial").html(data);
+    //        },
+    //        error: function () {
+    //            alert("An error occurred while fetching data.");
+    //        }
+    //    });
+    //});
 
 
 

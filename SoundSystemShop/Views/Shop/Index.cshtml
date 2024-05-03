@@ -36,6 +36,9 @@
                                         <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
 
                                     </div>
+                                <span class="selectedCategoryId d-none"></span>
+                                <span class="selectedMinPrice d-none"></span>
+                                <span class="selectedMaxPrice d-none"></span>
                                     <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
@@ -43,7 +46,11 @@
                                                 @foreach (var item in ViewBag.ShopProductCategory)
                                                 {
                                                     <li>
-                                                        <span style="cursor:pointer" class="category-link" data-category-id="@item.Id">@item.Name</span>
+
+
+                                                            <span style="cursor:pointer" class="category-link" data-category-id="@item.Id">@item.Name</span>
+
+                                                           
                                                     </li>
                                                 }
                                             </ul>
@@ -79,10 +86,10 @@
                                 <div class="shop__product__option__right">
                                     <p>Sort by Price:</p>
                                 <select id="sortOptions">
-                                        <option value="lth">Low To High</option>
-									    <option value="htl">High To Low</option>
-                                        
-                                    </select>
+                                    <option value="lth">Low To High</option>
+                                    <option value="htl">High To Low</option>
+                                </select>
+
                                 </div>
                             </div>
                         </div>
