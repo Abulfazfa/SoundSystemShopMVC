@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using SoundSystemShop.Areas.AdminArea.Controllers;
 using SoundSystemShop.Models;
 using SoundSystemShop.Services;
 using SoundSystemShop.ViewModels;
@@ -31,7 +32,7 @@ namespace SoundSystemShop.Controllers
             else
             {
                 // Handle the case where the user is not authenticated (e.g., display a message)
-                return View("NotAuthenticatedView"); // Replace with an appropriate view
+                return RedirectToAction("Login", "Account"); // Replace with an appropriate view
             }
         }
 

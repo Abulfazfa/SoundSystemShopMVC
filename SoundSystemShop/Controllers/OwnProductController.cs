@@ -141,8 +141,7 @@ namespace SoundSystemShop.Controllers
             return View(userProducts);
         }
         public IActionResult SendNewProductEmail(string email, string message)
-        {
-           
+        {           
             return NoContent();
         }
     }

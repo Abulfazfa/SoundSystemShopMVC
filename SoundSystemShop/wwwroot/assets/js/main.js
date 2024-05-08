@@ -587,6 +587,19 @@ function onSignIn(googleUser) {
 
 
     // Function to handle the click event
+
+
+        var isRed = false;
+
+        $('#addToCartButton').click(function () {
+            if (isRed) {
+                $(this).css('color', 'black').css('color', 'white');
+            } else {
+                $(this).css('color', 'red').css('color', 'black');
+            }
+            isRed = !isRed;
+        });
+
     $(".order-button").on("click", function () {
         var button = $(this);
         var productId = button.data("id");
@@ -823,5 +836,30 @@ function onSignIn(googleUser) {
             }
         });
     });
+
+
+
+
+
+
+
+            $('form').submit(function (e) {
+                e.preventDefault(); // Prevent the form from submitting normally
+
+                // Perform any validation here if needed
+
+                // Assuming validation passes, show success alert
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Your message has been sent successfully!',
+                });
+
+                // Clear the form fields if needed
+                $('form')[0].reset();
+            });
+
+
+
 
 })(jQuery);

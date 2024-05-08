@@ -3,6 +3,7 @@
 
 <section class="latest spad">
     <div class="container">
+        <h3 class="mt-4 mb-3">My Likes</h3>
         <div class="row">
             @foreach (var product in Model)
             {
@@ -39,7 +40,7 @@
                                 }
 
                             </div>
-                            <a asp-controller="wishlist" asp-action="RemoveFromWishlist" asp-route-productId="@product.Id" class="text-dark"><i class="fa-regular fa-heart"></i></a>
+                            <a asp-controller="wishlist" asp-action="RemoveFromWishlist" asp-route-productId="@product.Id" class="text-danger"><i class="fa-regular fa-heart"></i></a>
 
                             
 

@@ -28,12 +28,13 @@ namespace SoundSystemShop.Services
             email.Body = new TextPart(TextFormat.Html) { Text = body };
 
             //////send mail
-            
-            //using SmtpClient smtp = new SmtpClient();
-            //smtp.Connect(_configuration.GetSection("Smtp:Server").Value, int.Parse(_configuration.GetSection("Smtp:Port").Value), MailKit.Security.SecureSocketOptions.StartTls);
-            //smtp.Authenticate(_configuration.GetSection("Smtp:FromAddress").Value, _configuration.GetSection("Smtp:Password").Value);
-            //smtp.Send(email);
-            //smtp.Disconnect(true);
+
+            using SmtpClient smtp = new SmtpClient();
+            smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
+            smtp.Connect(_configuration.GetSection("Smtp:Server").Value, int.Parse(_configuration.GetSection("Smtp:Port").Value), MailKit.Security.SecureSocketOptions.StartTls);
+            smtp.Authenticate(_configuration.GetSection("Smtp:FromAddress").Value, _configuration.GetSection("Smtp:Password").Value);
+            smtp.Send(email);
+            smtp.Disconnect(true);
         }
 
         public void PrepareEmail(EmailMember emailMember) 
