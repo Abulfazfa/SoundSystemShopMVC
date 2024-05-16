@@ -198,7 +198,7 @@ public class AccountController : Controller
                 bool isAdmin = await _accountService.GetRoleList(loginVM.UsernameOrEmail);
                 if (isAdmin)
                 {
-                    return RedirectToAction(nameof(Index), nameof(DashboardController), new { area = "adminarea" });
+                    return RedirectToAction(nameof(Index), "Dashboard", new { area = "adminarea" });
                 }
 
                 return RedirectToAction(nameof(Index), nameof(HomeController));

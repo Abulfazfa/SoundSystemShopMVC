@@ -16,21 +16,21 @@ public class DashboardController : Controller
 
     public IActionResult Index()
     {
-        var mostPopularProduct = _appDbContext.UserActivities
-     .GroupBy(u => u.Url)
-     .OrderByDescending(g => g.Count())
-     .Select(g => new { Url = g.Key, ClickCount = g.Count() })
-     .FirstOrDefault();
+     //   var mostPopularProduct = _appDbContext.UserActivities
+     //.GroupBy(u => u.Url)
+     //.OrderByDescending(g => g.Count())
+     //.Select(g => new { Url = g.Key, ClickCount = g.Count() })
+     //.FirstOrDefault();
 
-        if (mostPopularProduct != null)
-        {
-            int startIndex = mostPopularProduct.Url.LastIndexOf('/') + 1;
-            int numberPart = int.Parse(mostPopularProduct.Url.Substring(startIndex));
-            var product = _appDbContext.Products.Include(p => p.Images).FirstOrDefault(p => p.Id == numberPart);
+     //   if (mostPopularProduct != null)
+     //   {
+     //       int startIndex = mostPopularProduct.Url.LastIndexOf('/') + 1;
+     //       int numberPart = int.Parse(mostPopularProduct.Url.Substring(startIndex));
+     //       var product = _appDbContext.Products.Include(p => p.Images).FirstOrDefault(p => p.Id == numberPart);
 
-            ViewBag.MostPopularProduct = product;
-            ViewBag.MostPopularProductClickCount = mostPopularProduct.ClickCount;
-        }
+     //       ViewBag.MostPopularProduct = product;
+     //       ViewBag.MostPopularProductClickCount = mostPopularProduct.ClickCount;
+     //   }
 
         return View();
     }

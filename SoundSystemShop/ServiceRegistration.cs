@@ -31,9 +31,6 @@ namespace SoundSystemShop
                 option.Password.RequireDigit = true;
 
                 option.User.RequireUniqueEmail = true;
-                option.Lockout.AllowedForNewUsers = true;
-                option.Lockout.MaxFailedAccessAttempts = 3;
-                option.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
 
             }).AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();

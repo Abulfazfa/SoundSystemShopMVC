@@ -843,7 +843,7 @@ function onSignIn(googleUser) {
 
 
 
-            $('form').submit(function (e) {
+    $('.contactForm').submit(function (e) {
                 e.preventDefault(); // Prevent the form from submitting normally
 
                 // Perform any validation here if needed
