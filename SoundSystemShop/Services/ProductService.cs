@@ -63,7 +63,7 @@ namespace SoundSystemShop.Services
         public List<Product> GetAll()
         {
             Discount();
-            return _unitOfWork.ProductRepo.GetProductWithIncludes().Where(p => p.IsDeleted == false).OrderByDescending(p => p.CreationDate).ToList();
+            return _unitOfWork.ProductRepo.GetProductWithIncludes().Where(p => p.IsDeleted == false && p.Brand != "Customer").OrderByDescending(p => p.CreationDate).ToList();
         }
         public Product GetProductDetail(int id)
         {

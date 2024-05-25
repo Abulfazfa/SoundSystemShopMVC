@@ -54,67 +54,70 @@
     </section>
     <!-- Hero Section End -->
 
-@* <section class="latest spad">
+<section class="latest spad">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                
-                    <h2 class="test123" style=" font-weight:bold">Recently viewed</h2>
-                
+        @if (Model.UserActivities.Count > 0)
+        {
+            <div class="row">
+                <div class="col-lg-12">
 
+                    <h2 class="test123" style=" font-weight:bold">Recently viewed</h2>
+
+
+                </div>
             </div>
-        </div>
-        <div class="row">
-            @foreach (var product in Model.UserActivities)
-            {
-                
-                <div class="product col-lg-3 col-md-4 swiper-slide">
-                    <a asp-controller="shop" asp-action="product" asp-route-id="@product.Id">
-                        <div class="product-img d-flex justify-content-center mt-5 mb-4">
-                            <img class="img-fluid w-100"
-                             src="~/assets/img/product/@product.Images.FirstOrDefault().ImgUrl"
-                             alt="" style="height:262.5px;">
-                        </div>
-                        <div class="product-name">
-                            <p class="text-center fw-bold text-dark mb-4 ">@product.Name</p>
-                        </div>
-                        <div class="product-price d-flex justify-content-around align-items-center">
-                            <div class="discount">
-                                @if (product.InDiscount)
-                                {
-                                    <span style="text-decoration:line-through solid red;font-weight:normal"
-                                  class="text-dark">
-                                        <small class="azn_span text-dark">$</small> @product.Price.00
-                                    </span>
-                                    <br>
-                                    <span class="nprice text-danger fw-bold" id="price-1060446">
-                                        <small class="azn_span fw-normal">$</small> @product.DiscountPrice.00
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span style="font-weight:normal"
-                                  class="text-dark">
-                                        <small class="azn_span text-dark">$</small> @product.Price.00
-                                    </span>
-                                }
+            <div class="row">
+                @foreach (var product in Model.UserActivities)
+                {
+
+                    <div class="product col-lg-3 col-md-4 swiper-slide">
+                        <a asp-controller="shop" asp-action="product" asp-route-id="@product.Id">
+                            <div class="product-img d-flex justify-content-center mt-5 mb-4">
+                                <img class="img-fluid w-100"
+                                     src="~/assets/img/product/@product.Images.FirstOrDefault().ImgUrl"
+                                     alt="" style="height:262.5px;">
+                            </div>
+                            <div class="product-name">
+                                <p class="text-center fw-bold text-dark mb-4 ">@product.Name</p>
+                            </div>
+                            <div class="product-price d-flex justify-content-around align-items-center">
+                                <div class="discount">
+                                    @if (product.InDiscount)
+                                    {
+                                        <span style="text-decoration:line-through solid red;font-weight:normal"
+                                              class="text-dark">
+                                            <small class="azn_span text-dark">$</small> @product.Price.00
+                                        </span>
+                                        <br>
+                                        <span class="nprice text-danger fw-bold" id="price-1060446">
+                                            <small class="azn_span fw-normal">$</small> @product.DiscountPrice.00
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span style="font-weight:normal"
+                                              class="text-dark">
+                                            <small class="azn_span text-dark">$</small> @product.Price.00
+                                        </span>
+                                    }
+
+                                </div>
+                                <a asp-controller="wishlist" asp-action="AddToWishlist" asp-route-productId="@product.Id" class="wishlistbutton text-dark"><i class="fa-regular fa-heart"></i></a>
+                                <span style="display:none;" id="productId">@product.Id</span>
+
+                                <a class="btn-add-to-cart mt-2 border-0 text-light minusIcon" data-id="@product.Id"
+                                   style="background-color: black; font-size: 14px; font-weight: bold; padding: 5px 13px; border-radius: 3px; cursor:pointer;">
+                                    Add Basket
+                                </a>
 
                             </div>
-                            <a asp-controller="wishlist" asp-action="AddToWishlist" asp-route-productId="@product.Id" class="wishlistbutton text-dark"><i class="fa-regular fa-heart"></i></a>
-                            <span style="display:none;" id="productId">@product.Id</span>
-                           
-                            <a class="btn-add-to-cart mt-2 border-0 text-light minusIcon" data-id="@product.Id"
-                           style="background-color: black; font-size: 14px; font-weight: bold; padding: 5px 13px; border-radius: 3px; cursor:pointer;">
-                                Add Basket
-                            </a>
-
-                        </div>
-                    </a>
-                </div>
-            }
-        </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
     </div>
-</section> *@
+</section>
 
     <!-- Product Section Begin -->
     <section class="product spad">

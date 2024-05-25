@@ -201,7 +201,7 @@ public class AccountController : Controller
                     return RedirectToAction(nameof(Index), "Dashboard", new { area = "adminarea" });
                 }
 
-                return RedirectToAction(nameof(Index), nameof(HomeController));
+                return RedirectToAction(nameof(Index), "Home");
 
             case LoginResult.UserNotFound:
                 ModelState.AddModelError("", MessageConstants.UserNameOrPasswordIncorrect);

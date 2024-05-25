@@ -52,7 +52,10 @@ namespace SoundSystemShop.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateProductVM createProduct)
         {
-            
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             if (createProduct == null) return Json(null);
             Product product = new Product();
             List<Product> products = new();

@@ -843,7 +843,7 @@ function onSignIn(googleUser) {
 
 
 
-    $('.contactForm').submit(function (e) {
+    $('.swalBtn').submit(function (e) {
                 e.preventDefault(); // Prevent the form from submitting normally
 
                 // Perform any validation here if needed
@@ -857,9 +857,107 @@ function onSignIn(googleUser) {
 
                 // Clear the form fields if needed
                 $('form')[0].reset();
+    });
+
+
+    $(document).ready(function () {
+        var totalPrice = 0;
+        var totalPriceElement = $(".totalPrice");
+        var allButtons = $(".productButton");
+        var area = $(".area");
+        var selectedList = $("#selectedList");
+        var selectedCategory = null;
+
+        function clearSelected() {
+            selectedCategory = null;
+            area.empty();
+            allButtons.removeClass("selected");
+        }
+        $("form").submit(function (event) {
+            var inputs = $(".form-control");
+            var hasEmptyField = false;
+
+            inputs.each(function () {
+                if ($(this).val() === "") {
+                    hasEmptyField = true;
+                    return false; // Stop iterating through the inputs
+                }
             });
 
+            if (hasEmptyField) {
+                event.preventDefault(); // Prevent form submission
+                alert("Please fill in all fields.");
+            }
+        });
 
+        allButtons.click(function () {
+
+            var button = $(this);
+            var buttonId = button.data("category");
+
+            if (buttonId === selectedCategory) {
+                clearSelected();
+                return;
+            }
+
+            clearSelected();
+            button.addClass("selected");
+            selectedCategory = buttonId;
+
+            $.ajax({
+                url: `https://localhost:44392/shop/GetCategoryProduct?categoryName=${buttonId}`,
+                success: function (results) {
+                    results.forEach(function (result) {
+                        var product = `
+                                            <div class="col-md-3">
+                                                <div class="card mt-5">
+                                                    <div class="card-body">
+                                                        <div class="form-group">
+                                                            <img src="/assets/img/product/${result.images[0].imgUrl}" width="150" height="100" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <p>${result.name}</p>
+                                                            <span>$${result.price}</span>
+                                                        </div>
+                                                        <a class="btn btn-primary selectButton text-light">Select</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+
+                        area.append(product);
+                    });
+
+                    $(".selectButton").click(function () {
+                        var productName = $(this).siblings(".form-group").find("p").text();
+                        var productPrice = $(this).siblings(".form-group").find("span").text();
+                        var categoryName = selectedCategory.toLowerCase();
+
+                        // Set the value of the input field for the selected category
+                        $("#" + categoryName).val(productName + " - " + productPrice);
+                    });
+
+                    selectedList.on("click", ".deleteButton", function () {
+                        var listItem = $(this).parent();
+                        var productPriceFormatted = listItem.find("span").text();
+
+                        listItem.html('');
+                    });
+
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX request failed:", status, error);
+                }
+            });
+        });
+        $(".clearButton").click(function (event) {
+            event.preventDefault();
+            var inputField = $(this).prev(".form-control");
+            inputField.val("");
+        });
+
+
+    });
 
 
 })(jQuery);

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SoundSystemShop.DAL;
 using SoundSystemShop.Models;
@@ -33,7 +34,7 @@ public class HomeController : Controller
         //homeVW.SocialMedias = _unitOfWork.SocialMediaRepo.GetAll();
         homeVW.Products = _productService.GetAll();
         homeVW.Blogs = _blogService.GetAllBlogs().Result.ToList();
-        //homeVW.UserActivities = _userActivityFilter.GetUserActivity();
+        homeVW.UserActivities = _userActivityFilter.GetRecentlyViewedProducts();
         homeVW.DayOfDiscount = _productService.SaleOfDay();
         return View(homeVW);
     }
