@@ -1,10 +1,11 @@
+
 ---
 
 # Soundsystem ASP.NET Core MVC Project
 
 ## Overview
 
-This project is an e-commerce platform for music-related products. It includes various features like recently viewed products, filtering options, blog comments, social media sharing, email operations, OTP verification, product creation, and an admin panel for website modifications.
+This project is an e-commerce platform for music-related products. It includes various features like recently viewed products, filtering options, blog comments, social media sharing, email operations, OTP verification, product creation, discount management, and an admin panel for website modifications.
 
 ## Table of Contents
 
@@ -35,6 +36,8 @@ This project is an e-commerce platform for music-related products. It includes v
 - **Email Operations**: Includes forget password and reset password functionalities via SMTP.
 - **OTP Verification**: Secure operations with One-Time Password (OTP) verification.
 - **Product Creation**: Users can create products, which are then checked by an expert before being published.
+- **Discount Management**: Includes daily and monthly discounts.
+- **Weekly Promo Codes**: Send weekly promo codes to random clients.
 - **Admin Page**: For modifying website content and managing products.
 
 ## Pages and Functionalities
@@ -67,6 +70,12 @@ This project is an e-commerce platform for music-related products. It includes v
 - **Create Product**: Users can create new products.
 - **Expert Review**: Created products are checked by an expert before being published.
 
+### Discount Management
+
+- **Daily Discounts**: Display daily discounts on selected products.
+- **Monthly Discounts**: Display monthly discounts on selected products.
+- **Weekly Promo Codes**: Automatically send promo codes to random clients every week via email.
+
 ### Admin Page
 
 - **Modify Website**: Admins can modify website content and manage products.
@@ -75,12 +84,12 @@ This project is an e-commerce platform for music-related products. It includes v
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/yourusername/soundsystem-aspnet-core-mvc.git
-    cd soundsystem-aspnet-core-mvc
+    git clone https://github.com/Abulfazfa/SoundSystemShopMVC.git
+    cd SoundSystemShopMVC
     ```
 
 2. **Configure the Database**:
-    Update the connection string in `appsettings.json` to point to your SQL Server instance.
+   Update the connection string in `appsettings.json` to point to your SQL Server instance.
 
 3. **Run Migrations**:
     ```bash
@@ -88,7 +97,7 @@ This project is an e-commerce platform for music-related products. It includes v
     ```
 
 4. **Configure SMTP and OTP**:
-    Update the SMTP settings in `appsettings.json`.
+   Update the SMTP settings in `appsettings.json`.
 
 5. **Run the Application**:
     ```bash
@@ -133,9 +142,4 @@ The admin page allows for managing website content and products. Ensure you have
 3. Commit your changes (`git commit -am 'Add some feature'`).
 4. Push to the branch (`git push origin feature/your-feature`).
 5. Create a new Pull Request.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ---
