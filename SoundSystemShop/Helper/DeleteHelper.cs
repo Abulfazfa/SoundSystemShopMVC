@@ -4,9 +4,9 @@
     {
         public static void DeleteFile(string path)
         {
-            if (System.IO.File.Exists(path))
+            if (File.Exists(path))
             {
-                System.IO.File.Delete(path);
+                File.Delete(path);
             }
         }
     }

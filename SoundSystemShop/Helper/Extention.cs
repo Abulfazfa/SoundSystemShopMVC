@@ -20,13 +20,4 @@ public static class Extention
         }
         return fileName;
     }
-
-    public static byte[] BitmapToByteArray(this Bitmap bitmap)
-    {
-        using (MemoryStream ms = new MemoryStream())
-        {
-            bitmap.Save(ms, ImageFormat.Png);
-            return ms.ToArray();
-        }
-    }
 }

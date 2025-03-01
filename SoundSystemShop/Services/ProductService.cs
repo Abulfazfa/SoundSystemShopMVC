@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SoundSystemShop.DAL;
 using SoundSystemShop.Helper;
 using SoundSystemShop.Models;
 using SoundSystemShop.Services.Interfaces;
